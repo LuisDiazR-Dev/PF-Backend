@@ -1,16 +1,12 @@
-const {PORT, server} = require('./src/app.js')
-const { database } = require('./src/db.js')
+const server = require("./src/app.js");
+const { conn } = require("./src/db.js");
+const PORT = 3001;
 
-server.listen(PORT, async ()=>{
-    try {
-        await database.sync({ alter: true, logging: false });
-        console.log('Base de datos escuchando en el puerto 5432');
-        console.log(`Servidor escuchando en el puerto: ${PORT}`);
-        
-        // * {force:true} -> tras cada save hace un reset de todas asl tablas creadas. false para que no se ejecute 
-        // * {alter:true} -> modifica las tablas a medida que se va trabajando sin borrar otras ya creadas      
-        
-    } catch (error) {
-        console.error('Error al iniciar el servidor:', error)
-    }
-})
+conn
+  .sync({ force: false })
+  .then(() => {
+    server.listen(PORT, () => {
+      console.log(`Server listening on port ${PORT}`);
+    });
+  })
+  .catch((error) => console.error(error));
