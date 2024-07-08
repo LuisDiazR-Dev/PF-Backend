@@ -1,12 +1,25 @@
-const getAllUsersController = "../controllers/users/allUsersController";
+const { getAllUsersController, getUserByIdController } = '../controllers/'
 
 const getAllUsers = async (req, res) => {
-    try {
-        const response = await getAllUsersController();
-        res.status(200).json(response);
-    } catch (error) {
-        next(error);
-    }
-};
+	try {
+		const response = await getAllUsersController()
+		res.status(200).json(response)
+	} catch (error) {
+		res.status(500).send(error.message)
+	}
+}
 
-module.exports = getAllUsers;
+const getUserById = async (req, res) => {
+	try {
+		const { id } = req.params
+		const response = await getUserByIdController(id)
+		res.status(200).json(response)
+	} catch (error) {
+		res.status(500).send(error.message)
+	}
+}
+
+module.exports = {
+	getAllUsers,
+	getUserById,
+}
