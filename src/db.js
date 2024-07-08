@@ -1,44 +1,45 @@
-// ----------------------------------------------------
-require('dotenv').config();
-const { Sequelize } = require('sequelize');
-const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME} = process.env;
+require("dotenv").config();
+const { Sequelize } = require("sequelize");
 
+const fs = require("fs");
+const path = require("path");
+const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME } = process.env;
 
-// * Import Models
-const User = require('./models/User')
+const sequelize = new Sequelize(
+  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
+  {
+    logging: false,
+    native: false,
+  }
+);
 
+const basename = path.basename(__filename);
+const modelDefiners = [];
 
+fs.readdirSync(path.join(__dirname, "/models"))
+  .filter(
+    (file) =>
+      file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
+  )
+  .forEach((file) => {
+    modelDefiners.push(require(path.join(__dirname, "/models", file)));
+  });
 
-// const database = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`);
+modelDefiners.forEach((model) => model(sequelize));
 
-const database = new Sequelize({
-   dialect: 'postgres',
-   host: DB_HOST,
-   username: DB_USER,
-   password: DB_PASSWORD,
-   database: DB_NAME,
-   // logging: false,
-   // native: false
- })
+let entries = Object.entries(sequelize.models);
+let capsEntries = entries.map((entry) => [
+  entry[0][0].toUpperCase() + entry[0].slice(1),
+  entry[1],
+]);
+sequelize.models = Object.fromEntries(capsEntries);
 
+const { User, Project } = sequelize.models;
 
-// * Models executed
-User(database)
+User.hasMany(Project, { foreignKey: 'userId', as: 'projects' });
+Project.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
-// * Relaciones
-// User.hasMany(Reviews);
-
-
-database.authenticate()
-   .then(() => {
-      console.log('Connection has been established successfully.');
-   })
-   .catch(err => {
-      console.error('Unable to connect to the database:', err);
-   });
-
-
-module.exports = { 
-         database, 
-   ...database.models 
-}
+module.exports = {
+  ...sequelize.models,
+  conn: sequelize,
+};
