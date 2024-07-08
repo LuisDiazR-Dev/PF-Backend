@@ -1,4 +1,8 @@
-const { getAllUsersController, getUserByIdController } = require('../controllers/users-controller')
+const {
+	getAllUsersController,
+	getUserByIdController,
+	createUserController,
+} = require('../controllers/users-controller')
 
 const getAllUsers = async (req, res) => {
 	try {
@@ -19,7 +23,20 @@ const getUserById = async (req, res) => {
 	}
 }
 
+const createUser = async (req, res) => {
+	const { userName, email, password, bio, image, isPremium } = req.body
+	console.log(req.body)
+	try {
+		const newuser = await createUserController(userName, email, password, bio, image, isPremium)
+		res.status(200).json({ newuser })
+	} catch (error) {
+		console.log(error)
+		res.status(400).json({ error: error.message })
+	}
+}
+
 module.exports = {
 	getAllUsers,
 	getUserById,
+	createUser,
 }
