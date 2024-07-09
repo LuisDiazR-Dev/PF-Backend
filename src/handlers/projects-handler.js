@@ -7,7 +7,7 @@ const {
 const getAllProjects = async (req, res) => {
 
 	const { search, technology } = req.query
-
+	// console.log(technology.trim().split(','))
 	try {
 		const response = await getAllProjectsController(search, technology)
 		res.status(200).json(response)

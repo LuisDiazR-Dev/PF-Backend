@@ -1,8 +1,24 @@
 const { User } = require('../db')
+const { Op } = require('sequelize')
 
-const getAllUsersController = async () => {
+const getAllUsersController = async (search) => {
 	try {
-		const users = await User.findAll()
+		let where = {}
+		if (search) {
+			where[Op.or] = [
+				{
+					userName: {
+						[Op.like]: `%${search.toLowerCase()}%`,
+					},
+				},
+				{
+					email: {
+						[Op.like]: `%${search.toLowerCase()}%`,
+					},
+				},
+			]
+		}
+		const users = await User.findAll({ where })
 		return users
 	} catch (error) {
 		throw error

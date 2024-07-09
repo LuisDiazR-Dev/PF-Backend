@@ -5,8 +5,10 @@ const {
 } = require('../controllers/users-controller')
 
 const getAllUsers = async (req, res) => {
+
+	const { search } = req.query
 	try {
-		const response = await getAllUsersController()
+		const response = await getAllUsersController(search)
 		res.status(200).json(response)
 	} catch (error) {
 		res.status(500).send(error.message)

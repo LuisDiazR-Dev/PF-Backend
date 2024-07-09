@@ -12,19 +12,32 @@ const getAllProjectsController = async (search, technology) => {
 			where[Op.or] = [
 				{
 					title: {
-						[Op.like]: `%${search}%`,
+						[Op.like]: `%${search.toLowerCase()}%`,
 					},
 				},
 				Sequelize.where(Sequelize.fn('array_to_string', Sequelize.col('tags'), ','), {
-					[Op.like]: `%${search}%`,
+					[Op.like]: `%${search.toLowerCase()}%`,
 				}),
 			]
 		}
-		
+
+		//   if (technology) {
+		// 		const technologyArray = technology.split(',').map((tech) => tech.trim().toLowerCase())
+		// 		where[Op.and] = [
+		// 			...(where[Op.and] || []),
+		// 			{
+		// 				technology: {
+		// 					[Op.overlap]: technologyArray,
+		// 				},
+		// 			},
+		// 		]
+		// 	}
+
 		const projects = await Project.findAll({ where })
 		return projects
 	} catch (error) {
-		throw error
+		console.error('Error fetching projects:', error)
+		throw new Error('Error fetching projects')
 	}
 }
 
