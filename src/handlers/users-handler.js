@@ -28,7 +28,7 @@ const createUser = async (req, res) => {
 	console.log(req.body)
 	try {
 		const newuser = await createUserController(userName, email, password, bio, image, isPremium)
-		res.status(200).json({ newuser })
+		res.status(201).json({ newuser })
 	} catch (error) {
 		console.log(error)
 		res.status(400).json({ error: error.message })

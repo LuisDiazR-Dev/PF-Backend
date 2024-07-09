@@ -31,7 +31,7 @@ const createUserController = async (userName, email, password, bio, image, isPre
 		return newUser
 	} catch (error) {
 		console.log(error)
-		throw new Error(' No se pudo crear el usuario')
+		throw new Error('No se pudo crear el usuario')
 	}
 }
 
