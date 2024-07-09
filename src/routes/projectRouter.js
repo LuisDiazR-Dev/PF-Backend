@@ -1,8 +1,10 @@
 const { Router } = require('express')
-
 const projectRouter = Router()
-const createProjectHandler = require('../handlers/projects-handler')
+const { getProjectById, createProjectHandler } = require('../handlers/projects-handler')
 
 projectRouter.post('/create', createProjectHandler)
+projectRouter.get('/:id', getProjectById)
+
 
 module.exports = projectRouter
+

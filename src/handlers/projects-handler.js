@@ -1,5 +1,5 @@
-<<<<<<< HEAD
 const createProject = require('../controllers/postProjects')
+const { getProjectByIdController } = require('../controllers/projects-controller')
 
 const createProjectHandler = async (req, res) => {
 	const { title, description, tags, technology, image } = req.body
@@ -10,10 +10,6 @@ const createProjectHandler = async (req, res) => {
 		res.status(500).json({ error: error.message })
 	}
 }
-
-module.exports = createProjectHandler;
-=======
-const { getProjectByIdController } = require('../controllers/projects-controller')
 
 const getProjectById = async (req, res) => {
 	try {
@@ -27,5 +23,5 @@ const getProjectById = async (req, res) => {
 
 module.exports = {
 	getProjectById,
+	createProjectHandler,
 }
->>>>>>> 4e0562b2bdf375b1ea7d6f0aa693ff30260755c7
