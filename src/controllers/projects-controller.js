@@ -12,11 +12,11 @@ const getAllProjectsController = async (search, technology) => {
 			where[Op.or] = [
 				{
 					title: {
-						[Op.like]: `%${search}%`,
+						[Op.iLike]: `%${search}%`,
 					},
 				},
 				Sequelize.where(Sequelize.fn('array_to_string', Sequelize.col('tags'), ','), {
-					[Op.like]: `%${search}%`,
+					[Op.iLike]: `%${search}%`,
 				}),
 			]
 		}
@@ -26,7 +26,8 @@ const getAllProjectsController = async (search, technology) => {
 				...(where[Op.and] || []),
 				{
 					technology: {
-						[Op.overlap]: technology.split(','),
+						[Op.overlap]: JSON.parse(technology), // --> caso array de strings
+						// [Op.overlap]: technology.split(', '), // --> caso string
 					},
 				},
 			]
