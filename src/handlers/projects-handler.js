@@ -1,13 +1,18 @@
-const createProject = require('../controllers/postProjects')
-const { getProjectByIdController } = require('../controllers/projects-controller')
+const {
+	getAllProjectsController,
+	getProjectByIdController,
+	createProjectController,
+} = require('../controllers/projects-controller')
 
-const createProjectHandler = async (req, res) => {
-	const { title, description, tags, technology, image } = req.body
+const getAllProjects = async (req, res) => {
+
+	const { search, technology } = req.query
+	// console.log(technology.trim().split(','))
 	try {
-		const project = await createProject(title, description, tags, technology, image)
-		res.status(200).json({ project: project })
+		const response = await getAllProjectsController(search, technology)
+		res.status(200).json(response)
 	} catch (error) {
-		res.status(500).json({ error: error.message })
+		res.status(500).send(error.message)
 	}
 }
 
@@ -21,7 +26,18 @@ const getProjectById = async (req, res) => {
 	}
 }
 
+const createProject = async (req, res) => {
+	const { title, description, tags, technology, image } = req.body
+	try {
+		const project = await createProjectController(title, description, tags, technology, image)
+		res.status(201).json({ project: project })
+	} catch (error) {
+		res.status(400).json({ error: error.message })
+	}
+}
+
 module.exports = {
+	getAllProjects,
 	getProjectById,
-	createProjectHandler,
+	createProject,
 }
