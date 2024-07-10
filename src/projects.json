@@ -5,7 +5,7 @@
 			"title": "Project Management App",
 			"description": "An app to manage programming projects effectively",
 			"tags": ["management", "productivity", "collaboration"],
-			"languages": ["JavaScript", "React", "Node.js"],
+			"technology": ["JavaScript", "React", "Node.js"],
 			"image": "https://example.com/images/project-management-app.jpg"
 		},
 		{
@@ -13,7 +13,7 @@
 			"title": "E-commerce Platform",
 			"description": "A scalable e-commerce platform with multiple features",
 			"tags": ["e-commerce", "sales", "shopping"],
-			"languages": ["Python", "Django", "PostgreSQL"],
+			"technology": ["Python", "Django", "PostgreSQL"],
 			"image": "https://example.com/images/e-commerce-platform.jpg"
 		},
 		{
@@ -21,7 +21,7 @@
 			"title": "Social Networking Site",
 			"description": "A site to connect with friends and family",
 			"tags": ["social", "networking", "community"],
-			"languages": ["Ruby", "Rails", "SQLite"],
+			"technology": ["Ruby", "Rails", "SQLite"],
 			"image": "https://example.com/images/social-networking-site.jpg"
 		},
 		{
@@ -29,7 +29,7 @@
 			"title": "Fitness Tracker",
 			"description": "An app to track fitness activities and goals",
 			"tags": ["fitness", "health", "tracking"],
-			"languages": ["Java", "Spring Boot", "MySQL"],
+			"technology": ["Java", "Spring Boot", "MySQL"],
 			"image": "https://example.com/images/fitness-tracker.jpg"
 		},
 		{
@@ -37,7 +37,7 @@
 			"title": "Recipe Sharing Platform",
 			"description": "A platform to share and discover new recipes",
 			"tags": ["cooking", "recipes", "food"],
-			"languages": ["PHP", "Laravel", "MongoDB"],
+			"technology": ["PHP", "Laravel", "MongoDB"],
 			"image": "https://example.com/images/recipe-sharing-platform.jpg"
 		}
 	]
