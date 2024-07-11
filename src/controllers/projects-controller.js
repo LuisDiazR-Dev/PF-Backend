@@ -1,5 +1,5 @@
-const { Project } = require('../db')
 const { Sequelize, Op } = require('sequelize')
+const { Project, Technology } = require('../db')
 
 const getAllProjectsController = async (search, technology) => {
 	let where = {
@@ -16,18 +16,18 @@ const getAllProjectsController = async (search, technology) => {
 				}),
 			]
 
+		const projects = await Project.findAll({
+			where,
+			include: {
+				model: Technology,
+				as: 'technologies',
+			},
+		})
+		
 		if (technology)
-			where[Op.and] = [
-				...(where[Op.and] || []),
-				{
-					technology: {
-						[Op.overlap]: JSON.parse(technology), // --> caso array de strings
-						// [Op.overlap]: technology.split(', '), // --> caso string
-					},
-				},
-			]
-
-		const projects = await Project.findAll({ where })
+			return projects.filter((project) =>
+				project.technologies.filter((technology) => technology.name === technology)
+			)
 		return projects
 	} catch (error) {
 		console.error('Error fetching projects:', error)

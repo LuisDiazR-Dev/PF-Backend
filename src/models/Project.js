@@ -34,11 +34,11 @@ module.exports = (sequelize) => {
         allowNull: true,
         defaultValue: [],
       },
-      technology: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
-        allowNull: true,
-        defaultValue: [],
-      },
+      // technology: {
+      //   type: DataTypes.ARRAY(DataTypes.STRING),
+      //   allowNull: true,
+      //   defaultValue: [],
+      // },
       image: {
         type: DataTypes.STRING,
         allowNull: false,

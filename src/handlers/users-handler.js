@@ -15,7 +15,7 @@ const getAllUsers = async (req, res) => {
 
 const getUserById = async (req, res) => {
 	try {
-		const { id } = req.user
+		const { id } = req.params
 		const response = await getUserByIdController(id)
 		res.status(200).json(response)
 	} catch (error) {
