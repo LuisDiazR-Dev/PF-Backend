@@ -1,11 +1,11 @@
 const { Sequelize, Op } = require('sequelize')
 const { Project, Technology } = require('../db')
 
-const getAllProjectsController = async (search, technology) => {
+const getAllProjectsController = async (search, technologies) => {
 	let where = {
 		// ...(title !== undefined && { title: title }),
 		// ...(tags !== undefined && { tags: tags }),
-		// ...(technology !== undefined && { technology: technology }),
+		// ...(technologies !== undefined && { technologies: technologies }),
 	}
 	try {
 		if (search)
@@ -23,11 +23,14 @@ const getAllProjectsController = async (search, technology) => {
 				as: 'technologies',
 			},
 		})
-		
-		if (technology)
-			return projects.filter((project) =>
-				project.technologies.filter((technology) => technology.name === technology)
-			)
+
+		if (technologies) {
+            return projects.filter((project) =>
+                technologies.split(",").every(technology =>
+                    project.technologies.some(t => t.name === technology)
+                )
+            );
+        }
 		return projects
 	} catch (error) {
 		console.error('Error fetching projects:', error)
