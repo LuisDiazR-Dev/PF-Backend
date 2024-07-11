@@ -2,7 +2,7 @@ const server = require('./src/app.js')
 const { conn } = require('./src/db.js')
 const PORT = 3001
 
-const createSeeders = require("./src/seeders.js")
+const createSeeders = require('./src/seeders.js')
 
 conn
 	.sync({ alter: true })

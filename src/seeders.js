@@ -139,7 +139,7 @@ const createSeeders = async () => {
 				tags: ['management', 'productivity', 'collaboration'],
 				image: 'https://example.com/images/project-management-app.jpg',
 				technologies: ['JavaScript', 'React', 'Node.js'],
-				userId: createdUsers[0].id
+				userId: createdUsers[0].id,
 			},
 			{
 				title: 'E-commerce Platform',
@@ -147,7 +147,7 @@ const createSeeders = async () => {
 				tags: ['e-commerce', 'sales', 'shopping'],
 				image: 'https://example.com/images/e-commerce-platform.jpg',
 				technologies: ['Python', 'Django', 'PostgreSQL'],
-				userId: createdUsers[1].id
+				userId: createdUsers[1].id,
 			},
 			{
 				title: 'Social Networking Site',
@@ -155,7 +155,7 @@ const createSeeders = async () => {
 				tags: ['social', 'networking', 'community'],
 				image: 'https://example.com/images/social-networking-site.jpg',
 				technologies: ['Ruby', 'Rails', 'SQLite'],
-				userId: createdUsers[2].id
+				userId: createdUsers[2].id,
 			},
 			{
 				title: 'Fitness Tracker',
@@ -163,7 +163,7 @@ const createSeeders = async () => {
 				tags: ['fitness', 'health', 'tracking'],
 				image: 'https://example.com/images/fitness-tracker.jpg',
 				technologies: ['Java', 'Spring Boot', 'MySQL'],
-				userId: createdUsers[3].id
+				userId: createdUsers[3].id,
 			},
 			{
 				title: 'Recipe Sharing Platform',
@@ -171,9 +171,80 @@ const createSeeders = async () => {
 				tags: ['cooking', 'recipes', 'food'],
 				image: 'https://example.com/images/recipe-sharing-platform.jpg',
 				technologies: ['PHP', 'Laravel', 'MongoDB'],
-				userId: createdUsers[4].id
+				userId: createdUsers[4].id,
 			},
 		]
+
+		const technologies = [
+			'MongoDB',
+			'Spring Boot',
+			'MySQL',
+			'Laravel',
+			'Django',
+			'Node.js',
+			'JavaScript',
+			'Python',
+			'Java',
+			'C#',
+			'C++',
+			'Ruby',
+			'PHP',
+			'Swift',
+			'TypeScript',
+			'Go',
+			'Kotlin',
+			'Rust',
+			'Scala',
+			'Objective-C',
+			'Perl',
+			'R',
+			'Dart',
+			'Elixir',
+			'Haskell',
+			'Lua',
+			'MATLAB',
+			'Clojure',
+			'Shell',
+			'SQL',
+			'HTML',
+			'CSS',
+			'Sass',
+			'Less',
+			'XML',
+			'JSON',
+			'YAML',
+			'Markdown',
+			'GraphQL',
+			'PL/SQL',
+			'Transact-SQL',
+			'VHDL',
+			'Verilog',
+			'Assembly',
+			'Fortran',
+			'COBOL',
+			'Pascal',
+			'Ada',
+			'Lisp',
+			'Scheme',
+			'F#',
+			'VB.NET',
+			'Groovy',
+			'Crystal',
+			'Nim',
+			'React',
+			'PostgreSQL',
+			'Rails',
+			'SQLite',
+		]
+
+		await Promise.all(
+			technologies.map(async (tech) => {
+				await Technology.findOrCreate({
+					where: { name: tech },
+				})
+			})
+		)
+		console.log('All technologies have been added to the database.')
 
 		for (const projectData of projects) {
 			const user = createdUsers.find((u) => u.id === projectData.userId)
@@ -184,13 +255,13 @@ const createSeeders = async () => {
 					description: projectData.description,
 					tags: projectData.tags,
 					image: projectData.image,
-					userId: projectData.userId,
+					userId: user.id,
 				},
 			})
 
 			const newTechnologies = await Promise.all(
 				projectData.technologies.map(
-					async (technology) => (await Technology.findOrCreate({ where: { name: technology } }))[0]
+					async (technology) => (await Technology.findAll({ where: { name: technology } }))[0]
 				)
 			)
 

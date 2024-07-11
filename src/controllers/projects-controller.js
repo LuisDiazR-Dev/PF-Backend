@@ -2,11 +2,7 @@ const { Sequelize, Op } = require('sequelize')
 const { Project, Technology } = require('../db')
 
 const getAllProjectsController = async (search, technologies) => {
-	let where = {
-		// ...(title !== undefined && { title: title }),
-		// ...(tags !== undefined && { tags: tags }),
-		// ...(technologies !== undefined && { technologies: technologies }),
-	}
+	let where = {}
 	try {
 		if (search)
 			where[Op.or] = [
@@ -25,12 +21,12 @@ const getAllProjectsController = async (search, technologies) => {
 		})
 
 		if (technologies) {
-            return projects.filter((project) =>
-                technologies.split(",").every(technology =>
-                    project.technologies.some(t => t.name === technology)
-                )
-            );
-        }
+			return projects.filter((project) =>
+				technologies
+					.split(',')
+					.some((technology) => project.technologies.some((t) => t.name === technology))
+			)
+		}
 		return projects
 	} catch (error) {
 		console.error('Error fetching projects:', error)
@@ -47,20 +43,39 @@ const getProjectByIdController = async (id) => {
 	}
 }
 
-const createProjectController = async (title, description, tags, technology, image) => {
+const createProjectController = async (title, description, tags, technologies, image, user) => {
+	console.log(user)
 	try {
 		const [project, created] = await Project.findOrCreate({
 			where: {
 				title,
+				userId: user.id,
+			},
+			defaults: {
 				description,
 				tags,
-				technology,
 				image,
 			},
 		})
 		if (!created) throw new Error('This project already exists in DB!')
+		if (!technologies || technologies.length < 1) throw new Error('Add at least 1 technology')
 
-		return project
+		const techNames = technologies.map((tech) => (typeof tech === 'string' ? tech : tech.name))
+
+		const techInstances = await Technology.findAll({
+			where: { name: techNames },
+		})
+
+		if (techInstances.length !== techNames.length) {
+			throw new Error('Some technologies were not found in the DB')
+		}
+
+		await project.addTechnologies(techInstances)
+
+		return {
+			...project.toJSON(),
+			technologies: techNames,
+		}
 	} catch (error) {
 		console.error('Error creating a project', error)
 	}
