@@ -17,7 +17,7 @@ const registerUser = async (req, res) => {
         const response = await registerUserController(userName, email, password)
         return res.status(201).json(response);
 	} catch (error) {
-		res.status(401).json(200)
+		res.status(401).json(error)
 	}
 }
 

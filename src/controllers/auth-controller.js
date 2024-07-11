@@ -8,7 +8,7 @@ const loginUserController = async (email, password) => {
 		const accessToken = jwt.sign(
 			{ id: user.id, userName: user.userName },
 			process.env.ACCESS_TOKEN_SECRET,
-			{ expiresIn: '1h' }
+			// { expiresIn: '1h' }
 		)
 		return {user: user, token: accessToken}
 	} catch (error) {
