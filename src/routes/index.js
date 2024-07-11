@@ -1,10 +1,13 @@
-const { Router } = require("express");
+const { Router } = require('express')
+const authRouter = require('./authRouter')
 const usersRouter = require('./usersRouter')
 const projectsRouter = require('./projectRouter')
 
-// * Rutas
-const router = Router();
-router.use('/users', usersRouter)
-router.use('/projects', projectsRouter)
+const { verifyToken } = require('../middlewares/auth-middleware')
 
-module.exports = router;
+const router = Router()
+router.use('/', authRouter)
+router.use('/users', verifyToken, usersRouter)
+router.use('/projects', verifyToken, projectsRouter)
+
+module.exports = router

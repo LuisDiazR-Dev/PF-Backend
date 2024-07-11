@@ -8,20 +8,15 @@ const getAllProjectsController = async (search, technology) => {
 		// ...(technology !== undefined && { technology: technology }),
 	}
 	try {
-		if (search) {
+		if (search)
 			where[Op.or] = [
-				{
-					title: {
-						[Op.iLike]: `%${search}%`,
-					},
-				},
+				{ title: { [Op.iLike]: `%${search}%` } },
 				Sequelize.where(Sequelize.fn('array_to_string', Sequelize.col('tags'), ','), {
 					[Op.iLike]: `%${search}%`,
 				}),
 			]
-		}
 
-		if (technology) {
+		if (technology)
 			where[Op.and] = [
 				...(where[Op.and] || []),
 				{
@@ -31,7 +26,6 @@ const getAllProjectsController = async (search, technology) => {
 					},
 				},
 			]
-		}
 
 		const projects = await Project.findAll({ where })
 		return projects

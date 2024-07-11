@@ -53,15 +53,24 @@ module.exports = (sequelize) => {
 			image: {
 				type: DataTypes.STRING,
 				allowNull: false,
+				isUrl: true,
+				defaultValue: "avatar.jpg",
 				validate: {
-					isUrl: {
-						msg: 'Image must be a valid URL',
+					len: {
+						args: [1, 20],
+						msg: 'Description should be between 1 and 20 characters',
 					},
 				},
+			},
+			role: {
+				type: DataTypes.ENUM("user", "admin"),
+				allowNull: false,
+				defaultValue: "user"
 			},
 			isPremium: {
 				type: DataTypes.BOOLEAN,
 				allowNull: false,
+				defaultValue: false,
 			},
 		},
 		{ timestamps: false }

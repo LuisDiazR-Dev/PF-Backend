@@ -4,20 +4,11 @@ const { Op } = require('sequelize')
 const getAllUsersController = async (search) => {
 	try {
 		let where = {}
-		if (search) {
+		if (search)
 			where[Op.or] = [
-				{
-					userName: {
-						[Op.like]: `%${search.toLowerCase()}%`,
-					},
-				},
-				{
-					email: {
-						[Op.like]: `%${search.toLowerCase()}%`,
-					},
-				},
+				{ userName: { [Op.iLike]: `%${search}%` } },
+				{ email: { [Op.iLike]: `%${search}%` } },
 			]
-		}
 		const users = await User.findAll({ where })
 		return users
 	} catch (error) {
@@ -34,21 +25,4 @@ const getUserByIdController = async (id) => {
 	}
 }
 
-const createUserController = async (userName, email, password, bio, image, isPremium) => {
-	try {
-		const newUser = await User.create({
-			userName,
-			email,
-			password,
-			bio,
-			image,
-			isPremium,
-		})
-		return newUser
-	} catch (error) {
-		console.log(error)
-		throw new Error('No se pudo crear el usuario')
-	}
-}
-
-module.exports = { getAllUsersController, getUserByIdController, createUserController }
+module.exports = { getAllUsersController, getUserByIdController }

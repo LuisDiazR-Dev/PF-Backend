@@ -1,13 +1,11 @@
 const {
 	getAllUsersController,
 	getUserByIdController,
-	createUserController,
 } = require('../controllers/users-controller')
 
 const getAllUsers = async (req, res) => {
-
-	const { search } = req.query
 	try {
+		const { search } = req.query
 		const response = await getAllUsersController(search)
 		res.status(200).json(response)
 	} catch (error) {
@@ -17,7 +15,7 @@ const getAllUsers = async (req, res) => {
 
 const getUserById = async (req, res) => {
 	try {
-		const { id } = req.params
+		const { id } = req.user
 		const response = await getUserByIdController(id)
 		res.status(200).json(response)
 	} catch (error) {
@@ -25,20 +23,18 @@ const getUserById = async (req, res) => {
 	}
 }
 
-const createUser = async (req, res) => {
-	const { userName, email, password, bio, image, isPremium } = req.body
-	console.log(req.body)
+const getUserProfile = async (req, res) => {
 	try {
-		const newuser = await createUserController(userName, email, password, bio, image, isPremium)
-		res.status(201).json({ newuser })
+		const { id } = req.user
+		const response = await getUserByIdController(id)
+		res.status(200).json(response)
 	} catch (error) {
-		console.log(error)
-		res.status(400).json({ error: error.message })
+		res.status(500).send(error.message)
 	}
 }
 
 module.exports = {
 	getAllUsers,
 	getUserById,
-	createUser,
+	getUserProfile
 }

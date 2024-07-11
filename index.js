@@ -235,7 +235,6 @@ const createAllUser = async () => {
 				image: 'https://example.com/images/photo-editing-app.jpg',
 			},
 		])
-		console.log('All users created successfully.')
 	} catch (error) {
 		console.log(error)
 	}
