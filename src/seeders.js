@@ -1,8 +1,8 @@
-const {User, Project, Technology} = require("./db")
+const { User, Project, Technology } = require('./db')
 
-const createAllUser = async () => {
+const createSeeders = async () => {
 	try {
-        const users = [
+		const users = [
 			{
 				userName: 'JaneSmith456',
 				email: 'janesmith@example.com',
@@ -124,37 +124,83 @@ const createAllUser = async () => {
 				isPremium: true,
 			},
 		]
-		await Promise.all(users.map(async user => await User.findOrCreate({where: user})))
 
-		const [newProject, created] = await Project.findOrCreate({ where: {
-			title: 'Project Management App',
-			description: 'An app to manage programming projects effectively',
-			tags: ['management', 'productivity', 'collaboration'],
-			image: 'https://example.com/images/project-management-app.jpg',
-		}})
+		const createdUsers = await Promise.all(
+			users.map(async (user) => {
+				const [createdUser] = await User.findOrCreate({ where: user })
+				return createdUser
+			})
+		)
 
-		const [newProject2, created2] = await Project.findOrCreate({ where: {
-			title: 'holaa',
-			description: 'An app to manage programming projects effectively',
-			tags: ['management', 'productivity', 'collaboration'],
-			image: 'https://example.com/images/project-management-app.jpg',
-		}})
-		const newTechnologies = await Promise.all(
-			['JavaScript', 'Python', 'Java', 'React'].map(
-				async (technology) => (await Technology.findOrCreate({ where: { name: technology } }))[0]
+		const projects = [
+			{
+				title: 'Project Management App',
+				description: 'An app to manage programming projects effectively',
+				tags: ['management', 'productivity', 'collaboration'],
+				image: 'https://example.com/images/project-management-app.jpg',
+				technologies: ['JavaScript', 'React', 'Node.js'],
+				userId: createdUsers[0].id
+			},
+			{
+				title: 'E-commerce Platform',
+				description: 'A scalable e-commerce platform with multiple features',
+				tags: ['e-commerce', 'sales', 'shopping'],
+				image: 'https://example.com/images/e-commerce-platform.jpg',
+				technologies: ['Python', 'Django', 'PostgreSQL'],
+				userId: createdUsers[1].id
+			},
+			{
+				title: 'Social Networking Site',
+				description: 'A site to connect with friends and family',
+				tags: ['social', 'networking', 'community'],
+				image: 'https://example.com/images/social-networking-site.jpg',
+				technologies: ['Ruby', 'Rails', 'SQLite'],
+				userId: createdUsers[2].id
+			},
+			{
+				title: 'Fitness Tracker',
+				description: 'An app to track fitness activities and goals',
+				tags: ['fitness', 'health', 'tracking'],
+				image: 'https://example.com/images/fitness-tracker.jpg',
+				technologies: ['Java', 'Spring Boot', 'MySQL'],
+				userId: createdUsers[3].id
+			},
+			{
+				title: 'Recipe Sharing Platform',
+				description: 'A platform to share and discover new recipes',
+				tags: ['cooking', 'recipes', 'food'],
+				image: 'https://example.com/images/recipe-sharing-platform.jpg',
+				technologies: ['PHP', 'Laravel', 'MongoDB'],
+				userId: createdUsers[4].id
+			},
+		]
+
+		for (const projectData of projects) {
+			const user = createdUsers.find((u) => u.id === projectData.userId)
+
+			const [newProject, created] = await Project.findOrCreate({
+				where: {
+					title: projectData.title,
+					description: projectData.description,
+					tags: projectData.tags,
+					image: projectData.image,
+					userId: projectData.userId,
+				},
+			})
+
+			const newTechnologies = await Promise.all(
+				projectData.technologies.map(
+					async (technology) => (await Technology.findOrCreate({ where: { name: technology } }))[0]
+				)
 			)
-		)
-		const newTechnologies2 = await Promise.all(
-			['JavaScript', 'Django'].map(
-				async (technology) => (await Technology.findOrCreate({ where: { name: technology } }))[0]
-			)
-		)
-		if (!created) await newProject.addTechnologies(newTechnologies)
-		if (!created2) await newProject2.addTechnologies(newTechnologies2)
-            console.log("Users and Projects alredy created!");
+
+			if (!created) await newProject.addTechnologies(newTechnologies)
+		}
+
+		console.log('Users and Projects alredy created!')
 	} catch (error) {
 		console.log(error)
 	}
 }
 
-module.exports = createAllUser
+module.exports = createSeeders

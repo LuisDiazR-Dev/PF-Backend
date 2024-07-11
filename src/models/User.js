@@ -57,8 +57,8 @@ module.exports = (sequelize) => {
 				defaultValue: "avatar.jpg",
 				validate: {
 					len: {
-						args: [1, 20],
-						msg: 'Description should be between 1 and 20 characters',
+						args: [1, 50],
+						msg: 'Description should be between 1 and 50 characters',
 					},
 				},
 			},
