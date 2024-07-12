@@ -37,13 +37,15 @@ Backend del proyecto final Henry
   }
 ```
 
-##  Git
+## Git
 
 ### Ramas
-	- main
-	- development
-	- luis
-	- las demás (por crear y actualizar mas no subir al repo por favor )
+
+- main
+- develop
+- gaston
+- max
+- mika
 
 ### Manejo de ramas
 
@@ -56,11 +58,13 @@ Backend del proyecto final Henry
 2. Trayendo la rama development
 
 - git fetch
+  - Obtener las actualizaciones del repositorio remoto
 - git branch -r
+  - Listar todas las ramas remotas
 - git checkout -b development origin/development
   - y quedas parado en development. luego crear tu rama de trabajo
 
-3. Creando ramas
+1. Creando ramas
 
 - git branch
   - para ver todas las ramas y saber en cual estoy
@@ -71,8 +75,8 @@ Backend del proyecto final Henry
 - git branch -D "nombreDeLaRama"
   - para eliminar rama
 - git checkout "nombre de rama"
-  - para desplasarse entre ramas
--	git checkut -
+  - para desplazarme entre ramas
+-	git checkout -
 	-	Te devuelve a la rama anterior activa
 - git show-branch
   - muestra las ramas que hay y el ultimo commit de cada una
@@ -98,7 +102,7 @@ NOTA 1
 
 NOTA 2
 
-- Los MERGE siempre seran hacia la rama donde estes parado.
+- Los MERGE siempre serán hacia la rama donde estés parado.
 Ejemplo, estoy en trabajando en mi rama "luis" y necesito actualizar "development" con mi avance.
 lo que debo hacer primero es ASEGURARME que development no ha tenido cambios, sino, empezar NOTA 1,
 si ya logre la primera parte del flujo, sigo con:

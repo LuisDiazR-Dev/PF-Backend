@@ -11,9 +11,11 @@ Las rutas para gestionar las solicitudes relacionadas con los usuarios están de
 Ruta para obtener todos los usuarios.
 
 #### Query Parameters (opcional)
+
 - `search`: Filtra usuarios por username o email.
 
 #### Ejemplo de Uso
+
 ```http
 GET /users ---> Obtiene todos los usuarios
 GET /users?search=John ---> Obtiene los usuarios por busqueda de username y email
@@ -24,9 +26,11 @@ GET /users?search=John ---> Obtiene los usuarios por busqueda de username y emai
 Ruta para obtener el usuario por id.
 
 #### Params
+
 - `:id`: por id del usuario
 
 #### Ejemplo de Uso
+
 ```http
 GET /users/:id ---> Obtiene todos el usuario por id
 ```
@@ -36,7 +40,9 @@ GET /users/:id ---> Obtiene todos el usuario por id
 Ruta para crear usuario.
 
 #### Body
+
 Se debe enviar el modelo de usuario con los siguientes datos:
+
 - userName
 - email
 - password
@@ -44,10 +50,7 @@ Se debe enviar el modelo de usuario con los siguientes datos:
 - image (url)
 
 #### Ejemplo de Uso
+
 ```http
 GET /users/:id ---> Obtiene todos el usuario por id
 ```
-
-
-
-
