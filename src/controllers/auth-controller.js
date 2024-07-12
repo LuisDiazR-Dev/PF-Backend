@@ -20,10 +20,9 @@ const registerUserController = async (userName, email, password) => {
 	try {
         const [user, created] = await User.findOrCreate({
             where: { email, password, userName },
-            defaults: { bio, image, role, isPremium }
         });
         if (!created) throw new Error('User already exists');
-        return res.status(201).json(user);
+        return user;
 	} catch (error) {
 		console.log(error)
 		throw new Error('No se pudo crear el usuario')
