@@ -6,10 +6,10 @@ const {
 
 const getAllProjects = async (req, res) => {
 
-	const { search, technology } = req.query
+	const { search, technologies } = req.query
 	// console.log(technology.trim().split(','))
 	try {
-		const response = await getAllProjectsController(search, technology)
+		const response = await getAllProjectsController(search, technologies)
 		res.status(200).json(response)
 	} catch (error) {
 		res.status(500).send(error.message)
@@ -27,9 +27,10 @@ const getProjectById = async (req, res) => {
 }
 
 const createProject = async (req, res) => {
-	const { title, description, tags, technology, image } = req.body
+	const { title, description, tags, technologies, image } = req.body
 	try {
-		const project = await createProjectController(title, description, tags, technology, image)
+		const user = req.user;
+		const project = await createProjectController(title, description, tags, technologies, image, user)
 		res.status(201).json({ project: project })
 	} catch (error) {
 		res.status(400).json({ error: error.message })

@@ -6,8 +6,8 @@ module.exports = (sequelize) => {
     {
       id: {
         type: DataTypes.UUID,
-        primaryKey: true,
         defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
       },
       title: {
         type: DataTypes.STRING,
@@ -22,30 +22,23 @@ module.exports = (sequelize) => {
       description: {
         type: DataTypes.STRING,
         allowNull: false,
-        validate: {
-          len: {
-            args: [5],
-            msg: "Description should contain at least 5 characters",
-          },
-        },
+        defaultValue: "",
       },
       tags: {
         type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: true,
         defaultValue: [],
       },
-      technology: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
-        allowNull: true,
-        defaultValue: [],
-      },
+      // technology: {
+      //   type: DataTypes.ARRAY(DataTypes.STRING),
+      //   allowNull: true,
+      //   defaultValue: [],
+      // },
       image: {
         type: DataTypes.STRING,
         allowNull: false,
-        validate: {
-          isUrl: true,
-          // msg: "Image must be a valid URL",
-        },
+        isUrl: true,
+        defaultValue: "image_notfound.jpg"
       },
     },
     { timestamps: false }

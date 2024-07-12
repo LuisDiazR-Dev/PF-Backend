@@ -1,39 +1,32 @@
-const { Project } = require('../db')
 const { Sequelize, Op } = require('sequelize')
+const { Project, Technology } = require('../db')
 
-const getAllProjectsController = async (search, technology) => {
-	let where = {
-		// ...(title !== undefined && { title: title }),
-		// ...(tags !== undefined && { tags: tags }),
-		// ...(technology !== undefined && { technology: technology }),
-	}
+const getAllProjectsController = async (search, technologies) => {
+	let where = {}
 	try {
-		if (search) {
+		if (search)
 			where[Op.or] = [
-				{
-					title: {
-						[Op.iLike]: `%${search}%`,
-					},
-				},
+				{ title: { [Op.iLike]: `%${search}%` } },
 				Sequelize.where(Sequelize.fn('array_to_string', Sequelize.col('tags'), ','), {
 					[Op.iLike]: `%${search}%`,
 				}),
 			]
-		}
 
-		if (technology) {
-			where[Op.and] = [
-				...(where[Op.and] || []),
-				{
-					technology: {
-						[Op.overlap]: JSON.parse(technology), // --> caso array de strings
-						// [Op.overlap]: technology.split(', '), // --> caso string
-					},
-				},
-			]
-		}
+		const projects = await Project.findAll({
+			where,
+			include: {
+				model: Technology,
+				as: 'technologies',
+			},
+		})
 
-		const projects = await Project.findAll({ where })
+		if (technologies) {
+			return projects.filter((project) =>
+				technologies
+					.split(',')
+					.some((technology) => project.technologies.some((t) => t.name === technology))
+			)
+		}
 		return projects
 	} catch (error) {
 		console.error('Error fetching projects:', error)
@@ -50,20 +43,39 @@ const getProjectByIdController = async (id) => {
 	}
 }
 
-const createProjectController = async (title, description, tags, technology, image) => {
+const createProjectController = async (title, description, tags, technologies, image, user) => {
+	console.log(user)
 	try {
 		const [project, created] = await Project.findOrCreate({
 			where: {
 				title,
+				userId: user.id,
+			},
+			defaults: {
 				description,
 				tags,
-				technology,
 				image,
 			},
 		})
 		if (!created) throw new Error('This project already exists in DB!')
+		if (!technologies || technologies.length < 1) throw new Error('Add at least 1 technology')
 
-		return project
+		const techNames = technologies.map((tech) => (typeof tech === 'string' ? tech : tech.name))
+
+		const techInstances = await Technology.findAll({
+			where: { name: techNames },
+		})
+
+		if (techInstances.length !== techNames.length) {
+			throw new Error('Some technologies were not found in the DB')
+		}
+
+		await project.addTechnologies(techInstances)
+
+		return {
+			...project.toJSON(),
+			technologies: techNames,
+		}
 	} catch (error) {
 		console.error('Error creating a project', error)
 	}
