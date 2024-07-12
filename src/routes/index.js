@@ -8,8 +8,8 @@ const { verifyToken } = require('../middlewares/auth-middleware')
 
 const router = Router()
 router.use('/', authRouter)
+router.use('/projects', projectsRouter)
 router.use('/users', verifyToken, usersRouter)
-router.use('/projects', verifyToken, projectsRouter)
 router.use('/technologies', verifyToken, techRouter)
 
 module.exports = router

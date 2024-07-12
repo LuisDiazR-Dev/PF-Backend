@@ -8,10 +8,12 @@ const {
 	deleteProject,
 } = require('../handlers/projects-handler')
 
+const { verifyToken } = require('../middlewares/auth-middleware')
+
 projectRouter.get('/', getAllProjects)
 projectRouter.get('/:id', getProjectById)
-projectRouter.post('/', createProject)
-projectRouter.put('/:id', updateProject)
-projectRouter.delete('/:id', deleteProject)
+projectRouter.post('/', verifyToken, createProject)
+projectRouter.put('/:id', verifyToken, updateProject)
+projectRouter.delete('/:id', verifyToken, deleteProject)
 
 module.exports = projectRouter
