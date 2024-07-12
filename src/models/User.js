@@ -42,23 +42,23 @@ module.exports = (sequelize) => {
 			bio: {
 				type: DataTypes.STRING,
 				allowNull: false,
-				defaultValue: 'No hay descripcion',
+				defaultValue: '',
 				validate: {
 					len: {
-						args: [5],
-						msg: 'Description should contain at least 5 characters',
+						args: [0, 300],
+						msg: 'Bio should be up to 300 characters',
 					},
 				},
 			},
 			image: {
 				type: DataTypes.STRING,
 				allowNull: false,
-				isUrl: true,
-				defaultValue: "avatar.jpg",
+				defaultValue: 'avatar.jpg',
 				validate: {
+					isUrl: true,
 					len: {
 						args: [1, 50],
-						msg: 'Description should be between 1 and 50 characters',
+						msg: 'Image URL should be between 1 and 50 characters',
 					},
 				},
 			},
@@ -73,6 +73,6 @@ module.exports = (sequelize) => {
 				defaultValue: false,
 			},
 		},
-		{ timestamps: false }
+		{ timestamps: true }
 	)
 }
