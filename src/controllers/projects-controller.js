@@ -1,7 +1,11 @@
 const { Sequelize, Op } = require('sequelize')
 const { Project, Technology } = require('../db')
 
-const getAllProjectsController = async (search, technologies, sort) => {
+const getAllProjectsController = async (search, technologies, sort, page, pageSize) => {
+	console.log(page + ' page', pageSize + ' paseSize')
+
+	let offset = (page - 1) * pageSize
+	let limit = parseInt(pageSize, 10)
 	let where = []
 	let order = []
 	try {
@@ -16,7 +20,9 @@ const getAllProjectsController = async (search, technologies, sort) => {
 				}),
 			]
 
-		const projects = await Project.findAll({
+		const projects = await Project.findAndCountAll({
+			limit: limit,
+			offset: offset,
 			order,
 			where,
 			include: {
@@ -31,7 +37,10 @@ const getAllProjectsController = async (search, technologies, sort) => {
 					.split(',')
 					.some((technology) => project.technologies.some((t) => t.name === technology))
 			)
-		return projects
+		const projectPage = projects.rows.map((project) => {
+			return project.dataValues
+		})
+		return projectPage
 	} catch (error) {
 		console.error('Error fetching projects:', error)
 		throw new Error('Error fetching projects')

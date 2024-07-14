@@ -5,11 +5,13 @@ const {
 	updateProjectController,
 	deleteProjectController,
 } = require('../controllers/projects-controller')
+const { loginUser } = require('./auth-handler')
 
 const getAllProjects = async (req, res) => {
-	const { search, technologies, sort } = req.query
+	const { search, technologies, sort, page = 1, pageSize = 10 } = req.query
+
 	try {
-		const response = await getAllProjectsController(search, technologies, sort)
+		const response = await getAllProjectsController(search, technologies, sort, page, pageSize)
 		res.status(200).json(response)
 	} catch (error) {
 		res.status(500).send(error.message)
