@@ -2,11 +2,12 @@ const { Sequelize, Op } = require('sequelize')
 const { Project, Technology } = require('../db')
 
 const getAllProjectsController = async (search, technologies, sort) => {
-	let where
-	let order
+	let where = []
+	let order = []
 	try {
 		if (sort === 'az') order = [['title', 'ASC']]
 		if (sort === 'za') order = [['title', 'DESC']]
+
 		if (search)
 			where[Op.or] = [
 				{ title: { [Op.iLike]: `%${search}%` } },
@@ -30,7 +31,6 @@ const getAllProjectsController = async (search, technologies, sort) => {
 					.split(',')
 					.some((technology) => project.technologies.some((t) => t.name === technology))
 			)
-
 		return projects
 	} catch (error) {
 		console.error('Error fetching projects:', error)

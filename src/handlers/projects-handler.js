@@ -8,8 +8,6 @@ const {
 
 const getAllProjects = async (req, res) => {
 	const { search, technologies, sort } = req.query
-
-	console.log(sort + ' LOG DE SORT')
 	try {
 		const response = await getAllProjectsController(search, technologies, sort)
 		res.status(200).json(response)
