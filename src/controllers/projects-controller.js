@@ -10,6 +10,7 @@ const getAllProjectsController = async (queries) => {
 	try {
 		if (sort === 'a-z') order = [['title', 'ASC']]
 		if (sort === 'z-a') order = [['title', 'DESC']]
+    
 		if (search)
 			where[Op.or] = [
 				{ title: { [Op.iLike]: `%${search}%` } },
@@ -17,7 +18,7 @@ const getAllProjectsController = async (queries) => {
 					[Op.iLike]: `%${search}%`,
 				}),
 			]
-
+    
 		const projects = await Project.findAndCountAll({
 			limit: limit,
 			offset: offset,
