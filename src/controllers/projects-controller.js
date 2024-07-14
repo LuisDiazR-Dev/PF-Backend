@@ -1,9 +1,12 @@
 const { Sequelize, Op } = require('sequelize')
 const { Project, Technology } = require('../db')
 
-const getAllProjectsController = async (search, technologies) => {
-	let where = {}
+const getAllProjectsController = async (search, technologies, sort) => {
+	let where
+	let order
 	try {
+		if (sort === 'az') order = [['title', 'ASC']]
+		if (sort === 'za') order = [['title', 'DESC']]
 		if (search)
 			where[Op.or] = [
 				{ title: { [Op.iLike]: `%${search}%` } },
@@ -13,6 +16,7 @@ const getAllProjectsController = async (search, technologies) => {
 			]
 
 		const projects = await Project.findAll({
+			order,
 			where,
 			include: {
 				model: Technology,
@@ -26,6 +30,7 @@ const getAllProjectsController = async (search, technologies) => {
 					.split(',')
 					.some((technology) => project.technologies.some((t) => t.name === technology))
 			)
+
 		return projects
 	} catch (error) {
 		console.error('Error fetching projects:', error)
@@ -85,17 +90,17 @@ const updateProjectController = async (projectData, id) => {
 			{ where: { id: id } }
 		)
 
-        if (projectData.technologies) {
-            const technologies = await Promise.all(
-                projectData.technologies.map(async (techName) => {
-                    const [technology] = await Technology.findOrCreate({
-                        where: { name: techName },
-                    });
-                    return technology;
-                })
-            );
-            await project.setTechnologies(technologies);
-        }
+		if (projectData.technologies) {
+			const technologies = await Promise.all(
+				projectData.technologies.map(async (techName) => {
+					const [technology] = await Technology.findOrCreate({
+						where: { name: techName },
+					})
+					return technology
+				})
+			)
+			await project.setTechnologies(technologies)
+		}
 
 		const updatedProject = await Project.findByPk(id, {
 			include: { model: Technology, as: 'technologies' },
