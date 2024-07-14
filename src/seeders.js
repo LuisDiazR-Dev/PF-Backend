@@ -185,7 +185,8 @@ const createSeeders = async () => {
 				title: 'Project Management App',
 				description: 'An app to manage programming projects effectively',
 				tags: ['management', 'productivity', 'collaboration'],
-				image: 'https://example.com/images/project-management-app.jpg',
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
 				technologies: ['JavaScript', 'React', 'Node.js'],
 				userId: createdUsers[0].id,
 			},
@@ -193,7 +194,8 @@ const createSeeders = async () => {
 				title: 'E-commerce Platform',
 				description: 'A scalable e-commerce platform with multiple features',
 				tags: ['e-commerce', 'sales', 'shopping'],
-				image: 'https://example.com/images/e-commerce-platform.jpg',
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
 				technologies: ['Python', 'Django', 'PostgreSQL'],
 				userId: createdUsers[1].id,
 			},
@@ -201,7 +203,8 @@ const createSeeders = async () => {
 				title: 'Social Networking Site',
 				description: 'A site to connect with friends and family',
 				tags: ['social', 'networking', 'community'],
-				image: 'https://example.com/images/social-networking-site.jpg',
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
 				technologies: ['Ruby', 'Rails', 'SQLite'],
 				userId: createdUsers[2].id,
 			},
@@ -209,7 +212,8 @@ const createSeeders = async () => {
 				title: 'Fitness Tracker',
 				description: 'An app to track fitness activities and goals',
 				tags: ['fitness', 'health', 'tracking'],
-				image: 'https://example.com/images/fitness-tracker.jpg',
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
 				technologies: ['Java', 'Spring Boot', 'MySQL'],
 				userId: createdUsers[3].id,
 			},
@@ -217,7 +221,8 @@ const createSeeders = async () => {
 				title: 'Recipe Sharing Platform',
 				description: 'A platform to share and discover new recipes',
 				tags: ['cooking', 'recipes', 'food'],
-				image: 'https://example.com/images/recipe-sharing-platform.jpg',
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
 				technologies: ['PHP', 'Laravel', 'MongoDB'],
 				userId: createdUsers[4].id,
 			},
@@ -225,7 +230,8 @@ const createSeeders = async () => {
 				title: 'Music Streaming Service',
 				description: 'A service to stream and discover new music',
 				tags: ['music', 'streaming', 'entertainment'],
-				image: 'https://example.com/images/music-streaming-service.jpg',
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
 				technologies: ['Java', 'Spring Boot', 'PostgreSQL'],
 				userId: createdUsers[5].id,
 			},
@@ -233,7 +239,8 @@ const createSeeders = async () => {
 				title: 'Weather Forecast App',
 				description: 'An app to get the latest weather forecasts',
 				tags: ['weather', 'forecast', 'environment'],
-				image: 'https://example.com/images/weather-forecast-app.jpg',
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
 				technologies: ['JavaScript', 'React', 'Node.js'],
 				userId: createdUsers[6].id,
 			},
@@ -241,7 +248,8 @@ const createSeeders = async () => {
 				title: 'Travel Booking Platform',
 				description: 'A platform to book travel tickets and accommodations',
 				tags: ['travel', 'booking', 'tourism'],
-				image: 'https://example.com/images/travel-booking-platform.jpg',
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
 				technologies: ['Python', 'Django', 'MySQL'],
 				userId: createdUsers[7].id,
 			},
@@ -249,7 +257,8 @@ const createSeeders = async () => {
 				title: 'Online Learning Platform',
 				description: 'A platform to offer and take online courses',
 				tags: ['education', 'learning', 'courses'],
-				image: 'https://example.com/images/online-learning-platform.jpg',
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
 				technologies: ['Ruby', 'Rails', 'PostgreSQL'],
 				userId: createdUsers[8].id,
 			},
@@ -257,7 +266,8 @@ const createSeeders = async () => {
 				title: 'Job Search Website',
 				description: 'A website to search and apply for jobs',
 				tags: ['jobs', 'career', 'employment'],
-				image: 'https://example.com/images/job-search-website.jpg',
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
 				technologies: ['PHP', 'Laravel', 'SQLite'],
 				userId: createdUsers[9].id,
 			},
@@ -265,7 +275,8 @@ const createSeeders = async () => {
 				title: 'Online Marketplace',
 				description: 'A platform to buy and sell products online',
 				tags: ['marketplace', 'shopping', 'sales'],
-				image: 'https://example.com/images/online-marketplace.jpg',
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
 				technologies: ['JavaScript', 'React', 'Node.js'],
 				userId: createdUsers[10].id,
 			},
@@ -273,7 +284,8 @@ const createSeeders = async () => {
 				title: 'Photo Sharing App',
 				description: 'An app to share and discover photos',
 				tags: ['photos', 'sharing', 'social'],
-				image: 'https://example.com/images/photo-sharing-app.jpg',
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
 				technologies: ['Python', 'Django', 'PostgreSQL'],
 				userId: createdUsers[11].id,
 			},
@@ -281,7 +293,8 @@ const createSeeders = async () => {
 				title: 'Task Management Tool',
 				description: 'A tool to manage and organize tasks',
 				tags: ['tasks', 'management', 'productivity'],
-				image: 'https://example.com/images/task-management-tool.jpg',
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
 				technologies: ['Ruby', 'Rails', 'MySQL'],
 				userId: createdUsers[12].id,
 			},
@@ -289,7 +302,8 @@ const createSeeders = async () => {
 				title: 'Real Estate Platform',
 				description: 'A platform to buy, sell, and rent properties',
 				tags: ['real estate', 'properties', 'sales'],
-				image: 'https://example.com/images/real-estate-platform.jpg',
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
 				technologies: ['PHP', 'Laravel', 'PostgreSQL'],
 				userId: createdUsers[13].id,
 			},
@@ -297,7 +311,8 @@ const createSeeders = async () => {
 				title: 'Fitness App',
 				description: 'An app to track fitness activities and workouts',
 				tags: ['fitness', 'health', 'tracking'],
-				image: 'https://example.com/images/fitness-app.jpg',
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
 				technologies: ['Java', 'Spring Boot', 'MongoDB'],
 				userId: createdUsers[14].id,
 			},
@@ -305,7 +320,8 @@ const createSeeders = async () => {
 				title: 'Event Management System',
 				description: 'A system to manage and organize events',
 				tags: ['events', 'management', 'organization'],
-				image: 'https://example.com/images/event-management-system.jpg',
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
 				technologies: ['JavaScript', 'React', 'Node.js'],
 				userId: createdUsers[15].id,
 			},
@@ -313,7 +329,8 @@ const createSeeders = async () => {
 				title: 'Online Survey Tool',
 				description: 'A tool to create and conduct online surveys',
 				tags: ['surveys', 'feedback', 'research'],
-				image: 'https://example.com/images/online-survey-tool.jpg',
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
 				technologies: ['Python', 'Django', 'MySQL'],
 				userId: createdUsers[16].id,
 			},
@@ -321,7 +338,8 @@ const createSeeders = async () => {
 				title: 'Budget Management App',
 				description: 'An app to manage and track budgets',
 				tags: ['budget', 'finance', 'tracking'],
-				image: 'https://example.com/images/budget-management-app.jpg',
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
 				technologies: ['Ruby', 'Rails', 'PostgreSQL'],
 				userId: createdUsers[17].id,
 			},
@@ -329,7 +347,8 @@ const createSeeders = async () => {
 				title: 'Blog Platform',
 				description: 'A platform to create and share blog posts',
 				tags: ['blog', 'writing', 'sharing'],
-				image: 'https://example.com/images/blog-platform.jpg',
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
 				technologies: ['PHP', 'Laravel', 'SQLite'],
 				userId: createdUsers[18].id,
 			},
@@ -337,7 +356,8 @@ const createSeeders = async () => {
 				title: 'Video Streaming Service',
 				description: 'A service to stream and watch videos',
 				tags: ['video', 'streaming', 'entertainment'],
-				image: 'https://example.com/images/video-streaming-service.jpg',
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
 				technologies: ['JavaScript', 'React', 'Node.js'],
 				userId: createdUsers[19].id,
 			},
@@ -345,7 +365,8 @@ const createSeeders = async () => {
 				title: 'Customer Support Chatbot',
 				description: 'A chatbot to provide customer support',
 				tags: ['chatbot', 'support', 'AI'],
-				image: 'https://example.com/images/customer-support-chatbot.jpg',
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
 				technologies: ['Python', 'Django', 'PostgreSQL'],
 				userId: createdUsers[20].id,
 			},
@@ -353,7 +374,8 @@ const createSeeders = async () => {
 				title: 'Meditation App',
 				description: 'An app to guide and track meditation sessions',
 				tags: ['meditation', 'health', 'wellness'],
-				image: 'https://example.com/images/meditation-app.jpg',
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
 				technologies: ['Ruby', 'Rails', 'MySQL'],
 				userId: createdUsers[1].id,
 			},
@@ -361,7 +383,8 @@ const createSeeders = async () => {
 				title: 'Online Quiz Platform',
 				description: 'A platform to create and take quizzes',
 				tags: ['quiz', 'education', 'learning'],
-				image: 'https://example.com/images/online-quiz-platform.jpg',
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
 				technologies: ['PHP', 'Laravel', 'PostgreSQL'],
 				userId: createdUsers[2].id,
 			},
@@ -369,7 +392,8 @@ const createSeeders = async () => {
 				title: 'Food Delivery App',
 				description: 'An app to order food from restaurants',
 				tags: ['food', 'delivery', 'ordering'],
-				image: 'https://example.com/images/food-delivery-app.jpg',
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
 				technologies: ['Java', 'Spring Boot', 'MongoDB'],
 				userId: createdUsers[3].id,
 			},
@@ -377,7 +401,8 @@ const createSeeders = async () => {
 				title: 'Language Learning App',
 				description: 'An app to learn new languages',
 				tags: ['languages', 'education', 'learning'],
-				image: 'https://example.com/images/language-learning-app.jpg',
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
 				technologies: ['JavaScript', 'React', 'Node.js'],
 				userId: createdUsers[4].id,
 			},
@@ -385,12 +410,13 @@ const createSeeders = async () => {
 				title: 'Home Automation System',
 				description: 'A system to automate and control home devices',
 				tags: ['home', 'automation', 'IoT'],
-				image: 'https://example.com/images/home-automation-system.jpg',
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
 				technologies: ['Python', 'Django', 'MySQL'],
 				userId: createdUsers[5].id,
 			},
 		]
-		
+
 		const technologies = [
 			'MongoDB',
 			'Spring Boot',
@@ -451,7 +477,7 @@ const createSeeders = async () => {
 			'PostgreSQL',
 			'Rails',
 			'SQLite',
-		];
+		]
 
 		await Promise.all(
 			technologies.map(async (tech) => {
