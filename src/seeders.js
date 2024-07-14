@@ -123,6 +123,54 @@ const createSeeders = async () => {
 				image: 'https://example.com/images/mikeolsen.jpg',
 				isPremium: true,
 			},
+			{
+				userName: 'IvanBell',
+				email: 'ivan@bell.com',
+				password: 'ivan123',
+				bio: 'Software engineer',
+				image: 'https://example.com/images/ivanbell.jpg',
+				isPremium: true,
+			},
+			{
+				userName: 'Luis Diaz',
+				email: 'luis@diaz.com',
+				password: 'luis123',
+				bio: 'Accountant',
+				image: 'https://example.com/images/luisdiaz.jpg',
+				isPremium: false,
+			},
+			{
+				userName: 'Gaston Ibarra',
+				email: 'gaston@ibarra.com',
+				password: 'gaston123',
+				bio: 'Business analyst',
+				image: 'https://example.com/images/gastonibarra.jpg',
+				isPremium: false,
+			},
+			{
+				userName: 'Miguel Linares',
+				email: 'miguel@linares.com',
+				password: 'miguel123',
+				bio: 'HR manager',
+				image: 'https://example.com/images/miguellinares.jpg',
+				isPremium: false,
+			},
+			{
+				userName: 'Maria Sol Iha',
+				email: 'mariasol@iha.com',
+				password: 'marial123',
+				bio: 'Content writer',
+				image: 'https://example.com/images/mariasoliha.jpg',
+				isPremium: false,
+			},
+			{
+				userName: 'Maximiliano Altamirano',
+				email: 'maximiliano@altamirano.com',
+				password: 'maximilianol123',
+				bio: 'SEO specialist',
+				image: 'https://example.com/images/maxialtamirano.jpg',
+				isPremium: false,
+			},
 		]
 
 		const createdUsers = await Promise.all(
@@ -137,7 +185,8 @@ const createSeeders = async () => {
 				title: 'Project Management App',
 				description: 'An app to manage programming projects effectively',
 				tags: ['management', 'productivity', 'collaboration'],
-				image: 'https://example.com/images/project-management-app.jpg',
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
 				technologies: ['JavaScript', 'React', 'Node.js'],
 				userId: createdUsers[0].id,
 			},
@@ -145,7 +194,8 @@ const createSeeders = async () => {
 				title: 'E-commerce Platform',
 				description: 'A scalable e-commerce platform with multiple features',
 				tags: ['e-commerce', 'sales', 'shopping'],
-				image: 'https://example.com/images/e-commerce-platform.jpg',
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
 				technologies: ['Python', 'Django', 'PostgreSQL'],
 				userId: createdUsers[1].id,
 			},
@@ -153,7 +203,8 @@ const createSeeders = async () => {
 				title: 'Social Networking Site',
 				description: 'A site to connect with friends and family',
 				tags: ['social', 'networking', 'community'],
-				image: 'https://example.com/images/social-networking-site.jpg',
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
 				technologies: ['Ruby', 'Rails', 'SQLite'],
 				userId: createdUsers[2].id,
 			},
@@ -161,7 +212,8 @@ const createSeeders = async () => {
 				title: 'Fitness Tracker',
 				description: 'An app to track fitness activities and goals',
 				tags: ['fitness', 'health', 'tracking'],
-				image: 'https://example.com/images/fitness-tracker.jpg',
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
 				technologies: ['Java', 'Spring Boot', 'MySQL'],
 				userId: createdUsers[3].id,
 			},
@@ -169,9 +221,199 @@ const createSeeders = async () => {
 				title: 'Recipe Sharing Platform',
 				description: 'A platform to share and discover new recipes',
 				tags: ['cooking', 'recipes', 'food'],
-				image: 'https://example.com/images/recipe-sharing-platform.jpg',
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
 				technologies: ['PHP', 'Laravel', 'MongoDB'],
 				userId: createdUsers[4].id,
+			},
+			{
+				title: 'Music Streaming Service',
+				description: 'A service to stream and discover new music',
+				tags: ['music', 'streaming', 'entertainment'],
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
+				technologies: ['Java', 'Spring Boot', 'PostgreSQL'],
+				userId: createdUsers[5].id,
+			},
+			{
+				title: 'Weather Forecast App',
+				description: 'An app to get the latest weather forecasts',
+				tags: ['weather', 'forecast', 'environment'],
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
+				technologies: ['JavaScript', 'React', 'Node.js'],
+				userId: createdUsers[6].id,
+			},
+			{
+				title: 'Travel Booking Platform',
+				description: 'A platform to book travel tickets and accommodations',
+				tags: ['travel', 'booking', 'tourism'],
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
+				technologies: ['Python', 'Django', 'MySQL'],
+				userId: createdUsers[7].id,
+			},
+			{
+				title: 'Online Learning Platform',
+				description: 'A platform to offer and take online courses',
+				tags: ['education', 'learning', 'courses'],
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
+				technologies: ['Ruby', 'Rails', 'PostgreSQL'],
+				userId: createdUsers[8].id,
+			},
+			{
+				title: 'Job Search Website',
+				description: 'A website to search and apply for jobs',
+				tags: ['jobs', 'career', 'employment'],
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
+				technologies: ['PHP', 'Laravel', 'SQLite'],
+				userId: createdUsers[9].id,
+			},
+			{
+				title: 'Online Marketplace',
+				description: 'A platform to buy and sell products online',
+				tags: ['marketplace', 'shopping', 'sales'],
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
+				technologies: ['JavaScript', 'React', 'Node.js'],
+				userId: createdUsers[10].id,
+			},
+			{
+				title: 'Photo Sharing App',
+				description: 'An app to share and discover photos',
+				tags: ['photos', 'sharing', 'social'],
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
+				technologies: ['Python', 'Django', 'PostgreSQL'],
+				userId: createdUsers[11].id,
+			},
+			{
+				title: 'Task Management Tool',
+				description: 'A tool to manage and organize tasks',
+				tags: ['tasks', 'management', 'productivity'],
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
+				technologies: ['Ruby', 'Rails', 'MySQL'],
+				userId: createdUsers[12].id,
+			},
+			{
+				title: 'Real Estate Platform',
+				description: 'A platform to buy, sell, and rent properties',
+				tags: ['real estate', 'properties', 'sales'],
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
+				technologies: ['PHP', 'Laravel', 'PostgreSQL'],
+				userId: createdUsers[13].id,
+			},
+			{
+				title: 'Fitness App',
+				description: 'An app to track fitness activities and workouts',
+				tags: ['fitness', 'health', 'tracking'],
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
+				technologies: ['Java', 'Spring Boot', 'MongoDB'],
+				userId: createdUsers[14].id,
+			},
+			{
+				title: 'Event Management System',
+				description: 'A system to manage and organize events',
+				tags: ['events', 'management', 'organization'],
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
+				technologies: ['JavaScript', 'React', 'Node.js'],
+				userId: createdUsers[15].id,
+			},
+			{
+				title: 'Online Survey Tool',
+				description: 'A tool to create and conduct online surveys',
+				tags: ['surveys', 'feedback', 'research'],
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
+				technologies: ['Python', 'Django', 'MySQL'],
+				userId: createdUsers[16].id,
+			},
+			{
+				title: 'Budget Management App',
+				description: 'An app to manage and track budgets',
+				tags: ['budget', 'finance', 'tracking'],
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
+				technologies: ['Ruby', 'Rails', 'PostgreSQL'],
+				userId: createdUsers[17].id,
+			},
+			{
+				title: 'Blog Platform',
+				description: 'A platform to create and share blog posts',
+				tags: ['blog', 'writing', 'sharing'],
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
+				technologies: ['PHP', 'Laravel', 'SQLite'],
+				userId: createdUsers[18].id,
+			},
+			{
+				title: 'Video Streaming Service',
+				description: 'A service to stream and watch videos',
+				tags: ['video', 'streaming', 'entertainment'],
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
+				technologies: ['JavaScript', 'React', 'Node.js'],
+				userId: createdUsers[19].id,
+			},
+			{
+				title: 'Customer Support Chatbot',
+				description: 'A chatbot to provide customer support',
+				tags: ['chatbot', 'support', 'AI'],
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
+				technologies: ['Python', 'Django', 'PostgreSQL'],
+				userId: createdUsers[20].id,
+			},
+			{
+				title: 'Meditation App',
+				description: 'An app to guide and track meditation sessions',
+				tags: ['meditation', 'health', 'wellness'],
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
+				technologies: ['Ruby', 'Rails', 'MySQL'],
+				userId: createdUsers[1].id,
+			},
+			{
+				title: 'Online Quiz Platform',
+				description: 'A platform to create and take quizzes',
+				tags: ['quiz', 'education', 'learning'],
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
+				technologies: ['PHP', 'Laravel', 'PostgreSQL'],
+				userId: createdUsers[2].id,
+			},
+			{
+				title: 'Food Delivery App',
+				description: 'An app to order food from restaurants',
+				tags: ['food', 'delivery', 'ordering'],
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
+				technologies: ['Java', 'Spring Boot', 'MongoDB'],
+				userId: createdUsers[3].id,
+			},
+			{
+				title: 'Language Learning App',
+				description: 'An app to learn new languages',
+				tags: ['languages', 'education', 'learning'],
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
+				technologies: ['JavaScript', 'React', 'Node.js'],
+				userId: createdUsers[4].id,
+			},
+			{
+				title: 'Home Automation System',
+				description: 'A system to automate and control home devices',
+				tags: ['home', 'automation', 'IoT'],
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
+				technologies: ['Python', 'Django', 'MySQL'],
+				userId: createdUsers[5].id,
 			},
 		]
 
