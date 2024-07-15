@@ -2,7 +2,7 @@ const { Sequelize, Op } = require('sequelize')
 const { Project, Technology } = require('../db')
 
 const getAllProjectsController = async (queries) => {
-	const { search, technologies, sort, page, pageSize } = queries
+	const { search, technologies, sort, page = 1, pageSize = 10 } = queries
 	let where = {}
 	let order = []
 	let offset = (page - 1) * pageSize
@@ -10,7 +10,7 @@ const getAllProjectsController = async (queries) => {
 	try {
 		if (sort === 'a-z') order = [['title', 'ASC']]
 		if (sort === 'z-a') order = [['title', 'DESC']]
-    
+
 		if (search)
 			where[Op.or] = [
 				{ title: { [Op.iLike]: `%${search}%` } },
@@ -18,17 +18,17 @@ const getAllProjectsController = async (queries) => {
 					[Op.iLike]: `%${search}%`,
 				}),
 			]
-    
-		const projects = await Project.findAndCountAll({
-			limit: limit,
-			offset: offset,
+
+		const projects = (await Project.findAndCountAll({
+			limit,
+			offset,
 			order,
 			where,
 			include: {
 				model: Technology,
 				as: 'technologies',
 			},
-		})
+		})).rows.map((project) => project.dataValues)
 
 		if (technologies)
 			return projects.filter((project) =>
@@ -37,9 +37,7 @@ const getAllProjectsController = async (queries) => {
 					.some((technology) => project.technologies.some((t) => t.name === technology))
 			)
 
-		const projectPage = projects.rows.map((project) => project.dataValues)
-		
-		return projectPage
+		return projects
 	} catch (error) {
 		console.error('Error fetching projects:', error)
 		throw new Error('Error fetching projects')
