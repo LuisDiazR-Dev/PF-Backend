@@ -1,6 +1,6 @@
 const { Sequelize, Op } = require('sequelize')
 const { Project, Technology } = require('../db')
-const AppError = require('../utils')
+const AppError = require('../utils');
 
 const getAllProjectsController = async (queries) => {
 	const { search, technologies, sort, page = 1, pageSize = 10 } = queries
@@ -20,18 +20,16 @@ const getAllProjectsController = async (queries) => {
 				}),
 			]
 
-		const projects = (
-			await Project.findAndCountAll({
-				limit,
-				offset,
-				order,
-				where,
-				include: {
-					model: Technology,
-					as: 'technologies',
-				},
-			})
-		).rows.map((project) => project.dataValues)
+		const projects = (await Project.findAndCountAll({
+			limit,
+			offset,
+			order,
+			where,
+			include: {
+				model: Technology,
+				as: 'technologies',
+			},
+		})).rows.map((project) => project.dataValues)
 
 		if (technologies)
 			return projects.filter((project) =>
@@ -42,24 +40,27 @@ const getAllProjectsController = async (queries) => {
 
 		return projects
 	} catch (error) {
-		throw new AppError('Error fetching projects', 500)
+        throw new AppError('Error fetching projects', 500);
 	}
 }
 
+
 const getProjectByIdController = async (id) => {
-	try {
-		const project = await Project.findByPk(id, {
-			include: {
-				model: Technology,
-				as: 'technologies',
-			},
-		})
-		if (!project) throw new AppError(`Project with id ${id} not found`, 404)
-		return project
-	} catch (error) {
-		throw new AppError(`Error fetching project with id ${id}`, 500)
-	}
-}
+    try {
+        const project = await Project.findByPk(id, {
+            include: {
+                model: Technology,
+                as: 'technologies',
+            },
+        });
+        
+        if (!project) throw new AppError(`Project with id ${id} not found`, 404);
+
+        return project;
+    } catch (error) {
+        throw new AppError(`Error fetching project with id ${id}`, 500);
+    }
+};
 
 const createProjectController = async (projectData, user) => {
 	try {
@@ -68,16 +69,15 @@ const createProjectController = async (projectData, user) => {
 			where: { title, userId: user.id },
 			defaults: { description, tags, image },
 		})
-		if (!created) throw new AppError('This project already exists in the database!', 400)
-		if (!technologies || technologies.length < 1)
-			throw new AppError('Add at least one technology', 400)
+		if (!created) throw new AppError('This project already exists in the database!', 400);
+        if (!technologies || technologies.length < 1) throw new AppError('Add at least one technology', 400);
 
 		const techNames = technologies.map((tech) => (typeof tech === 'string' ? tech : tech.name))
 
 		const techInstances = await Technology.findAll({ where: { name: techNames } })
 
-		if (techInstances.length !== techNames.length)
-			throw new AppError('Some technologies were not found in the database', 400)
+        if (techInstances.length !== techNames.length) 
+            throw new AppError('Some technologies were not found in the database', 400);
 
 		await project.addTechnologies(techInstances)
 
@@ -86,14 +86,14 @@ const createProjectController = async (projectData, user) => {
 			technologies: techNames,
 		}
 	} catch (error) {
-		throw new AppError('Error creating a project', 500)
+        throw new AppError('Error creating a project', 500);
 	}
 }
 
 const updateProjectController = async (projectData, id) => {
 	try {
-		const project = await Project.findByPk(id)
-		if (!project) throw new AppError('Project not found', 404)
+        const project = await Project.findByPk(id);
+        if (!project) throw new AppError('Project not found', 404);
 
 		await Project.update(
 			{
@@ -123,19 +123,18 @@ const updateProjectController = async (projectData, id) => {
 
 		return updatedProject
 	} catch (error) {
-		throw new AppError('Error updating project', 500)
+        throw new AppError('Error updating project', 500);
 	}
 }
 
 const deleteProjectController = async (id) => {
 	try {
-		const project = await Project.findByPk(id)
-		if (!project) throw new AppError('Project not found', 404)
+		const project = await Project.findByPk(id);
+		if (!project) throw new AppError('Project not found', 404);
 		await Project.destroy({ where: { id: id } })
 		return 'Project correctly deleted'
 	} catch (error) {
-		throw new AppError('Error deleting project', 500)
-	}
+		throw new AppError('Error deleting project', 500);	}
 }
 
 module.exports = {
