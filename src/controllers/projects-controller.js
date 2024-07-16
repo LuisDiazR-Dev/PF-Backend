@@ -11,6 +11,8 @@ const getAllProjectsController = async (queries) => {
 	try {
 		if (sort === 'a-z') order = [['title', 'ASC']]
 		if (sort === 'z-a') order = [['title', 'DESC']]
+		if (sort === 'new') order = [['createdAt', 'DESC']]
+		if (sort === 'old') order = [['createdAt', 'ASC']]
 
 		if (search)
 			where[Op.or] = [
@@ -20,16 +22,18 @@ const getAllProjectsController = async (queries) => {
 				}),
 			]
 
-		const projects = (await Project.findAndCountAll({
-			limit,
-			offset,
-			order,
-			where,
-			include: {
-				model: Technology,
-				as: 'technologies',
-			},
-		})).rows.map((project) => project.dataValues)
+		const projects = (
+			await Project.findAndCountAll({
+				limit,
+				offset,
+				order,
+				where,
+				include: {
+					model: Technology,
+					as: 'technologies',
+				},
+			})
+		).rows.map((project) => project.dataValues)
 
 		if (technologies)
 			return projects.filter((project) =>
