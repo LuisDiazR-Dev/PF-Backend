@@ -1,4 +1,4 @@
-const { User } = require('../db')
+const { User, Project, Technology } = require('../db')
 const { Op } = require('sequelize')
 
 const getAllUsersController = async (search) => {
@@ -18,7 +18,17 @@ const getAllUsersController = async (search) => {
 
 const getUserByIdController = async (id) => {
 	try {
-		const user = await User.findByPk(id)
+		const user = await User.findByPk(id, {
+			include: [{
+				model: Project,
+				as: 'projects',
+				include: [{
+                    model: Technology,
+                    as: 'technologies'
+                }]
+			}],
+		})
+		if (!user) throw new AppError('User not found', 404)
 		return user
 	} catch (error) {
 		throw error
@@ -28,12 +38,15 @@ const getUserByIdController = async (id) => {
 const updateUserController = async (userData, id) => {
 	try {
 		const user = await User.findByPk(id)
-		await User.update({
-			userName: userData.userName ?? user.userName,
-            password: userData.password ?? user.password,
-            bio: userData.bio ?? user.bio,
-            image: userData.image ?? user.image,
-		}, { where: {id: id}})
+		await User.update(
+			{
+				userName: userData.userName ?? user.userName,
+				password: userData.password ?? user.password,
+				bio: userData.bio ?? user.bio,
+				image: userData.image ?? user.image,
+			},
+			{ where: { id: id } }
+		)
 		const updatedUser = await User.findByPk(id)
 		return updatedUser
 	} catch (error) {
