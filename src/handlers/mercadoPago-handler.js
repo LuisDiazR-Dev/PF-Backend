@@ -5,7 +5,9 @@ const mercadoPagoPreference = async (req, res) => {
 	try {
 		const response = await createPreference(title, quantity, unit_price)
 		res.status(200).json(response)
-	} catch (error) {}
+	} catch (error) {
+		res.status(500).send(error.message)
+	}
 }
 
 module.exports = mercadoPagoPreference

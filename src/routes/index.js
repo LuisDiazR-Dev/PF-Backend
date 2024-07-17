@@ -12,6 +12,6 @@ router.use('/', authRouter)
 router.use('/projects', projectsRouter)
 router.use('/technologies', techRouter)
 router.use('/users', verifyToken, usersRouter)
-router.use('/createPreference', mercadoPagoRouter)
+router.use('/payment', mercadoPagoRouter)
 
 module.exports = router
