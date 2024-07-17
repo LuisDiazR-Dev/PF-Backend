@@ -49,7 +49,8 @@ const updateUser = async (req, res) => {
 const deleteUserById = async (req, res) => {
 	try {
 		const { id } = req.params
-		const response = await deleteUserByIdController(id)
+		const user = req.user
+		const response = await deleteUserByIdController(id, user)
 		res.status(200).json(response)
 	} catch (error) {
 		res.status(500).send(error.message)
@@ -59,7 +60,8 @@ const deleteUserById = async (req, res) => {
 const deleteUserProfile = async (req, res) => {
 	try {
 		const { id } = req.user
-		const response = await deleteUserByIdController(id)
+		const user = req.user
+		const response = await deleteUserByIdController(id, user)
 		res.status(200).json(response)
 	} catch (error) {
 		res.status(500).send(error.message)

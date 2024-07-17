@@ -1,5 +1,6 @@
 const { User, Project, Technology } = require('../db')
 const { Op } = require('sequelize')
+const AppError = require('../utils/index')
 
 const getAllUsersController = async (search) => {
 	try {
@@ -19,14 +20,18 @@ const getAllUsersController = async (search) => {
 const getUserByIdController = async (id) => {
 	try {
 		const user = await User.findByPk(id, {
-			include: [{
-				model: Project,
-				as: 'projects',
-				include: [{
-                    model: Technology,
-                    as: 'technologies'
-                }]
-			}],
+			include: [
+				{
+					model: Project,
+					as: 'projects',
+					include: [
+						{
+							model: Technology,
+							as: 'technologies',
+						},
+					],
+				},
+			],
 		})
 		if (!user) throw new AppError('User not found', 404)
 		return user
@@ -54,12 +59,23 @@ const updateUserController = async (userData, id) => {
 	}
 }
 
-const deleteUserByIdController = async (id) => {
+const deleteUserByIdController = async (id, user) => {
 	try {
-		await User.destroy({ where: { id: id } })
-		return 'User correctly deleted'
+		console.log(`Attempting to delete user with id: ${user.id}`)
+		const userToDelete = await User.findByPk(id)
+		if (!userToDelete) throw new AppError('User not found', 404)
+
+		if (user.id !== id && user.role !== 'admin') {
+			throw new AppError('You are not authorized to delete this user', 403)
+		}
+
+		await User.destroy({ where: { id } })
+		console.log(`User whit id: ${id} deleted successfully`)
+
+		return { message: 'User deleted successfully' }
 	} catch (error) {
-		throw error
+		console.error(`Error deleting user: ${error.message}`)
+		throw new AppError(error.message || `Error deleting user`, error.statusCode || 500)
 	}
 }
 
