@@ -57,7 +57,7 @@ const getProjectByIdController = async (id) => {
 
 const createProjectController = async (projectData, user) => {
 	try {
-		const { title, description, tags, technologies, image } = projectData
+		const { title, description, tags, technologies, image } = projectData;
 		const [project, created] = await Project.findOrCreate({
 			where: { title, userId: user.id },
 			defaults: { description, tags, image },
