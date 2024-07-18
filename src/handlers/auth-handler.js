@@ -1,12 +1,8 @@
-<<<<<<< Updated upstream
 const {
 	auth0UserController,
 	loginUserController,
 	registerUserController,
 } = require('../controllers/auth-controller')
-=======
-const { auth0UserController, loginUserController, registerUserController } = require('../controllers/auth-controller')
->>>>>>> Stashed changes
 
 const auth0User = async (req, res) => {
 	try {
@@ -20,10 +16,6 @@ const auth0User = async (req, res) => {
 		return res.status(401).json({ message: 'Unauthorized: Invalid token' })
 	}
 }
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 
 const loginUser = async (req, res) => {
 	try {

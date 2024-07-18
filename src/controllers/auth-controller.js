@@ -1,18 +1,10 @@
 const { User } = require('../db')
 const jwt = require('jsonwebtoken')
-<<<<<<< Updated upstream
-const { verifyAuth0Token } = require('../middlewares/auth-middleware')
-
-const auth0UserController = async (token) => {
-	try {
-		const decoded = await verifyAuth0Token(token)
-=======
 const { decryptAuth0Token } = require('../middlewares/auth-middleware')
 
 const auth0UserController = async (token) => {
 	try {
 		const decoded = await decryptAuth0Token(token)
->>>>>>> Stashed changes
 		return {
 			user: {
 				id: decoded.sub,
