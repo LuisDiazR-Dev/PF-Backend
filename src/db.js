@@ -27,14 +27,14 @@ sequelize.models = Object.fromEntries(capsEntries)
 
 const { User, Project, Technology, Plan } = sequelize.models
 
-User.belongsTo(Plan, { foreignKey: 'planId', as: 'plan' })
-Plan.hasMany(User, { foreignKey: 'planId', as: 'users' })
-
 User.hasMany(Project, { foreignKey: 'userId', as: 'projects' })
 Project.belongsTo(User, { foreignKey: 'userId', as: 'user' })
 
 Project.belongsToMany(Technology, { through: 'project_tech', as: 'technologies' })
 Technology.belongsToMany(Project, { through: 'project_tech', as: 'projects' })
+
+User.belongsTo(Plan, { foreignKey: 'planName', as: 'plan' });
+Plan.hasMany(User, { foreignKey: 'planName', as: 'users' });
 
 module.exports = {
 	...sequelize.models,

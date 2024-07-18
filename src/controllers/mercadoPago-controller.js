@@ -15,17 +15,15 @@ const createPreference = async (title, quantity, unit_price, userId) => {
 				},
 			],
 			back_urls: {
-				success: 'http://localhost:5173/paymentSuccess',
-                failure: 'http://localhost:5173/paymentFailure',
-                pending: 'http://localhost:5173/paymentPending',
+				success: 'http://localhost:5175/paymentSuccess',
+				failure: 'http://localhost:5175/paymentFailure',
+				pending: 'http://localhost:5175/paymentPending',
 			},
 			external_reference: userId,
 		}
 		const preference = new mercadopago.Preference(client)
 		const result = await preference.create({ body })
-
-		console.log(result.id + ' log de result')
-		return result.id
+		return result.sandbox_init_point
 	} catch (error) {
 		console.error('Error creating preference:', error)
 		throw error

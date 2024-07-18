@@ -1,7 +1,12 @@
-const { User, Project, Technology } = require('./db')
+const { User, Project, Technology, Plan } = require('./db')
 
 const createSeeders = async () => {
 	try {
+		const [freePlan] = await Plan.findOrCreate({ where: { planName: 'Free', price: 0.0 } })
+		const [premiumPlan] = await Plan.findOrCreate({
+			where: { planName: 'Premium', price: 10.0 },
+		})
+
 		const users = [
 			{
 				userName: 'JaneSmith456',
@@ -9,7 +14,7 @@ const createSeeders = async () => {
 				password: 'securePassword!',
 				bio: 'UX/UI designer',
 				image: 'https://example.com/images/janesmith.jpg',
-				isPremium: false,
+				planName: freePlan.planName,
 			},
 			{
 				userName: 'JohnDoe789',
@@ -17,7 +22,7 @@ const createSeeders = async () => {
 				password: 'password123',
 				bio: 'Fullstack developer',
 				image: 'https://example.com/images/johndoe.jpg',
-				isPremium: true,
+				planName: freePlan.planName,
 			},
 			{
 				userName: 'AliceJohnson101',
@@ -25,7 +30,7 @@ const createSeeders = async () => {
 				password: 'alicepassword',
 				bio: 'Data scientist',
 				image: 'https://example.com/images/alicejohnson.jpg',
-				isPremium: true,
+				planName: freePlan.planName,
 			},
 			{
 				userName: 'BobBrown202',
@@ -33,7 +38,7 @@ const createSeeders = async () => {
 				password: 'bobbypassword',
 				bio: 'Project manager',
 				image: 'https://example.com/images/bobbrown.jpg',
-				isPremium: false,
+				planName: freePlan.planName,
 			},
 			{
 				userName: 'CharlieDavis303',
@@ -41,7 +46,7 @@ const createSeeders = async () => {
 				password: 'charliedpassword',
 				bio: 'Backend developer',
 				image: 'https://example.com/images/charliedavis.jpg',
-				isPremium: true,
+				planName: freePlan.planName,
 			},
 			{
 				userName: 'DanaEvans404',
@@ -49,7 +54,7 @@ const createSeeders = async () => {
 				password: 'danapassword',
 				bio: 'Graphic designer',
 				image: 'https://example.com/images/danaevans.jpg',
-				isPremium: false,
+				planName: freePlan.planName,
 			},
 			{
 				userName: 'EvanGarcia505',
@@ -57,7 +62,7 @@ const createSeeders = async () => {
 				password: 'evanpassword',
 				bio: 'Marketing specialist',
 				image: 'https://example.com/images/evangarcia.jpg',
-				isPremium: false,
+				planName: freePlan.planName,
 			},
 			{
 				userName: 'FionaHarris606',
@@ -65,7 +70,7 @@ const createSeeders = async () => {
 				password: 'fionapassword',
 				bio: 'Sales manager',
 				image: 'https://example.com/images/fionaharris.jpg',
-				isPremium: true,
+				planName: freePlan.planName,
 			},
 			{
 				userName: 'GeorgeIbrahim707',
@@ -73,7 +78,7 @@ const createSeeders = async () => {
 				password: 'georgepassword',
 				bio: 'Frontend developer',
 				image: 'https://example.com/images/georgeibrahim.jpg',
-				isPremium: false,
+				planName: freePlan.planName,
 			},
 			{
 				userName: 'HannahJackson808',
@@ -81,7 +86,7 @@ const createSeeders = async () => {
 				password: 'hannahpassword',
 				bio: 'SEO specialist',
 				image: 'https://example.com/images/hannahjackson.jpg',
-				isPremium: true,
+				planName: freePlan.planName,
 			},
 			{
 				userName: 'IanKing909',
@@ -89,7 +94,7 @@ const createSeeders = async () => {
 				password: 'ianpassword',
 				bio: 'Content writer',
 				image: 'https://example.com/images/ianking.jpg',
-				isPremium: true,
+				planName: freePlan.planName,
 			},
 			{
 				userName: 'JulieLopez010',
@@ -97,7 +102,7 @@ const createSeeders = async () => {
 				password: 'juliepassword',
 				bio: 'HR manager',
 				image: 'https://example.com/images/julielopez.jpg',
-				isPremium: false,
+				planName: freePlan.planName,
 			},
 			{
 				userName: 'KyleMartin111',
@@ -105,7 +110,7 @@ const createSeeders = async () => {
 				password: 'kylepassword',
 				bio: 'Business analyst',
 				image: 'https://example.com/images/kylemartin.jpg',
-				isPremium: false,
+				planName: freePlan.planName,
 			},
 			{
 				userName: 'LauraNelson212',
@@ -113,7 +118,7 @@ const createSeeders = async () => {
 				password: 'laurapassword',
 				bio: 'Accountant',
 				image: 'https://example.com/images/lauranelson.jpg',
-				isPremium: true,
+				planName: freePlan.planName,
 			},
 			{
 				userName: 'MikeOlsen313',
@@ -121,7 +126,7 @@ const createSeeders = async () => {
 				password: 'mikepassword',
 				bio: 'Software engineer',
 				image: 'https://example.com/images/mikeolsen.jpg',
-				isPremium: true,
+				planName: freePlan.planName,
 			},
 			{
 				userName: 'IvanBell',
@@ -129,8 +134,7 @@ const createSeeders = async () => {
 				password: 'ivan123',
 				bio: 'Software engineer',
 				image: 'https://example.com/images/ivanbell.jpg',
-				isPremium: true,
-				role: 'admin'
+				role: 'admin',
 			},
 			{
 				userName: 'Luis Diaz',
@@ -138,8 +142,7 @@ const createSeeders = async () => {
 				password: 'luis123',
 				bio: 'Accountant',
 				image: 'https://example.com/images/luisdiaz.jpg',
-				isPremium: false,
-				role: 'admin'
+				role: 'admin',
 			},
 			{
 				userName: 'Gaston Ibarra',
@@ -147,8 +150,7 @@ const createSeeders = async () => {
 				password: 'gaston123',
 				bio: 'Business analyst',
 				image: 'https://example.com/images/gastonibarra.jpg',
-				isPremium: false,
-				role: 'admin'
+				role: 'admin',
 			},
 			{
 				userName: 'Miguel Linares',
@@ -156,8 +158,7 @@ const createSeeders = async () => {
 				password: 'miguel123',
 				bio: 'HR manager',
 				image: 'https://example.com/images/miguellinares.jpg',
-				isPremium: false,
-				role: 'admin'
+				role: 'admin',
 			},
 			{
 				userName: 'Maria Sol Iha',
@@ -165,8 +166,7 @@ const createSeeders = async () => {
 				password: 'marial123',
 				bio: 'Content writer',
 				image: 'https://example.com/images/mariasoliha.jpg',
-				isPremium: false,
-				role: 'admin'
+				role: 'admin',
 			},
 			{
 				userName: 'Maximiliano Altamirano',
@@ -174,8 +174,7 @@ const createSeeders = async () => {
 				password: 'maximilianol123',
 				bio: 'SEO specialist',
 				image: 'https://example.com/images/maxialtamirano.jpg',
-				isPremium: false,
-				role: 'admin'
+				role: 'admin',
 			},
 			{
 				userName: 'Aldana Delgado',
@@ -183,14 +182,17 @@ const createSeeders = async () => {
 				password: 'aldana123',
 				bio: 'UI/UX designer',
 				image: 'https://example.com/images/aldanadelgado.jpg',
-				isPremium: false,
-				role: 'admin'
-			}
+				role: 'admin',
+			},
 		]
+
+		console.log(`Free and premium plans alredy created!`)
 
 		const createdUsers = await Promise.all(
 			users.map(async (user) => {
-				const [createdUser] = await User.findOrCreate({ where: user })
+				const [createdUser] = await User.findOrCreate({
+					where: user,
+				})
 				return createdUser
 			})
 		)
