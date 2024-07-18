@@ -73,6 +73,6 @@ module.exports = (sequelize) => {
 				defaultValue: false,
 			},
 		},
-		{ timestamps: true }
+		{ timestamps: true, paranoid: true }
 	)
 }
