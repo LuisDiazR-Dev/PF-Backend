@@ -1,6 +1,6 @@
 const { Sequelize, Op } = require('sequelize')
 const { Project, Technology } = require('../db')
-const AppError = require('../utils')
+const AppError = require('../utils/index')
 
 const getAllProjectsController = async (queries) => {
 	const { search, technologies, sort, page = 1, pageSize = 10 } = queries
@@ -131,14 +131,22 @@ const updateProjectController = async (projectData, id) => {
 	}
 }
 
-const deleteProjectController = async (id) => {
+const deleteProjectController = async (id, user) => {
 	try {
+		console.log(`Attempting to delete project with id: ${id} by user: ${user.id}`)
 		const project = await Project.findByPk(id)
 		if (!project) throw new AppError('Project not found', 404)
-		await Project.destroy({ where: { id: id } })
-		return 'Project correctly deleted'
+
+		if (project.userId !== user.id && user.role !== 'admin') {
+			throw new AppError('You are not authorized to delete this project', 403)
+		}
+		await Project.destroy({ where: { id } })
+		console.log(`Project with id: ${id} deleted successfully`)
+
+		return { message: 'Project deleted successfully' }
 	} catch (error) {
-		throw new AppError('Error deleting project', 500)
+		console.log(`Error deleting project: ${error.message}`)
+		throw new AppError(error.message || 'Error deleting project', error.status || 500)
 	}
 }
 
