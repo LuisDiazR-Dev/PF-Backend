@@ -1,4 +1,5 @@
 const { DataTypes } = require('sequelize')
+const { Plan } = require('./Plan')
 
 module.exports = (sequelize) => {
 	sequelize.define(
@@ -54,25 +55,24 @@ module.exports = (sequelize) => {
 				type: DataTypes.STRING,
 				allowNull: false,
 				defaultValue: 'avatar.jpg',
-				validate: {
-					isUrl: true,
-					len: {
-						args: [1, 50],
-						msg: 'Image URL should be between 1 and 50 characters',
-					},
-				},
+				isUrl: true,
 			},
 			role: {
-				type: DataTypes.ENUM("user", "admin"),
+				type: DataTypes.ENUM('user', 'admin'),
 				allowNull: false,
-				defaultValue: "user"
+				defaultValue: 'user',
 			},
-			isPremium: {
-				type: DataTypes.BOOLEAN,
-				allowNull: false,
-				defaultValue: false,
+			planName: {
+				type: DataTypes.STRING,
+				references: {
+					model: Plan,
+					key: 'planName',
+				},
 			},
 		},
-		{ timestamps: true }
+		{
+			tableName: 'users',
+		},
+		{ timestamps: true, paranoid: true }
 	)
 }

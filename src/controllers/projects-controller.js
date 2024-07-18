@@ -1,12 +1,18 @@
 const { Sequelize, Op } = require('sequelize')
 const { Project, Technology } = require('../db')
+const AppError = require('../utils/index')
 
-const getAllProjectsController = async (search, technologies, sort) => {
-	let where = []
+const getAllProjectsController = async (queries) => {
+	const { search, technologies, sort, page = 1, pageSize = 10 } = queries
+	let where = {}
 	let order = []
+	let offset = (page - 1) * pageSize
+	let limit = parseInt(pageSize, 10)
 	try {
-		if (sort === 'az') order = [['title', 'ASC']]
-		if (sort === 'za') order = [['title', 'DESC']]
+		if (sort === 'a-z') order = [['title', 'ASC']]
+		if (sort === 'z-a') order = [['title', 'DESC']]
+		if (sort === 'new') order = [['createdAt', 'DESC']]
+		if (sort === 'old') order = [['createdAt', 'ASC']]
 
 		if (search)
 			where[Op.or] = [
@@ -16,14 +22,18 @@ const getAllProjectsController = async (search, technologies, sort) => {
 				}),
 			]
 
-		const projects = await Project.findAll({
-			order,
-			where,
-			include: {
-				model: Technology,
-				as: 'technologies',
-			},
-		})
+		const projects = (
+			await Project.findAndCountAll({
+				limit,
+				offset,
+				order,
+				where,
+				include: {
+					model: Technology,
+					as: 'technologies',
+				},
+			})
+		).rows.map((project) => project.dataValues)
 
 		if (technologies)
 			return projects.filter((project) =>
@@ -31,38 +41,47 @@ const getAllProjectsController = async (search, technologies, sort) => {
 					.split(',')
 					.some((technology) => project.technologies.some((t) => t.name === technology))
 			)
+
 		return projects
 	} catch (error) {
-		console.error('Error fetching projects:', error)
-		throw new Error('Error fetching projects')
+		throw new AppError('Error fetching projects', 500)
 	}
 }
 
 const getProjectByIdController = async (id) => {
 	try {
-		const project = await Project.findByPk(id)
+		const project = await Project.findByPk(id, {
+			include: {
+				model: Technology,
+				as: 'technologies',
+			},
+		})
+
+		if (!project) throw new AppError(`Project with id ${id} not found`, 404)
+
 		return project
 	} catch (error) {
-		throw error
+		throw new AppError(`Error fetching project with id ${id}`, 500)
 	}
 }
 
 const createProjectController = async (projectData, user) => {
 	try {
-		const { title, description, tags, technologies, image } = projectData
+		const { title, description, tags, technologies, image } = projectData;
 		const [project, created] = await Project.findOrCreate({
 			where: { title, userId: user.id },
 			defaults: { description, tags, image },
 		})
-		if (!created) throw new Error('This project already exists in DB!')
-		if (!technologies || technologies.length < 1) throw new Error('Add at least 1 technology')
+		if (!created) throw new AppError('This project already exists in the database!', 400)
+		if (!technologies || technologies.length < 1)
+			throw new AppError('Add at least one technology', 400)
 
 		const techNames = technologies.map((tech) => (typeof tech === 'string' ? tech : tech.name))
 
 		const techInstances = await Technology.findAll({ where: { name: techNames } })
 
 		if (techInstances.length !== techNames.length)
-			throw new Error('Some technologies were not found in the DB')
+			throw new AppError('Some technologies were not found in the database', 400)
 
 		await project.addTechnologies(techInstances)
 
@@ -71,14 +90,14 @@ const createProjectController = async (projectData, user) => {
 			technologies: techNames,
 		}
 	} catch (error) {
-		throw new Error('Error creating a project', error)
+		throw new AppError('Error creating a project', 500)
 	}
 }
 
 const updateProjectController = async (projectData, id) => {
 	try {
 		const project = await Project.findByPk(id)
-		if (!project) throw new Error('Project not found')
+		if (!project) throw new AppError('Project not found', 404)
 
 		await Project.update(
 			{
@@ -108,16 +127,22 @@ const updateProjectController = async (projectData, id) => {
 
 		return updatedProject
 	} catch (error) {
-		throw error
+		throw new AppError('Error updating project', 500)
 	}
 }
 
-const deleteProjectController = async (id) => {
+const deleteProjectController = async (id, user) => {
 	try {
-		await Project.destroy({ where: { id: id } })
-		return 'Project correctly deleted'
+		const project = await Project.findByPk(id)
+		if (!project) throw new AppError('Project not found', 404)
+
+		if (project.userId !== user.id && user.role !== 'admin') {
+			throw new AppError('You are not authorized to delete this project', 403)
+		}
+		await Project.destroy({ where: { id } })
+		return { message: 'Project deleted successfully' }
 	} catch (error) {
-		throw error
+		throw new AppError(error.message || 'Error deleting project', error.status || 500)
 	}
 }
 

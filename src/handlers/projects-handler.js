@@ -7,9 +7,9 @@ const {
 } = require('../controllers/projects-controller')
 
 const getAllProjects = async (req, res) => {
-	const { search, technologies, sort } = req.query
+	const queries = req.query
 	try {
-		const response = await getAllProjectsController(search, technologies, sort)
+		const response = await getAllProjectsController(queries)
 		res.status(200).json(response)
 	} catch (error) {
 		res.status(500).send(error.message)
@@ -51,7 +51,8 @@ const updateProject = async (req, res) => {
 const deleteProject = async (req, res) => {
 	try {
 		const { id } = req.params
-		const response = await deleteProjectController(id)
+		const user = req.user
+		const response = await deleteProjectController(id, user)
 		res.status(200).json(response)
 	} catch (error) {
 		res.status(500).send(error.message)
