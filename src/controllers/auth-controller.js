@@ -42,7 +42,6 @@ const registerUserController = async (userName, email, password) => {
 		if (!created) throw new Error('User already exists')
 		return user
 	} catch (error) {
-		console.log(error)
 		throw new Error('Failed to create a user')
 	}
 }
