@@ -6,10 +6,8 @@ const {
 
 const auth0User = async (req, res) => {
 	try {
-		console.log('Headers:', req.headers);
-		const token = req.headers.authorization?.split(' ')[1]
-		if (!token) return res.status(401).json({ message: 'No token provided' })
-		const response = await auth0UserController(token)
+		const userData = req.body;
+		const response = await auth0UserController(userData)
 		res.status(200).json(response)
 	} catch (error) {
 		console.error('Token verification error:', error)

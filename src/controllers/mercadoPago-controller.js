@@ -3,7 +3,7 @@ const mercadopago = require('mercadopago')
 const client = new mercadopago.MercadoPagoConfig({
 	accessToken: 'TEST-4489293986958947-071617-2dcf20f3837c99bb9f59966d1526d5f2-145321681',
 })
-const createPreference = async (title, quantity, unit_price) => {
+const createPreference = async (title, quantity, unit_price, userId) => {
 	try {
 		const body = {
 			items: [
@@ -19,6 +19,7 @@ const createPreference = async (title, quantity, unit_price) => {
 				failure: 'https://www.youtube.com/watch?v=-VD-l5BQsuE',
 				pending: 'https://www.youtube.com/watch?v=-VD-l5BQsuE',
 			},
+			external_reference: userId,
 		}
 		const preference = new mercadopago.Preference(client)
 		const result = await preference.create({ body })

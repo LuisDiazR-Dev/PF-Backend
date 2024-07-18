@@ -130,6 +130,7 @@ const createSeeders = async () => {
 				bio: 'Software engineer',
 				image: 'https://example.com/images/ivanbell.jpg',
 				isPremium: true,
+				role: 'admin'
 			},
 			{
 				userName: 'Luis Diaz',
@@ -138,6 +139,7 @@ const createSeeders = async () => {
 				bio: 'Accountant',
 				image: 'https://example.com/images/luisdiaz.jpg',
 				isPremium: false,
+				role: 'admin'
 			},
 			{
 				userName: 'Gaston Ibarra',
@@ -146,6 +148,7 @@ const createSeeders = async () => {
 				bio: 'Business analyst',
 				image: 'https://example.com/images/gastonibarra.jpg',
 				isPremium: false,
+				role: 'admin'
 			},
 			{
 				userName: 'Miguel Linares',
@@ -154,6 +157,7 @@ const createSeeders = async () => {
 				bio: 'HR manager',
 				image: 'https://example.com/images/miguellinares.jpg',
 				isPremium: false,
+				role: 'admin'
 			},
 			{
 				userName: 'Maria Sol Iha',
@@ -162,6 +166,7 @@ const createSeeders = async () => {
 				bio: 'Content writer',
 				image: 'https://example.com/images/mariasoliha.jpg',
 				isPremium: false,
+				role: 'admin'
 			},
 			{
 				userName: 'Maximiliano Altamirano',
@@ -170,7 +175,17 @@ const createSeeders = async () => {
 				bio: 'SEO specialist',
 				image: 'https://example.com/images/maxialtamirano.jpg',
 				isPremium: false,
+				role: 'admin'
 			},
+			{
+				userName: 'Aldana Delgado',
+				email: 'aldana@delgado.com',
+				password: 'aldana123',
+				bio: 'UI/UX designer',
+				image: 'https://example.com/images/aldanadelgado.jpg',
+				isPremium: false,
+				role: 'admin'
+			}
 		]
 
 		const createdUsers = await Promise.all(
