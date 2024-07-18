@@ -90,58 +90,6 @@ Ruta para crear proyectos.
 
 Se debe enviar el modelo de usuario con los siguientes datos:
 
-<<<<<<< Updated upstream
-=======
-- title
-- description (opcional)
-- technologies (opcional)
-- tags (opcional)
-- image (url y opcional)
-
-#### Ejemplo de Uso
-
-```http
-POST /projects ---> Crea un nuevo proyecto
-
-Body (JSON):
-{
-    "title": "Proyecto 1",
-    "description": "Este es mi primer proyecto",
-    "technologies": ["React", "C++", "Django"],
-    "tags": ["e-commerce", "newTechnologies", "IA"],
-    "image": "image.jpg"
-}
-```
-
-## Technologies
-
-### `GET "/"`
-
-Ruta para obtener todas las tecnologías.
-
-#### Query Parameters (opcional)
-
-- `name`: busca todas las tecnologías por name almacenadas en la base de datos.
-
-#### Ejemplo de Uso
-
-```http
-GET /technologies ---> Obtiene todas las tecnologías
-
-GET /technologies?name=java ---> Obtiene las tecnologías por búsqueda de name de technologies
-```
-
-## AUTHENTICATE
-
-### `POST "/signup"`
-
-Ruta para enviar datos de registro y crear una nueva cuenta de usuario.
-
-#### Body
-
-Se debe enviar el modelo de usuario con los siguientes datos:
-
->>>>>>> Stashed changes
 - userName
 - email
 - password
@@ -160,16 +108,3 @@ Body (JSON):
     "password": "securePassword!"
 }
 ```
-<<<<<<< Updated upstream
-=======
-
-### `POST "/login"`
-
-Ruta para enviar credenciales y obtener un token de autenticación.
-
-#### Ejemplo de uso
-
-```http
-POST /login ---> Ingresa a la cuenta por medio del email y contraseña y así obtener un código Token que no caduca (por el momento).
-```
->>>>>>> Stashed changes
