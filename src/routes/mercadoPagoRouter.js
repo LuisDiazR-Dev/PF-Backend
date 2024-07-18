@@ -1,8 +1,9 @@
 const { Router } = require('express')
 const mercadoPagoRouter = Router()
 
-const mercadoPagoPreference = require('../handlers/mercadoPago-handler')
+const { mercadoPagoPreference, mercadoPagoNotification} = require('../handlers/mercadoPago-handler')
 
-mercadoPagoRouter.post('/', mercadoPagoPreference)
+mercadoPagoRouter.post('/preference', mercadoPagoPreference)
+mercadoPagoRouter.post('/notification', mercadoPagoNotification)
 
 module.exports = mercadoPagoRouter
