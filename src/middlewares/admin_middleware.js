@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 
-const verifyAdmin = (req, res, next) => {
+const admin_middleware = (req, res, next) => {
     try {
         const authHeader = req.headers.authorization;
         if (!authHeader) return res.status(401).send('Token missing');
@@ -19,5 +19,5 @@ const verifyAdmin = (req, res, next) => {
 }
 
 module.exports = {
-    verifyAdmin
+    admin_middleware
 }

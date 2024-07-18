@@ -15,9 +15,9 @@ const createPreference = async (title, quantity, unit_price, userId) => {
 				},
 			],
 			back_urls: {
-				success: 'https://www.youtube.com/watch?v=-VD-l5BQsuE',
-				failure: 'https://www.youtube.com/watch?v=-VD-l5BQsuE',
-				pending: 'https://www.youtube.com/watch?v=-VD-l5BQsuE',
+				success: 'http://localhost:5173/paymentSuccess',
+                failure: 'http://localhost:5173/paymentFailure',
+                pending: 'http://localhost:5173/paymentPending',
 			},
 			external_reference: userId,
 		}
