@@ -4,6 +4,7 @@ const { getUserByIdController } = require('../controllers/users-controller')
 const { User, Plan } = require('../db')
 
 const mercadoPagoPreference = async (req, res) => {
+
 	const { title, quantity, unit_price, id } = req.body
 	
 	try {
