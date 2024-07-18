@@ -9,7 +9,6 @@ const {
 } = require('../handlers/projects-handler')
 
 const { verifyToken } = require('../middlewares/auth-middleware')
-const { verifyAdmin } = require('../middlewares/verifyAdmin')
 
 projectRouter.get('/', getAllProjects)
 projectRouter.get('/:id', getProjectById)
