@@ -35,7 +35,7 @@ const mercadoPagoNotification = async (req, res) => {
 
 			try {
 				await transporter.sendMail({
-					from: '"ForDevs 👾  " <max.smp17@gmail.com>',
+					from: '"ForDevs 👾  " <ibarra.gl.2017@gmail.com>',
 					to: 'ibarra.gl.2017@gmail.com, max.smp17@gmail.com, mikaiha888@gmail.com',
 					subject: 'Thank You for Subscribing to ForDevs Premium! 👾 ',
 					text: 'Thank you for subscribing to ForDevs Premium. You now have access to all our premium features.',
