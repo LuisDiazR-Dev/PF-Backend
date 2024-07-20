@@ -23,7 +23,7 @@ const createPreference = async (title, quantity, unit_price, userId) => {
 		}
 		const preference = new mercadopago.Preference(client)
 		const result = await preference.create({ body })
-		return result.sandbox_init_point
+		return result.id
 	} catch (error) {
 		console.error('Error creating preference:', error)
 		throw error
