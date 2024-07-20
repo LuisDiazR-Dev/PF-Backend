@@ -36,6 +36,6 @@ module.exports = (sequelize) => {
 				defaultValue: 'image_notfound.jpg',
 			},
 		},
-		{ timestamps: true }
+		{ timestamps: true, paranoid: true }
 	)
 }

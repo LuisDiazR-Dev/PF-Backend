@@ -1,5 +1,5 @@
-const { Sequelize, Op } = require('sequelize')
 const { Project, Technology } = require('../db')
+const { Sequelize, Op } = require('sequelize')
 const AppError = require('../utils/index')
 
 const getAllProjectsController = async (queries) => {
@@ -65,9 +65,44 @@ const getProjectByIdController = async (id) => {
 	}
 }
 
+const getDeletedProjectsController = async (id) => {
+	try {
+		const projects = await Project.findAll({
+			where: { userId: id, deletedAt: { [Op.not]: null } },
+			paranoid: false,
+			include: {
+				model: Technology,
+				as: 'technologies',
+			},
+		})
+
+		return projects
+	} catch (error) {
+		throw new AppError('Error fetching deleted projects', 500)
+	}
+}
+
+const getDeletedProjectByIdController = async (id) => {
+	try {
+		const project = await Project.findOne({
+			where: { id },
+			paranoid: false,
+			include: {
+				model: Technology,
+				as: 'technologies',
+			},
+		})
+		if (!project) throw new AppError('No project found with the given id', 404)
+
+		return project
+	} catch (error) {
+		throw new AppError('Error fetching deleted project', 500)
+	}
+}
+
 const createProjectController = async (projectData, user) => {
 	try {
-		const { title, description, tags, technologies, image } = projectData;
+		const { title, description, tags, technologies, image } = projectData
 		const [project, created] = await Project.findOrCreate({
 			where: { title, userId: user.id },
 			defaults: { description, tags, image },
@@ -91,6 +126,23 @@ const createProjectController = async (projectData, user) => {
 		}
 	} catch (error) {
 		throw new AppError('Error creating a project', 500)
+	}
+}
+
+const restoreProjectController = async (id) => {
+	try {
+		const project = await Project.findOne({
+			where: { id: id },
+			paranoid: false,
+		})
+
+		if (!project) throw new AppError('No deleted project found with the given id', 404)
+
+		await project.restore()
+
+		return { message: 'Project restored successfully' }
+	} catch (error) {
+		throw new AppError('Error restoring project', 500)
 	}
 }
 
@@ -152,4 +204,7 @@ module.exports = {
 	createProjectController,
 	updateProjectController,
 	deleteProjectController,
+	restoreProjectController,
+	getDeletedProjectsController,
+	getDeletedProjectByIdController,
 }
