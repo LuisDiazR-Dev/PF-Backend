@@ -4,7 +4,7 @@ const youArePremium = async (payment) => {
 	const email = payment.data.emailUser
 	try {
 		await transporter.sendMail({
-			from: '"ForDevs 👾  " <max.smp17@gmail.com>',
+			from: "ForDevs 👾",
 			to: email,
 			subject: 'Thank You for Subscribing to ForDevs Premium! 👾 ',
 			text: 'Thank you for subscribing to ForDevs Premium. You now have access to all our premium features.',
