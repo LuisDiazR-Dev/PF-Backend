@@ -22,7 +22,6 @@ const mercadoPagoPreference = async (req, res) => {
 const mercadoPagoNotification = async (req, res) => {
 	try {
 		const payment = req.body
-		console.log(payment, ' payment', payment.data)
 
 		if (payment.type === 'payment' && payment.data.status === 'approved') {
 			const userId = payment.data.external_reference
