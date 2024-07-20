@@ -13,7 +13,8 @@ const createSeeders = async () => {
 				email: 'janesmith@example.com',
 				password: 'securePassword!',
 				bio: 'UX/UI designer',
-				image: 'https://example.com/images/janesmith.jpg',
+				image:
+					'https://img.freepik.com/psd-gratis/ilustracion-3d-avatar-o-perfil-humano_23-2150671126.jpg?ga=GA1.1.809440281.1720916925',
 				planName: freePlan.planName,
 			},
 			{
@@ -21,7 +22,8 @@ const createSeeders = async () => {
 				email: 'johndoe@example.com',
 				password: 'password123',
 				bio: 'Fullstack developer',
-				image: 'https://example.com/images/johndoe.jpg',
+				image:
+					'https://img.freepik.com/fotos-premium/personaje-dibujos-animados-fondo-azul-generado-ia_1029473-129016.jpg?ga=GA1.1.809440281.1720916925',
 				planName: freePlan.planName,
 			},
 			{
@@ -29,7 +31,8 @@ const createSeeders = async () => {
 				email: 'alicejohnson@example.com',
 				password: 'alicepassword',
 				bio: 'Data scientist',
-				image: 'https://example.com/images/alicejohnson.jpg',
+				image:
+					'https://img.freepik.com/psd-gratis/ilustracion-3d-avatar-o-perfil-humano_23-2150671138.jpg?ga=GA1.1.809440281.1720916925',
 				planName: freePlan.planName,
 			},
 			{
@@ -37,7 +40,8 @@ const createSeeders = async () => {
 				email: 'bobbrown@example.com',
 				password: 'bobbypassword',
 				bio: 'Project manager',
-				image: 'https://example.com/images/bobbrown.jpg',
+				image:
+					'https://img.freepik.com/psd-gratis/ilustracion-3d-avatar-o-perfil-humano_23-2150671116.jpg?ga=GA1.1.809440281.1720916925',
 				planName: freePlan.planName,
 			},
 			{
@@ -45,7 +49,8 @@ const createSeeders = async () => {
 				email: 'charliedavis@example.com',
 				password: 'charliedpassword',
 				bio: 'Backend developer',
-				image: 'https://example.com/images/charliedavis.jpg',
+				image:
+					'https://img.freepik.com/psd-gratis/ilustracion-3d-avatar-linea_23-2151303048.jpg?ga=GA1.1.809440281.1720916925',
 				planName: freePlan.planName,
 			},
 			{
@@ -53,7 +58,8 @@ const createSeeders = async () => {
 				email: 'danaevans@example.com',
 				password: 'danapassword',
 				bio: 'Graphic designer',
-				image: 'https://example.com/images/danaevans.jpg',
+				image:
+					'https://img.freepik.com/psd-gratis/ilustracion-3d-avatar-linea_23-2151303063.jpg?ga=GA1.1.809440281.1720916925',
 				planName: freePlan.planName,
 			},
 			{
@@ -61,7 +67,8 @@ const createSeeders = async () => {
 				email: 'evangarcia@example.com',
 				password: 'evanpassword',
 				bio: 'Marketing specialist',
-				image: 'https://example.com/images/evangarcia.jpg',
+				image:
+					'https://img.freepik.com/psd-gratis/ilustracion-3d-avatar-o-perfil-humano_23-2150671122.jpg?ga=GA1.1.809440281.1720916925',
 				planName: freePlan.planName,
 			},
 			{
@@ -69,7 +76,8 @@ const createSeeders = async () => {
 				email: 'fionaharris@example.com',
 				password: 'fionapassword',
 				bio: 'Sales manager',
-				image: 'https://example.com/images/fionaharris.jpg',
+				image:
+					'https://img.freepik.com/psd-gratis/ilustracion-3d-avatar-linea_23-2151303097.jpg?ga=GA1.1.809440281.1720916925',
 				planName: freePlan.planName,
 			},
 			{
@@ -77,7 +85,8 @@ const createSeeders = async () => {
 				email: 'georgeibrahim@example.com',
 				password: 'georgepassword',
 				bio: 'Frontend developer',
-				image: 'https://example.com/images/georgeibrahim.jpg',
+				image:
+					'https://img.freepik.com/psd-gratis/render-3d-personaje-avatar_23-2150611765.jpg?ga=GA1.1.809440281.1720916925',
 				planName: freePlan.planName,
 			},
 			{
@@ -85,7 +94,8 @@ const createSeeders = async () => {
 				email: 'hannahjackson@example.com',
 				password: 'hannahpassword',
 				bio: 'SEO specialist',
-				image: 'https://example.com/images/hannahjackson.jpg',
+				image:
+					'https://img.freepik.com/psd-gratis/3d-ilustracion-persona-gafas_23-2149436185.jpg?ga=GA1.1.809440281.1720916925',
 				planName: freePlan.planName,
 			},
 			{
@@ -93,7 +103,8 @@ const createSeeders = async () => {
 				email: 'ianking@example.com',
 				password: 'ianpassword',
 				bio: 'Content writer',
-				image: 'https://example.com/images/ianking.jpg',
+				image:
+					'https://img.freepik.com/psd-gratis/ilustracion-3d-avatar-o-perfil-humano_23-2150671126.jpg?ga=GA1.1.809440281.1720916925',
 				planName: freePlan.planName,
 			},
 			{
@@ -101,7 +112,8 @@ const createSeeders = async () => {
 				email: 'julielopez@example.com',
 				password: 'juliepassword',
 				bio: 'HR manager',
-				image: 'https://example.com/images/julielopez.jpg',
+				image:
+					'https://img.freepik.com/psd-gratis/ilustracion-3d-avatar-o-perfil-humano_23-2150671138.jpg?ga=GA1.1.809440281.1720916925',
 				planName: freePlan.planName,
 			},
 			{
@@ -109,7 +121,8 @@ const createSeeders = async () => {
 				email: 'kylemartin@example.com',
 				password: 'kylepassword',
 				bio: 'Business analyst',
-				image: 'https://example.com/images/kylemartin.jpg',
+				image:
+					'https://img.freepik.com/fotos-premium/personaje-dibujos-animados-fondo-azul-generado-ia_1029473-129016.jpg?ga=GA1.1.809440281.1720916925',
 				planName: freePlan.planName,
 			},
 			{
@@ -117,7 +130,8 @@ const createSeeders = async () => {
 				email: 'lauranelson@example.com',
 				password: 'laurapassword',
 				bio: 'Accountant',
-				image: 'https://example.com/images/lauranelson.jpg',
+				image:
+					'https://img.freepik.com/psd-gratis/ilustracion-3d-avatar-linea_23-2151303063.jpg?ga=GA1.1.809440281.1720916925',
 				planName: freePlan.planName,
 			},
 			{
@@ -125,7 +139,8 @@ const createSeeders = async () => {
 				email: 'mikeolsen@example.com',
 				password: 'mikepassword',
 				bio: 'Software engineer',
-				image: 'https://example.com/images/mikeolsen.jpg',
+				image:
+					'https://img.freepik.com/psd-gratis/ilustracion-3d-avatar-o-perfil-humano_23-2150671159.jpg?ga=GA1.1.809440281.1720916925',
 				planName: freePlan.planName,
 			},
 			{
@@ -133,7 +148,8 @@ const createSeeders = async () => {
 				email: 'ivan@bell.com',
 				password: 'ivan123',
 				bio: 'Software engineer',
-				image: 'https://example.com/images/ivanbell.jpg',
+				image:
+					'https://img.freepik.com/psd-premium/3d-render-avatar-dibujos-animados-aislado_570939-51.jpg?ga=GA1.1.809440281.1720916925',
 				role: 'admin',
 			},
 			{
@@ -141,7 +157,8 @@ const createSeeders = async () => {
 				email: 'luis@diaz.com',
 				password: 'luis123',
 				bio: 'Accountant',
-				image: 'https://example.com/images/luisdiaz.jpg',
+				image:
+					'https://img.freepik.com/psd-gratis/ilustracion-3d-persona-calva-gafas_23-2149436184.jpg?ga=GA1.1.809440281.1720916925',
 				role: 'admin',
 			},
 			{
@@ -149,7 +166,8 @@ const createSeeders = async () => {
 				email: 'gaston@ibarra.com',
 				password: 'gaston123',
 				bio: 'Business analyst',
-				image: 'https://example.com/images/gastonibarra.jpg',
+				image:
+					'https://img.freepik.com/fotos-premium/personaje-3d-personas-cerca-retrato-sonriendo-bonito-3d-avatar-o-icono_43969-22737.jpg?ga=GA1.1.809440281.1720916925',
 				role: 'admin',
 			},
 			{
@@ -157,7 +175,8 @@ const createSeeders = async () => {
 				email: 'miguel@linares.com',
 				password: 'miguel123',
 				bio: 'HR manager',
-				image: 'https://example.com/images/miguellinares.jpg',
+				image:
+					'https://img.freepik.com/psd-gratis/ilustracion-3d-persona-gafas-cabeza-medio-rapada_23-2149436187.jpg?ga=GA1.1.809440281.1720916925',
 				role: 'admin',
 			},
 			{
@@ -165,7 +184,8 @@ const createSeeders = async () => {
 				email: 'mariasol@iha.com',
 				password: 'marial123',
 				bio: 'Content writer',
-				image: 'https://example.com/images/mariasoliha.jpg',
+				image:
+					'https://img.freepik.com/psd-gratis/render-3d-personaje-avatar_23-2150611716.jpg?ga=GA1.1.809440281.1720916925',
 				role: 'admin',
 			},
 			{
@@ -173,7 +193,8 @@ const createSeeders = async () => {
 				email: 'maximiliano@altamirano.com',
 				password: 'maximilianol123',
 				bio: 'SEO specialist',
-				image: 'https://example.com/images/maxialtamirano.jpg',
+				image:
+					'https://img.freepik.com/fotos-premium/personaje-3d-personas-cerca-retrato-sonriendo-bonito-3d-avatar-o-icono_43969-20056.jpg?ga=GA1.1.809440281.1720916925',
 				role: 'admin',
 			},
 			{
@@ -181,7 +202,8 @@ const createSeeders = async () => {
 				email: 'aldana@delgado.com',
 				password: 'aldana123',
 				bio: 'UI/UX designer',
-				image: 'https://example.com/images/aldanadelgado.jpg',
+				image:
+					'https://img.freepik.com/psd-gratis/3d-ilustracion-persona-cabello-largo_23-2149436197.jpg?ga=GA1.1.809440281.1720916925',
 				role: 'admin',
 			},
 		]
