@@ -14,7 +14,7 @@ const createSeeders = async () => {
 				password: 'securePassword!',
 				bio: 'UX/UI designer',
 				image:
-					'https://img.freepik.com/psd-gratis/ilustracion-3d-avatar-o-perfil-humano_23-2150671126.jpg?ga=GA1.1.809440281.1720916925',
+					'https://img.freepik.com/psd-gratis/ilustracion-3d-avatar-o-perfil-humano_23-2150671118.jpg?ga=GA1.1.809440281.1720916925',
 				planName: freePlan.planName,
 			},
 			{
