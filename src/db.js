@@ -5,15 +5,15 @@ const fs = require('fs')
 const path = require('path')
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_DEPLOY } = process.env
 
- const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`, {
- 	logging: false,
- 	native: false,
- })
+const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`, {
+	logging: false,
+	native: false,
+})
 
-//const sequelize = new Sequelize(DB_DEPLOY, {
-//	logging: false,
-//	native: false,
-//})
+// const sequelize = new Sequelize(DB_DEPLOY, {
+// 	logging: false,
+// 	native: false,
+// })
 
 const basename = path.basename(__filename)
 const modelDefiners = []
@@ -38,8 +38,8 @@ Project.belongsTo(User, { foreignKey: 'userId', as: 'user' })
 Project.belongsToMany(Technology, { through: 'project_tech', as: 'technologies' })
 Technology.belongsToMany(Project, { through: 'project_tech', as: 'projects' })
 
-User.belongsTo(Plan, { foreignKey: 'planName', as: 'plan' });
-Plan.hasMany(User, { foreignKey: 'planName', as: 'users' });
+User.belongsTo(Plan, { foreignKey: 'planName', as: 'plan' })
+Plan.hasMany(User, { foreignKey: 'planName', as: 'users' })
 
 module.exports = {
 	...sequelize.models,
