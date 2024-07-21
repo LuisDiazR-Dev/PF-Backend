@@ -4,6 +4,9 @@ const {
 	createProjectController,
 	updateProjectController,
 	deleteProjectController,
+	restoreProjectController,
+	getDeletedProjectsController,
+	getDeletedProjectByIdController,
 } = require('../controllers/projects-controller')
 
 const getAllProjects = async (req, res) => {
@@ -26,12 +29,42 @@ const getProjectById = async (req, res) => {
 	}
 }
 
+const getDeletedProjects = async (req, res) => {
+	try {
+		const { id } = req.user
+		const response = await getDeletedProjectsController(id)
+		res.status(200).json(response)
+	} catch (error) {
+		res.status(500).send(error.message)
+	}
+}
+
+const getDeletedProjectById = async (req, res) => {
+	try {
+		const { id } = req.params
+		const response = await getDeletedProjectByIdController(id)
+		res.status(200).json(response)
+	} catch (error) {
+		res.status(500).send(error.message)
+	}
+}
+
 const createProject = async (req, res) => {
 	const projectData = req.body
 	try {
 		const user = req.user
-		const project = await createProjectController(projectData, user)
-		res.status(201).json({ project: project })
+		const response = await createProjectController(projectData, user)
+		res.status(201).json(response)
+	} catch (error) {
+		res.status(400).json({ error: error.message })
+	}
+}
+
+const restoreProject = async (req, res) => {
+	const { id } = req.params
+	try {
+		const response = await restoreProjectController(id)
+		res.status(200).json(response)
 	} catch (error) {
 		res.status(400).json({ error: error.message })
 	}
@@ -65,4 +98,7 @@ module.exports = {
 	createProject,
 	updateProject,
 	deleteProject,
+	restoreProject,
+	getDeletedProjects,
+	getDeletedProjectById
 }
