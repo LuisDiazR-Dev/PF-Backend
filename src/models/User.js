@@ -54,7 +54,8 @@ module.exports = (sequelize) => {
 			image: {
 				type: DataTypes.STRING,
 				allowNull: false,
-				defaultValue: 'avatar.jpg',
+				defaultValue:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
 				isUrl: true,
 			},
 			role: {
