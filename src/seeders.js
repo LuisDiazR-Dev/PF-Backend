@@ -208,7 +208,7 @@ const createSeeders = async () => {
 			},
 		]
 
-		console.log(`Free and premium plans alredy created!`)
+		console.log(`Free and premium plans have been added to the database!`)
 
 		const createdUsers = await Promise.all(
 			users.map(async (user) => {

@@ -15,9 +15,9 @@ const createPreference = async (title, quantity, unit_price, userId) => {
 				},
 			],
 			back_urls: {
-				success: 'http://localhost:5175/paymentSuccess',
-				failure: 'http://localhost:5175/paymentFailure',
-				pending: 'http://localhost:5175/paymentPending',
+				success: process.env.FRONT_DEPLOY,
+				failure: process.env.FRONT_DEPLOY,
+				pending: process.env.FRONT_DEPLOY,
 			},
 			external_reference: userId,
 		}
