@@ -54,8 +54,7 @@ module.exports = (sequelize) => {
 			image: {
 				type: DataTypes.STRING,
 				allowNull: false,
-				defaultValue:
-					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
+				defaultValue: 'https://img.freepik.com/psd-gratis/ilustracion-3d-avatar-o-perfil-humano_23-2150671118.jpg?ga=GA1.1.809440281.1720916925',
 				isUrl: true,
 			},
 			role: {
