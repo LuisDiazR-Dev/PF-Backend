@@ -3,6 +3,7 @@ const {
 	loginUserController,
 	registerUserController,
 } = require('../controllers/auth-controller')
+const { welcome } = require('../mailer/welcome')
 
 const auth0User = async (req, res) => {
 	try {
@@ -30,6 +31,7 @@ const registerUser = async (req, res) => {
 		const { userName, email, password } = req.body
 		if (!userName || !email || !password) res.status(400).send('All fields are required')
 		const response = await registerUserController(userName, email, password)
+		await welcome(email)
 		return res.status(201).json(response)
 	} catch (error) {
 		res.status(401).json(error)
