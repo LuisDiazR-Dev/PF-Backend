@@ -1,5 +1,7 @@
 const createPreference = require('../controllers/mercadoPago-controller')
 const { getUserByIdController } = require('../controllers/users-controller')
+const youArePremium = require('../mailer/newPremium')
+
 const { User, Plan } = require('../db')
 
 const mercadoPagoPreference = async (req, res) => {
@@ -29,6 +31,8 @@ const mercadoPagoNotification = async (req, res) => {
 			}
 			user.planName = premiumPlan.planName
 			await user.save()
+			await youArePremium(payment)
+
 			res.status(200).json({ message: 'User updated to premium' })
 		} else {
 			res.status(200).json({ message: 'Payment not approved or not a payment type' })
