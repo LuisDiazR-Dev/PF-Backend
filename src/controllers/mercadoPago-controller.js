@@ -1,7 +1,13 @@
 const mercadopago = require('mercadopago')
+const { MP_TEST_ACCESS_TOKEN, 
+		FRONT_DEPLOY, 
+		FRONT_LOCAL_SUCCESS, 
+		FRONT_LOCAL_FAILURE, 
+		FRONT_LOCAL_PENDING 
+	} = process.env
 
 const client = new mercadopago.MercadoPagoConfig({
-	accessToken: 'APP_USR-4489293986958947-071617-8a9234090e2242df13e09b3ac062e3a2-145321681',
+	accessToken: MP_TEST_ACCESS_TOKEN,
 })
 const createPreference = async (title, quantity, unit_price, userId) => {
 	try {
@@ -13,12 +19,17 @@ const createPreference = async (title, quantity, unit_price, userId) => {
 					unit_price: Number(unit_price),
 					currency_id: 'ARS',
 				},
-			],
+	 		],
+// 	   		back_urls: {
+//               success: FRONT_DEPLOY,
+//               failure: FRONT_DEPLOY,
+//               pending: FRONT_DEPLOY
+//          },
 			back_urls: {
-				success: process.env.FRONT_DEPLOY,
-				failure: process.env.FRONT_DEPLOY,
-				pending: process.env.FRONT_DEPLOY,
-			},
+                success: FRONT_LOCAL_SUCCESS,
+                failure: FRONT_LOCAL_FAILURE,
+                pending: FRONT_LOCAL_PENDING
+            },
 			external_reference: userId,
 		}
 		const preference = new mercadopago.Preference(client)
