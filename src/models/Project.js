@@ -24,11 +24,6 @@ module.exports = (sequelize) => {
 				allowNull: false,
 				defaultValue: '',
 			},
-			tags: {
-				type: DataTypes.ARRAY(DataTypes.STRING),
-				allowNull: true,
-				defaultValue: [],
-			},
 			image: {
 				type: DataTypes.STRING(512),
 				allowNull: false,
