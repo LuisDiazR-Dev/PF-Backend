@@ -20,11 +20,6 @@ const createPreference = async (title, quantity, unit_price, userId) => {
 					currency_id: 'ARS',
 				},
 	 		],
-// 	   		back_urls: {
-//               success: FRONT_DEPLOY,
-//               failure: FRONT_DEPLOY,
-//               pending: FRONT_DEPLOY
-//          },
 			back_urls: {
                 success: FRONT_LOCAL_SUCCESS,
                 failure: FRONT_LOCAL_FAILURE,

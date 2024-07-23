@@ -1,4 +1,4 @@
-const { User, Project, Technology, Plan } = require('./db')
+const { User, Project, Technology, Plan, Tag } = require('./db')
 
 const createSeeders = async () => {
 	try {
@@ -527,6 +527,76 @@ const createSeeders = async () => {
 		)
 		console.log('All technologies have been added to the database.')
 
+		const tags = [
+			'management',
+			'productivity',
+			'collaboration',
+			'e-commerce',
+			'sales',
+			'shopping',
+			'social',
+			'networking',
+			'community',
+			'fitness',
+			'health',
+			'tracking',
+			'cooking',
+			'recipes',
+			'food',
+			'music',
+			'streaming',
+			'entertainment',
+			'weather',
+			'forecast',
+			'environment',
+			'travel',
+			'booking',
+			'tourism',
+			'education',
+			'learning',
+			'courses',
+			'jobs',
+			'career',
+			'employment',
+			'marketplace',
+			'photos',
+			'sharing',
+			'tasks',
+			'real estate',
+			'properties',
+			'events',
+			'organization',
+			'surveys',
+			'feedback',
+			'research',
+			'budget',
+			'finance',
+			'blog',
+			'writing',
+			'video',
+			'chatbot',
+			'support',
+			'AI',
+			'meditation',
+			'wellness',
+			'quiz',
+			'delivery',
+			'ordering',
+			'languages',
+			'home',
+			'automation',
+			'IoT',
+		]
+
+		await Promise.all(
+			tags.map(async (tag) => {
+				await Tag.findOrCreate({
+					where: { tagName: tag },
+				})
+			})
+		)
+		console.log('All tags have been added to the database')
+
 		for (const projectData of projects) {
 			const user = createdUsers.find((u) => u.id === projectData.userId)
 
@@ -534,7 +604,6 @@ const createSeeders = async () => {
 				where: {
 					title: projectData.title,
 					description: projectData.description,
-					tags: projectData.tags,
 					image: projectData.image,
 					userId: user.id,
 				},
@@ -546,7 +615,12 @@ const createSeeders = async () => {
 				)
 			)
 
-			if (!created) await newProject.addTechnologies(newTechnologies)
+			const newTags = await Promise.all(
+				projectData.tags.map(async (tag) => (await Tag.findAll({ where: { tagName: tag } }))[0])
+			)
+
+			await newProject.addTechnologies(newTechnologies)
+			await newProject.addTags(newTags)
 		}
 
 		console.log('Users and Projects alredy created!')
