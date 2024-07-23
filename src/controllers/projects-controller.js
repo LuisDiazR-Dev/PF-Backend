@@ -1,5 +1,5 @@
-const { Project, Technology, Tag } = require('../db')
-const { Sequelize, Op } = require('sequelize')
+const { Project, Technology, Tag, Like } = require('../db')
+const { Op } = require('sequelize')
 const AppError = require('../utils/index')
 
 const getAllProjectsController = async (queries) => {
