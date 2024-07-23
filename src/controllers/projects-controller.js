@@ -31,6 +31,10 @@ const getAllProjectsController = async (queries) => {
 				where: tags ? { tagName: { [Op.iLike]: `%${tags.split(',').join('%')}%` } } : undefined,
 				required: !!tags,
 			},
+			{
+				model: Like,
+				as: 'likes',
+			},
 		].filter((include) => include.where)
 
 		const projectsData = await Project.findAndCountAll({
