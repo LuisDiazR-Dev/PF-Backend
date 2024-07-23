@@ -1,5 +1,5 @@
-const { Project, Technology, Tag } = require('../db')
-const { Sequelize, Op } = require('sequelize')
+const { Project, Technology, Tag, Like } = require('../db')
+const { Op } = require('sequelize')
 const AppError = require('../utils/index')
 
 const getAllProjectsController = async (queries) => {
@@ -30,6 +30,10 @@ const getAllProjectsController = async (queries) => {
 				through: { attributes: [] },
 				where: tags ? { tagName: { [Op.iLike]: `%${tags.split(',').join('%')}%` } } : undefined,
 				required: !!tags,
+			},
+			{
+				model: Like,
+				as: 'likes',
 			},
 		].filter((include) => include.where)
 

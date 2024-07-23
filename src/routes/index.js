@@ -5,6 +5,7 @@ const projectsRouter = require('./projectRouter')
 const techRouter = require('./techRouter')
 const mercadoPagoRouter = require('./mercadoPagoRouter')
 const tagRouter = require('./tagRouter')
+const likesRouter = require('./likesRouter')
 
 const { verifyToken } = require('../middlewares/auth-middleware')
 
@@ -15,5 +16,6 @@ router.use('/technologies', techRouter)
 router.use('/users', verifyToken, usersRouter)
 router.use('/payment', mercadoPagoRouter)
 router.use('/tags', tagRouter)
+router.use('/likes', likesRouter)
 
 module.exports = router
