@@ -1,9 +1,9 @@
-const { Project, Technology } = require('../db')
+const { Project, Technology, Tag } = require('../db')
 const { Sequelize, Op } = require('sequelize')
 const AppError = require('../utils/index')
 
 const getAllProjectsController = async (queries) => {
-	const { search, technologies, sort, page = 1, pageSize = 10 } = queries
+	const { title, tags, technologies, sort, page = 1, pageSize = 10 } = queries
 	let where = {}
 	let order = []
 	let offset = (page - 1) * pageSize
@@ -14,13 +14,7 @@ const getAllProjectsController = async (queries) => {
 		if (sort === 'new') order = [['createdAt', 'DESC']]
 		if (sort === 'old') order = [['createdAt', 'ASC']]
 
-		if (search)
-			where[Op.or] = [
-				{ title: { [Op.iLike]: `%${search}%` } },
-				Sequelize.where(Sequelize.fn('array_to_string', Sequelize.col('tags'), ','), {
-					[Op.iLike]: `%${search}%`,
-				}),
-			]
+		if (title) where[Op.or] = [{ title: { [Op.iLike]: `%${title}%` } }]
 
 		const projects = (
 			await Project.findAndCountAll({
@@ -28,10 +22,16 @@ const getAllProjectsController = async (queries) => {
 				offset,
 				order,
 				where,
-				include: {
-					model: Technology,
-					as: 'technologies',
-				},
+				include: [
+					{
+						model: Technology,
+						as: 'technologies',
+					},
+					{
+						model: Tag,
+						as: 'tags',
+					},
+				],
 			})
 		).rows.map((project) => project.dataValues)
 
@@ -41,7 +41,10 @@ const getAllProjectsController = async (queries) => {
 					.split(',')
 					.some((technology) => project.technologies.some((t) => t.name === technology))
 			)
-
+		if (tags)
+			return projects.filter((project) =>
+				tags.split(',').some((tag) => project.tags.some((t) => t.tagName === tag))
+			)
 		return projects
 	} catch (error) {
 		throw new AppError('Error fetching projects', 500)
@@ -105,24 +108,32 @@ const createProjectController = async (projectData, user) => {
 		const { title, description, tags, technologies, image } = projectData
 		const [project, created] = await Project.findOrCreate({
 			where: { title, userId: user.id },
-			defaults: { description, tags, image },
+			defaults: { description, image },
 		})
 		if (!created) throw new AppError('This project already exists in the database!', 400)
 		if (!technologies || technologies.length < 1)
 			throw new AppError('Add at least one technology', 400)
+		if (!tags || tags.length < 1) throw new AppError('Add at least on tag', 400)
 
 		const techNames = technologies.map((tech) => (typeof tech === 'string' ? tech : tech.name))
+		const tagNames = tags.map((tag) => (typeof tag === 'string' ? tag : tag.tagName))
+		console.log(tagNames)
 
 		const techInstances = await Technology.findAll({ where: { name: techNames } })
+		const tagInstances = await Tag.findAll({ where: { tagName: tagNames } })
 
 		if (techInstances.length !== techNames.length)
 			throw new AppError('Some technologies were not found in the database', 400)
+		if (tagInstances.length !== tagNames.length)
+			throw new AppError('Some tags were not found in the database', 400)
 
 		await project.addTechnologies(techInstances)
+		await project.addTags(tagInstances)
 
 		return {
 			...project.toJSON(),
 			technologies: techNames,
+			tags: tagNames,
 		}
 	} catch (error) {
 		throw new AppError('Error creating a project', 500)

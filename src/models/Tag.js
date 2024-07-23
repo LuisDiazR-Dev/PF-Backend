@@ -2,14 +2,14 @@ const { DataTypes } = require('sequelize')
 
 module.exports = (sequelize) => {
 	sequelize.define(
-		'technology',
+		'tag',
 		{
 			id: {
 				type: DataTypes.UUID,
 				defaultValue: DataTypes.UUIDV4,
 				primaryKey: true,
 			},
-			name: {
+			tagName: {
 				type: DataTypes.STRING,
 				allowNull: false,
 			},
