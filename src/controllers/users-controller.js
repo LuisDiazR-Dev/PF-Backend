@@ -67,8 +67,8 @@ const deleteUserByIdController = async (id, user) => {
 	try {
 		const userToDelete = await User.findByPk(id)
 		if (!userToDelete) throw new AppError('User not found', 404)
-		if (user.id !== id && user.role !== 'admin') {
-			throw new AppError('You are not authorized to delete this user', 403)
+		if (user.role !== 'admin') {
+			throw new AppError('You are not authorized to delete this user', 401)
 		}
 		await User.destroy({ where: { id } })
 		return { message: 'User deleted successfully' }
