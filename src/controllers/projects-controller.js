@@ -2,8 +2,8 @@ const { User, Project, Technology, Tag, Like } = require('../db')
 const { Op } = require('sequelize')
 const AppError = require('../utils/index')
 
-const getAllProjectsController = async (queries) => {
-	const { title = '', tags = '', technologies = '', sort, page = 1, pageSize = 10 } = queries
+const getAllProjectsController = async (queries, user) => {
+	const { title, tags, technologies, sort, page = 1, pageSize = 10 } = queries
 
 	let where = {
 		deletedAt: null,
