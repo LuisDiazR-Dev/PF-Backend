@@ -1,5 +1,5 @@
-const { Project, Technology, Tag } = require('../db')
-const { Sequelize, Op } = require('sequelize')
+const { Project, Technology, Tag, Like } = require('../db')
+const { Op } = require('sequelize')
 const AppError = require('../utils/index')
 
 const getAllProjectsController = async (queries) => {
@@ -16,35 +16,37 @@ const getAllProjectsController = async (queries) => {
 
 		if (title) where[Op.or] = [{ title: { [Op.iLike]: `%${title}%` } }]
 
-		const projects = (
-			await Project.findAndCountAll({
-				limit,
-				offset,
-				order,
-				where,
-				include: [
-					{
-						model: Technology,
-						as: 'technologies',
-					},
-					{
-						model: Tag,
-						as: 'tags',
-					},
-				],
-			})
-		).rows.map((project) => project.dataValues)
+		const include = [
+			{
+				model: Technology,
+				as: 'technologies',
+				through: { attributes: [] },
+				where: technologies ? { name: { [Op.in]: technologies.split(',') } } : undefined,
+				required: !!technologies,
+			},
+			{
+				model: Tag,
+				as: 'tags',
+				through: { attributes: [] },
+				where: tags ? { tagName: { [Op.iLike]: `%${tags.split(',').join('%')}%` } } : undefined,
+				required: !!tags,
+			},
+			{
+				model: Like,
+				as: 'likes',
+			},
+		].filter((include) => include.where)
 
-		if (technologies)
-			return projects.filter((project) =>
-				technologies
-					.split(',')
-					.some((technology) => project.technologies.some((t) => t.name === technology))
-			)
-		if (tags)
-			return projects.filter((project) =>
-				tags.split(',').some((tag) => project.tags.some((t) => t.tagName === tag))
-			)
+		const projectsData = await Project.findAndCountAll({
+			limit,
+			offset,
+			order,
+			where,
+			include,
+		})
+
+		const projects = projectsData.rows.map((project) => project.dataValues)
+
 		return projects
 	} catch (error) {
 		throw new AppError('Error fetching projects', 500)

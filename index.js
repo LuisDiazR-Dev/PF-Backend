@@ -5,7 +5,7 @@ const PORT = process.env.PORT || 3001
 const createSeeders = require('./src/seeders.js')
 
 conn
-	.sync({alter : true })
+	.sync({ force: true })
 	.then(() => {
 		server.listen(PORT, () => {
 			console.log(`Server listening on port ${PORT}`)

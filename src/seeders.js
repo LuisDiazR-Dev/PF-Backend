@@ -15,7 +15,7 @@ const createSeeders = async () => {
 				bio: 'UX/UI designer',
 				image:
 					'https://img.freepik.com/psd-gratis/ilustracion-3d-avatar-o-perfil-humano_23-2150671118.jpg?ga=GA1.1.809440281.1720916925',
-				planName: freePlan.planName,
+				planName: premiumPlan.planName,
 			},
 			{
 				userName: 'JohnDoe789',
@@ -145,7 +145,7 @@ const createSeeders = async () => {
 			},
 			{
 				userName: 'IvanBell',
-				email: 'ivan@bell.com',
+				email: 'ivanjavierbell@gmail.com',
 				password: 'ivan123',
 				bio: 'Software engineer',
 				image:
