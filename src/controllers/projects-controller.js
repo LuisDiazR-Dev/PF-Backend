@@ -74,7 +74,7 @@ const getAllProjectsController = async (queries, user) => {
 
 const getProjectByIdController = async (id, user) => {
 	try {
-		const projectsData = await Project.findByPk(id, {
+		const projectData = await Project.findByPk(id, {
 			include: [
 				{
 					model: User,
@@ -97,20 +97,16 @@ const getProjectByIdController = async (id, user) => {
 			],
 		})
 
-		if (!projectsData) throw new AppError(`Project with id ${id} not found`, 404)
+		if (!projectData) throw new AppError(`Project with id ${id} not found`, 404)
 
-		const projects = projectsData.map((project) => {
-			if (user)
-				return {
-					...project.dataValues,
-					liked: project.likes.some((like) => like.userId == user.id),
-				}
-			else {
-				return project.dataValues
-			}
-		})
+		const project = user ? {
+					...projectData.dataValues,
+					liked: projectData.likes.some((like) => like.userId == user.id),
+				} :
+				projectData.dataValues
+			console.log(project);
 
-		return { ...project.dataValues, liked: project.likes.some((like) => like.userId == user.id) }
+		return project
 	} catch (error) {
 		throw new AppError(`Error fetching project with id ${id}`, 500)
 	}
