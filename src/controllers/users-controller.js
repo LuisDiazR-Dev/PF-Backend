@@ -1,4 +1,4 @@
-const { User, Project, Technology } = require('../db')
+const { User, Project, Technology, Tag } = require('../db')
 const { Op } = require('sequelize')
 const AppError = require('../utils/index')
 
@@ -29,6 +29,10 @@ const getUserByIdController = async (id) => {
 							model: Technology,
 							as: 'technologies',
 						},
+						{
+							model: Tag,
+							as: 'tags'
+						}
 					],
 				},
 			],
