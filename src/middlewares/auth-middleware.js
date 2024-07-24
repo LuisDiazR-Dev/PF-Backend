@@ -13,6 +13,24 @@ const verifyToken = (req, res, next) => {
 	}
 }
 
+const authenticate = (req, res, next) => {
+	const token = req.headers.authorization?.split(' ')[1]
+	console.log(token, 'asd');
+	if (token) {
+		jwt.verify(token,  process.env.ACCESS_TOKEN_SECRET, async (err, decoded) => {
+			if (err) {
+				console.error('Invalid token:', err.message)
+				return next()
+			}
+			req.user = decoded.id
+			next()
+		})
+	} else {
+		next()
+	}
+}
+
 module.exports = {
 	verifyToken,
+	authenticate,
 }
