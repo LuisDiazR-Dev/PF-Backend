@@ -1,6 +1,5 @@
 const { Router } = require('express')
 const usersRouter = Router()
-const { verifyToken } = require('../middlewares/auth-middleware')
 const {
 	getAllUsers,
 	getUserById,
@@ -10,10 +9,12 @@ const {
 	deleteUserProfile,
 } = require('../handlers/users-handler')
 
+const { verifyToken } = require('../middlewares/auth-middleware')
+
 usersRouter.get('/', getAllUsers)
-usersRouter.get('/profile', getUserProfile)
+usersRouter.get('/profile', verifyToken, getUserProfile)
 usersRouter.get('/:id', getUserById)
-usersRouter.put('/', updateUser)
+usersRouter.put('/', verifyToken, updateUser)
 usersRouter.delete('/', verifyToken, deleteUserProfile)
 usersRouter.delete('/:id', verifyToken, deleteUserById)
 

@@ -1,11 +1,11 @@
-const { Project, Technology, Tag, Like } = require('../db')
+const { User, Project, Technology, Tag, Like } = require('../db')
 const { Op } = require('sequelize')
 const AppError = require('../utils/index')
 
 const getAllProjectsController = async (queries) => {
 	const { title = '', tags = '', technologies = '', sort, page = 1, pageSize = 10 } = queries
 
-	let whereClause = {
+	let where = {
 		deletedAt: null,
 	}
 	let order = []
@@ -13,101 +13,73 @@ const getAllProjectsController = async (queries) => {
 	let limit = parseInt(pageSize, 10)
 
 	try {
-		// Configuración de orden
 		if (sort === 'a-z') order = [['title', 'ASC']]
 		if (sort === 'z-a') order = [['title', 'DESC']]
 		if (sort === 'new') order = [['createdAt', 'DESC']]
 		if (sort === 'old') order = [['createdAt', 'ASC']]
 
-		// Configuración de filtros
-		if (title) {
-			whereClause.title = {
-				[Op.iLike]: `%${title}%`,
-			}
-		}
+		if (title) where[Op.or] = [{ title: { [Op.iLike]: `%${title}%` } }]
 
-		const technologyCondition = technologies
-			? {
-					[Op.or]: technologies.split(',').map((tech) => ({
-						name: {
-							[Op.in]: tech.split(','),
-						},
-					})),
-			  }
-			: {}
+		const include = [
+			{
+				model: User,
+				as: 'user',
+			},
+			{
+				model: Technology,
+				as: 'technologies',
+				through: { attributes: [] },
+				where: technologies ? { name: { [Op.in]: technologies.split(',') } } : undefined,
+				required: !!technologies,
+			},
+			{
+				model: Tag,
+				as: 'tags',
+				through: { attributes: [] },
+				where: tags ? { tagName: { [Op.iLike]: `%${tags.split(',').join('%')}%` } } : undefined,
+				required: !!tags,
+			},
+			{
+				model: Like,
+				as: 'likes',
+				attributes: ['userId'],
+				required: false,
+			},
+		]
 
-		const tagCondition = tags
-			? {
-					[Op.or]: tags.split(',').map((tag) => ({
-						tagName: {
-							[Op.iLike]: `%${tag}%`,
-						},
-					})),
-			  }
-			: {}
-
-		// Búsqueda de proyectos
 		const projectsData = await Project.findAndCountAll({
-			where: whereClause,
-			include: [
-				{
-					model: Technology,
-					as: 'technologies',
-					where: technologyCondition,
-					required: false,
-					through: {
-						attributes: [],
-					},
-				},
-				{
-					model: Tag,
-					as: 'tags',
-					where: tagCondition,
-					required: false,
-					through: {
-						attributes: [],
-					},
-				},
-				{
-					model: Like,
-					as: 'likes',
-					required: false,
-				},
-			],
 			limit,
 			offset,
+			order,
+			where,
+			include,
 		})
 
-		// Filtrado adicional para asegurar que los proyectos cumplen con todos los criterios
-		const filteredProjects = projectsData.rows.filter((project) => {
-			const hasTitle = title ? project.title.toLowerCase().includes(title.toLowerCase()) : true
-			const hasTechnologies = technologies
-				? project.technologies.some((tech) => technologies.split(',').includes(tech.name))
-				: true
-			const hasTags = tags
-				? project.tags.some((tag) =>
-						tags
-							.split(',')
-							.some((searchTag) => tag.tagName.toLowerCase().includes(searchTag.toLowerCase()))
-				  )
-				: true
-
-			return hasTitle && hasTechnologies && hasTags
+		const projects = projectsData.rows.map((project) => {
+			if (user)
+				return {
+					...project.dataValues,
+					liked: project.likes.some((like) => like.userId == user.id),
+				}
+			else {
+				return project.dataValues
+			}
 		})
 
-		return {
-			rows: filteredProjects,
-			count: filteredProjects.length,
-		}
+		return projects
 	} catch (error) {
 		throw new Error(`Error fetching projects: ${error.message}`)
 	}
 }
 
-const getProjectByIdController = async (id) => {
+const getProjectByIdController = async (id, user) => {
 	try {
-		const project = await Project.findByPk(id, {
+		const projectsData = await Project.findByPk(id, {
 			include: [
+				{
+					model: User,
+					as: 'user',
+				},
 				{
 					model: Technology,
 					as: 'technologies',
@@ -116,12 +88,29 @@ const getProjectByIdController = async (id) => {
 					model: Tag,
 					as: 'tags',
 				},
+				{
+					model: Like,
+					as: 'likes',
+					attributes: ['userId'],
+					required: false,
+				},
 			],
 		})
 
-		if (!project) throw new AppError(`Project with id ${id} not found`, 404)
+		if (!projectsData) throw new AppError(`Project with id ${id} not found`, 404)
 
-		return project
+		const projects = projectsData.map((project) => {
+			if (user)
+				return {
+					...project.dataValues,
+					liked: project.likes.some((like) => like.userId == user.id),
+				}
+			else {
+				return project.dataValues
+			}
+		})
+
+		return { ...project.dataValues, liked: project.likes.some((like) => like.userId == user.id) }
 	} catch (error) {
 		throw new AppError(`Error fetching project with id ${id}`, 500)
 	}
