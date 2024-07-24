@@ -3,53 +3,91 @@ const { Op } = require('sequelize')
 const AppError = require('../utils/index')
 
 const getAllProjectsController = async (queries) => {
-	const { title, tags, technologies, sort, page = 1, pageSize = 10 } = queries
-	let where = {}
+	const { title = '', tags = '', technologies = '', sort, page = 1, pageSize = 10 } = queries
+
+	let whereClause = {
+		deletedAt: null,
+	}
 	let order = []
-	let offset = (page - 1) * pageSize
+	let offset = (page - 1) * parseInt(pageSize, 10)
 	let limit = parseInt(pageSize, 10)
+
 	try {
+		// Configuración de orden
 		if (sort === 'a-z') order = [['title', 'ASC']]
 		if (sort === 'z-a') order = [['title', 'DESC']]
 		if (sort === 'new') order = [['createdAt', 'DESC']]
 		if (sort === 'old') order = [['createdAt', 'ASC']]
 
-		if (title) where[Op.or] = [{ title: { [Op.iLike]: `%${title}%` } }]
+		// Configuración de filtros
+		if (title) {
+			whereClause.title = {
+				[Op.iLike]: `%${title}%`,
+			}
+		}
 
-		const include = [
-			{
-				model: Technology,
-				as: 'technologies',
-				through: { attributes: [] },
-				where: technologies ? { name: { [Op.in]: technologies.split(',') } } : undefined,
-				required: !!technologies,
-			},
-			{
-				model: Tag,
-				as: 'tags',
-				through: { attributes: [] },
-				where: tags ? { tagName: { [Op.iLike]: `%${tags.split(',').join('%')}%` } } : undefined,
-				required: !!tags,
-			},
-			{
-				model: Like,
-				as: 'likes',
-			},
-		].filter((include) => include.where)
+		const technologyCondition = technologies
+			? {
+					[Op.or]: technologies.split(',').map((tech) => ({
+						name: {
+							[Op.in]: tech.split(','),
+						},
+					})),
+			  }
+			: {}
 
+		const tagCondition = tags
+			? {
+					[Op.or]: tags.split(',').map((tag) => ({
+						tagName: {
+							[Op.iLike]: `%${tag}%`,
+						},
+					})),
+			  }
+			: {}
+
+		// Búsqueda de proyectos
 		const projectsData = await Project.findAndCountAll({
+			where: whereClause,
+			include: [
+				{
+					model: Technology,
+					as: 'technologies', // Asegúrate de que este alias coincide con el usado en la asociación
+					where: technologyCondition,
+					required: false,
+					through: {
+						attributes: [],
+					},
+				},
+				{
+					model: Tag,
+					as: 'tags', // Asegúrate de que este alias coincide con el usado en la asociación
+					where: tagCondition,
+					required: false,
+					through: {
+						attributes: [],
+					},
+				},
+				{
+					model: Like,
+					as: 'likes', // Asegúrate de que este alias coincide con el usado en la asociación
+					required: false,
+				},
+			],
 			limit,
 			offset,
-			order,
-			where,
-			include,
 		})
 
-		const projects = projectsData.rows.map((project) => project.dataValues)
+		// Procesamiento de los datos de respuesta
+		const projects = projectsData.rows.map((project) => ({
+			...project.get(),
+			technologies: project.technologies.map((tech) => tech.get()),
+			tags: project.tags.map((tag) => tag.get()),
+		}))
 
 		return projects
 	} catch (error) {
-		throw new AppError('Error fetching projects', 500)
+		throw new Error(`Error fetching projects: ${error.message}`)
 	}
 }
 
@@ -255,7 +293,6 @@ const updateProjectController = async (projectData, userId, userRole) => {
 		throw new AppError('Error updating project', 500)
 	}
 }
-
 
 const deleteProjectController = async (id, user) => {
 	try {
