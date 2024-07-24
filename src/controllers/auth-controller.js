@@ -30,6 +30,7 @@ const loginUserController = async (email, password) => {
 		)
 		return { user: user, token: accessToken }
 	} catch (error) {
+		console.error("Error login:", error)
 		throw error
 	}
 }

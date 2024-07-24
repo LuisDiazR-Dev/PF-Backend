@@ -84,6 +84,7 @@ const welcome = async (email) => {
 		console.log('Message sent:')
 	} catch (error) {
 		console.log(error)
+		throw new Error('Error sendind welcome email:', error)
 	}
 }
 

@@ -15,7 +15,7 @@ const getAllProjects = async (req, res) => {
 		const response = await getAllProjectsController(queries)
 		res.status(200).json(response)
 	} catch (error) {
-		res.status(500).send(error.message)
+		res.status(500).json({ error: error.message })
 	}
 }
 
@@ -25,19 +25,21 @@ const getProjectById = async (req, res) => {
 		const response = await getProjectByIdController(id)
 		res.status(200).json(response)
 	} catch (error) {
-		res.status(500).send(error.message)
+		res.status(500).json({ error: error.message })
 	}
 }
 
 const getDeletedProjects = async (req, res) => {
 	try {
-		const { id } = req.user
-		const response = await getDeletedProjectsController(id)
+		const { id, role } = req.user
+		const response = await getDeletedProjectsController(id, role)
 		res.status(200).json(response)
 	} catch (error) {
-		res.status(500).send(error.message)
+		console.error('Error fetching deleted projects:', error)
+		res.status(500).json({ error: error.message })
 	}
 }
+
 
 const getDeletedProjectById = async (req, res) => {
 	try {
@@ -45,7 +47,7 @@ const getDeletedProjectById = async (req, res) => {
 		const response = await getDeletedProjectByIdController(id)
 		res.status(200).json(response)
 	} catch (error) {
-		res.status(500).send(error.message)
+		res.status(500).json({ error: error.message })
 	}
 }
 
@@ -73,11 +75,14 @@ const restoreProject = async (req, res) => {
 const updateProject = async (req, res) => {
 	try {
 		const { id } = req.params
-		const projectData = req.body
-		const response = await updateProjectController(projectData, id)
+		const projectData = { ...req.body, id }
+		const { id: userId, role: userRole } = req.user
+
+		const response = await updateProjectController(projectData, userId, userRole)
 		res.status(200).json(response)
 	} catch (error) {
-		res.status(500).send(error.message)
+		console.error('Error updating project:', error)
+		res.status(500).json({ error: error.message })
 	}
 }
 
@@ -88,7 +93,7 @@ const deleteProject = async (req, res) => {
 		const response = await deleteProjectController(id, user)
 		res.status(200).json(response)
 	} catch (error) {
-		res.status(500).send(error.message)
+		res.status(500).json({ error: error.message })
 	}
 }
 
@@ -100,5 +105,5 @@ module.exports = {
 	deleteProject,
 	restoreProject,
 	getDeletedProjects,
-	getDeletedProjectById
+	getDeletedProjectById,
 }
