@@ -99,7 +99,7 @@ const getProjectByIdController = async (id, user) => {
 
 		if (!projectsData) throw new AppError(`Project with id ${id} not found`, 404)
 
-		const projects = projectsData.map((project) => {
+		const project = projectsData.map((project) => {
 			if (user)
 				return {
 					...project.dataValues,
