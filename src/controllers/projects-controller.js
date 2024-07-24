@@ -52,7 +52,7 @@ const getAllProjectsController = async (queries) => {
 			include: [
 				{
 					model: Technology,
-					as: 'technologies', // Asegúrate de que este alias coincide con el usado en la asociación
+					as: 'technologies',
 					where: technologyCondition,
 					required: false,
 					through: {
@@ -61,7 +61,7 @@ const getAllProjectsController = async (queries) => {
 				},
 				{
 					model: Tag,
-					as: 'tags', // Asegúrate de que este alias coincide con el usado en la asociación
+					as: 'tags',
 					where: tagCondition,
 					required: false,
 					through: {
@@ -70,7 +70,7 @@ const getAllProjectsController = async (queries) => {
 				},
 				{
 					model: Like,
-					as: 'likes', // Asegúrate de que este alias coincide con el usado en la asociación
+					as: 'likes',
 					required: false,
 				},
 			],
@@ -78,14 +78,27 @@ const getAllProjectsController = async (queries) => {
 			offset,
 		})
 
-		// Procesamiento de los datos de respuesta
-		const projects = projectsData.rows.map((project) => ({
-			...project.get(),
-			technologies: project.technologies.map((tech) => tech.get()),
-			tags: project.tags.map((tag) => tag.get()),
-		}))
+		// Filtrado adicional para asegurar que los proyectos cumplen con todos los criterios
+		const filteredProjects = projectsData.rows.filter((project) => {
+			const hasTitle = title ? project.title.toLowerCase().includes(title.toLowerCase()) : true
+			const hasTechnologies = technologies
+				? project.technologies.some((tech) => technologies.split(',').includes(tech.name))
+				: true
+			const hasTags = tags
+				? project.tags.some((tag) =>
+						tags
+							.split(',')
+							.some((searchTag) => tag.tagName.toLowerCase().includes(searchTag.toLowerCase()))
+				  )
+				: true
 
-		return projects
+			return hasTitle && hasTechnologies && hasTags
+		})
+
+		return {
+			rows: filteredProjects,
+			count: filteredProjects.length,
+		}
 	} catch (error) {
 		throw new Error(`Error fetching projects: ${error.message}`)
 	}
