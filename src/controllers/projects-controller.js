@@ -99,13 +99,12 @@ const getProjectByIdController = async (id, user) => {
 
 		if (!projectData) throw new AppError(`Project with id ${id} not found`, 404)
 
-		const project = user
-			? {
+		const project = user ? {
 					...projectData.dataValues,
 					liked: projectData.likes.some((like) => like.userId == user.id),
-			  }
-			: projectData.dataValues
-		console.log(project)
+				} :
+				projectData.dataValues
+			console.log(project);
 
 		return project
 	} catch (error) {
@@ -126,22 +125,12 @@ const getDeletedProjectsController = async (id, role) => {
 			paranoid: false,
 			include: [
 				{
-					model: User,
-					as: 'user',
-				},
-				{
 					model: Technology,
 					as: 'technologies',
 				},
 				{
 					model: Tag,
 					as: 'tags',
-				},
-				{
-					model: Like,
-					as: 'likes',
-					attributes: ['userId'],
-					required: false,
 				},
 			],
 		})
@@ -160,22 +149,12 @@ const getDeletedProjectByIdController = async (id) => {
 			paranoid: false,
 			include: [
 				{
-					model: User,
-					as: 'user',
-				},
-				{
 					model: Technology,
 					as: 'technologies',
 				},
 				{
 					model: Tag,
 					as: 'tags',
-				},
-				{
-					model: Like,
-					as: 'likes',
-					attributes: ['userId'],
-					required: false,
 				},
 			],
 		})
@@ -194,29 +173,35 @@ const createProjectController = async (projectData, user) => {
 			where: { title, userId: user.id },
 			defaults: { description, image },
 		})
+		console.log(project)
 		if (!created) throw new AppError('This project already exists in the database!', 400)
+		if (!technologies || technologies.length < 1)
+			throw new AppError('Add at least one technology', 400)
+		if (!tags || tags.length < 1) throw new AppError('Add at least on tag', 400)
 
-		if (technologies) {
-			const techNames = technologies.map((tech) => (typeof tech === 'string' ? tech : tech.name))
-			const techInstances = await Technology.findAll({ where: { name: techNames } })
-			if (techInstances.length !== techNames.length)
-				throw new AppError('Some technologies were not found in the database', 400)
-			await project.addTechnologies(techInstances)
+		const techNames = technologies.map((tech) => (typeof tech === 'string' ? tech : tech.name))
+		const tagNames = tags.map((tag) => (typeof tag === 'string' ? tag : tag.tagName))
+
+		const techInstances = await Technology.findAll({ where: { name: techNames } })
+		const tagInstances = await Tag.findAll({ where: { tagName: tagNames } })
+
+		if (techInstances.length !== techNames.length)
+			throw new AppError('Some technologies were not found in the database', 400)
+		if (tagInstances.length !== tagNames.length)
+			throw new AppError('Some tags were not found in the database', 400)
+
+		await project.addTechnologies(techInstances)
+		await project.addTags(tagInstances)
+
+		console.log(typeof project.addTechnologies)
+		console.log(typeof project.addTags)
+
+		return {
+			...project.toJSON(),
+			technologies: techNames,
+			tags: tagNames,
 		}
-		if (tags) {
-			const tagNames = tags.map((tag) => (typeof tag === 'string' ? tag : tag.tagName))
-
-			const tagInstances = await Tag.findAll({ where: { tagName: tagNames } })
-
-			if (tagInstances.length !== tagNames.length)
-				throw new AppError('Some tags were not found in the database', 400)
-
-			await project.addTags(tagInstances)
-		}
-
-		return 'Proyecto creado exitosamente'
 	} catch (error) {
-		console.error(error)
 		throw new AppError('Error creating a project', 500)
 	}
 }
@@ -226,7 +211,7 @@ const restoreProjectController = async (id) => {
 		const project = await Project.findOne({
 			where: { id: id },
 			paranoid: false,
-			include: [				
+			include: [
 				{
 					model: Technology,
 					as: 'technologies',
@@ -234,12 +219,6 @@ const restoreProjectController = async (id) => {
 				{
 					model: Tag,
 					as: 'tags',
-				},
-				{
-					model: Like,
-					as: 'likes',
-					attributes: ['userId'],
-					required: false,
 				},
 			],
 		})
@@ -296,22 +275,12 @@ const updateProjectController = async (projectData, userId, userRole) => {
 		const updatedProject = await Project.findByPk(projectData.id, {
 			include: [
 				{
-					model: User,
-					as: 'user',
-				},
-				{
 					model: Technology,
 					as: 'technologies',
 				},
 				{
 					model: Tag,
 					as: 'tags',
-				},
-				{
-					model: Like,
-					as: 'likes',
-					attributes: ['userId'],
-					required: false,
 				},
 			],
 		})
