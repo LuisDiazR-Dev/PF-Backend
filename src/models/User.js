@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize')
 const { Plan } = require('./Plan')
 
 module.exports = (sequelize) => {
-	sequelize.define(
+	const User = sequelize.define(
 		'user',
 		{
 			id: {
@@ -66,7 +66,7 @@ module.exports = (sequelize) => {
 				type: DataTypes.STRING,
 				references: {
 					model: Plan,
-					key: 'planName',
+					key: 'planName',					
 				},
 			},
 		},
@@ -75,4 +75,11 @@ module.exports = (sequelize) => {
 		},
 		{ timestamps: true, paranoid: true }
 	)
+	 User.beforeCreate((user) => {
+			if (user.role === 'user' && !user.planName) {
+				user.planName = 'Free'			
+			}
+		})
+
+	return User
 }

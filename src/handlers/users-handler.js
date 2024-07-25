@@ -1,7 +1,8 @@
 const {
 	getAllUsersController,
 	getUserByIdController,
-	updateUserController,
+	updateUserProfileController,
+	updateUserByIdController,
 	deleteUserByIdController,
 } = require('../controllers/users-controller')
 
@@ -35,11 +36,22 @@ const getUserProfile = async (req, res) => {
 	}
 }
 
-const updateUser = async (req, res) => {
+const updateUserProfile = async (req, res) => {
 	try {
-		const { id } = req.user
+		const user = req.user
 		const userData = req.body
-		const response = await updateUserController(userData, id)
+		const response = await updateUserProfileController(userData, user)
+		res.status(200).json(response)
+	} catch (error) {
+		res.status(500).send(error.message)
+	}
+}
+
+const updateUserById = async (req, res) => {
+	try {
+		const user = req.user;
+		const userData = req.body
+		const response = await updateUserByIdController(userData, user)
 		res.status(200).json(response)
 	} catch (error) {
 		res.status(500).send(error.message)
@@ -59,9 +71,8 @@ const deleteUserById = async (req, res) => {
 
 const deleteUserProfile = async (req, res) => {
 	try {
-		const { id } = req.user
 		const user = req.user
-		const response = await deleteUserByIdController(id, user)
+		const response = await deleteUserByIdController(user)
 		res.status(200).json(response)
 	} catch (error) {
 		res.status(500).send(error.message)
@@ -72,7 +83,8 @@ module.exports = {
 	getAllUsers,
 	getUserById,
 	getUserProfile,
-	updateUser,
+	updateUserProfile,
+	updateUserById,
 	deleteUserById,
 	deleteUserProfile,
 }

@@ -7,6 +7,7 @@ module.exports = (sequelize) => {
 			planName: {
 				type: DataTypes.STRING,
 				primaryKey: true,
+				defaultValue: "Free",
 				allowNull: false,
 			},
 			price: {

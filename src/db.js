@@ -30,7 +30,7 @@ let entries = Object.entries(sequelize.models)
 let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]])
 sequelize.models = Object.fromEntries(capsEntries)
 
-const { User, Project, Technology, Plan, Tag, Like } = sequelize.models
+const { User, Project, Technology, Plan, Tag, Like, Contract } = sequelize.models
 
 User.hasMany(Project, { foreignKey: 'userId', as: 'projects' })
 Project.belongsTo(User, { foreignKey: 'userId', as: 'user' })
@@ -50,6 +50,11 @@ Like.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 Project.hasMany(Like, { foreignKey: 'projectId', as: 'likes' });
 Like.belongsTo(Project, { foreignKey: 'projectId', as: 'project' });
 
+User.hasMany(Contract, { foreignKey: 'senderId', as: 'sentContracts' })
+Contract.belongsTo(User, { foreignKey: 'senderId', as: 'sender' })
+
+User.hasMany(Contract, { foreignKey: 'receiverId', as: 'receivedContracts' })
+Contract.belongsTo(User, { foreignKey: 'receiverId', as: 'receiver' })
 
 module.exports = {
 	...sequelize.models,

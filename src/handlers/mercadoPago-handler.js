@@ -1,6 +1,10 @@
-const {createPreference, cancelSubscription} = require('../controllers/mercadoPago-controller')
+const {
+	createPreference,
+	createStripePreference,
+	paymentNotificationController,
+} = require('../controllers/mercadoPago-controller')
+
 const { getUserByIdController } = require('../controllers/users-controller')
-const youArePremium = require('../mailer/newPremium')
 
 const { User, Plan } = require('../db')
 
@@ -22,21 +26,29 @@ const mercadoPagoPreference = async (req, res) => {
 const mercadoPagoNotification = async (req, res) => {
 	try {
 		const payment = req.body
-		if (payment.type === 'payment' && payment.data.status === 'approved') {
-			const userId = payment.data.external_reference
-			const user = await User.findByPk(userId)
-			const premiumPlan = await Plan.findOne({ where: { planName: 'Premium' } })
-			if (!user) {
-				return res.status(404).json({ message: 'User not found' })
-			}
-			user.planName = premiumPlan.planName
-			await user.save()
-			await youArePremium(payment)
+		const response = await paymentNotificationController(payment)
+		res.status(200).json(response)
+	} catch (error) {
+		res.status(500).send(error.message)
+	}
+}
 
-			res.status(200).json({ message: 'User updated to premium' })
-		} else {
-			res.status(200).json({ message: 'Payment not approved or not a payment type' })
-		}
+const stripePreference = async (req, res) => {
+	const { title, quantity, unit_price } = req.body
+	try {
+		const response = await createStripePreference(title, quantity, unit_price)
+
+		res.status(200).json(response)
+	} catch (error) {
+		res.status(500).send(error.message)
+	}
+}
+
+const stripeWebhook = async (req, res) => {
+	const payment = req.body
+	try {
+		const response = await paymentNotificationController(payment)
+		res.status(200).json(response)
 	} catch (error) {
 		res.status(500).send(error.message)
 	}
@@ -44,30 +56,30 @@ const mercadoPagoNotification = async (req, res) => {
 
 const cancelSubscriptionHandler = async (req, res) => {
 	try {
-	  const { userId } = req.body;
-	  console.log('Received cancel request with userId:', userId); 
-	  if (!userId) {
-		return res.status(400).json({ error: 'User ID is required' });
-	  }
-	  const user = await User.findByPk(userId);
-	  if (!user) {
-		return res.status(404).json({ error: 'User not found' });
-	  }
-	  const freePlan = await Plan.findOne({ where: { planName: 'Free' } });
-	  if (!freePlan) {
-		return res.status(404).json({ error: 'Free plan not found' });
-	  }
-	  user.planName = freePlan.planName;
-	  await user.save();
-	  return res.status(200).json({ message: 'Subscription canceled and user updated to free plan' });
+		const { userId } = req.body
+		if (!userId) {
+			return res.status(400).json({ error: 'User ID is required' })
+		}
+		const user = await User.findByPk(userId)
+		if (!user) {
+			return res.status(404).json({ error: 'User not found' })
+		}
+		const freePlan = await Plan.findOne({ where: { planName: 'Free' } })
+		if (!freePlan) {
+			return res.status(404).json({ error: 'Free plan not found' })
+		}
+		user.planName = freePlan.planName
+		await user.save()
+		return res.status(200).json({ message: 'Subscription canceled and user updated to free plan' })
 	} catch (error) {
-	  return res.status(500).json({ error: 'Internal server error' });
+		return res.status(500).json({ error: 'Internal server error' })
 	}
-  };
-  
+}
 
 module.exports = {
 	mercadoPagoPreference,
 	mercadoPagoNotification,
-	cancelSubscriptionHandler
+	cancelSubscriptionHandler,
+	stripeWebhook,
+	stripePreference,
 }

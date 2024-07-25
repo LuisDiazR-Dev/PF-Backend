@@ -6,16 +6,16 @@ const techRouter = require('./techRouter')
 const mercadoPagoRouter = require('./mercadoPagoRouter')
 const tagRouter = require('./tagRouter')
 const likesRouter = require('./likesRouter')
-
-const { verifyToken } = require('../middlewares/auth-middleware')
+const contractRouter = require('./contractRouter')
 
 const router = Router()
 router.use('/', authRouter)
 router.use('/projects', projectsRouter)
 router.use('/technologies', techRouter)
-router.use('/users', verifyToken, usersRouter)
+router.use('/users', usersRouter)
 router.use('/payment', mercadoPagoRouter)
 router.use('/tags', tagRouter)
 router.use('/likes', likesRouter)
+router.use('/contract', contractRouter)
 
 module.exports = router
