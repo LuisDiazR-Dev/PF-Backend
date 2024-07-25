@@ -4,7 +4,8 @@ const {
 	getAllUsers,
 	getUserById,
 	getUserProfile,
-	updateUser,
+	updateUserProfile,
+	updateUserById,
 	deleteUserById,
 	deleteUserProfile,
 } = require('../handlers/users-handler')
@@ -14,7 +15,8 @@ const { verifyToken } = require('../middlewares/auth-middleware')
 usersRouter.get('/', getAllUsers)
 usersRouter.get('/profile', verifyToken, getUserProfile)
 usersRouter.get('/:id', getUserById)
-usersRouter.put('/', verifyToken, updateUser)
+usersRouter.put('/', verifyToken, updateUserProfile)
+usersRouter.put('/:id', verifyToken, updateUserById)
 usersRouter.delete('/', verifyToken, deleteUserProfile)
 usersRouter.delete('/:id', verifyToken, deleteUserById)
 
