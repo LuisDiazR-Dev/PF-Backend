@@ -38,9 +38,9 @@ const getUserProfile = async (req, res) => {
 
 const updateUserProfile = async (req, res) => {
 	try {
-		const { id } = req.user
+		const user = req.user
 		const userData = req.body
-		const response = await updateUserProfileController(userData, id)
+		const response = await updateUserProfileController(userData, user)
 		res.status(200).json(response)
 	} catch (error) {
 		res.status(500).send(error.message)
@@ -49,10 +49,9 @@ const updateUserProfile = async (req, res) => {
 
 const updateUserById = async (req, res) => {
 	try {
-		const { id } = req.params
+		const user = req.user;
 		const userData = req.body
-		const loggedUser = req.user;
-		const response = await updateUserByIdController(userData, id, loggedUser)
+		const response = await updateUserByIdController(userData, user)
 		res.status(200).json(response)
 	} catch (error) {
 		res.status(500).send(error.message)
