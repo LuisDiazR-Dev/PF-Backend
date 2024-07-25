@@ -24,7 +24,6 @@ const getProjectById = async (req, res) => {
 	try {
 		const { id } = req.params
 		const user = req.user ? req.user : undefined
-		console.log(id, user, 'asdasddsa');
 		const response = await getProjectByIdController(id, user)
 		res.status(200).json(response)
 	} catch (error) {
