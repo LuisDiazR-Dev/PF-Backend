@@ -192,9 +192,6 @@ const createProjectController = async (projectData, user) => {
 		await project.addTechnologies(techInstances)
 		await project.addTags(tagInstances)
 
-		console.log(typeof project.addTechnologies)
-		console.log(typeof project.addTags)
-
 		return {
 			...project.toJSON(),
 			technologies: techNames,
