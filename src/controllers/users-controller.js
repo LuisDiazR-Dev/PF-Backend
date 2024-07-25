@@ -1,7 +1,32 @@
-const { User, Project, Technology, Tag } = require('../db')
+const { User, Project, Technology, Tag, Plan } = require('../db')
 const { Op } = require('sequelize')
 const AppError = require('../utils/index')
+const Contract = require('../models/Contract')
 
+const include = [
+	{
+		model: Project,
+		as: 'projects',
+		include: [
+			{
+				model: Technology,
+				as: 'technologies',
+			},
+			{
+				model: Tag,
+				as: 'tags',
+			},
+		],
+	},
+	{
+		model: Contract,
+		as: 'contract',
+	},
+	{
+		model: Plan,
+		as: 'plan'
+	}
+]
 const getAllUsersController = async (search) => {
 	try {
 		let where = {}
@@ -10,7 +35,7 @@ const getAllUsersController = async (search) => {
 				{ userName: { [Op.iLike]: `%${search}%` } },
 				{ email: { [Op.iLike]: `%${search}%` } },
 			]
-		const users = await User.findAll({ where })
+		const users = await User.findAll({ where, include })
 		return users
 	} catch (error) {
 		throw error
@@ -19,24 +44,7 @@ const getAllUsersController = async (search) => {
 
 const getUserByIdController = async (id) => {
 	try {
-		const user = await User.findByPk(id, {
-			include: [
-				{
-					model: Project,
-					as: 'projects',
-					include: [
-						{
-							model: Technology,
-							as: 'technologies',
-						},
-						{
-							model: Tag,
-							as: 'tags',
-						},
-					],
-				},
-			],
-		})
+		const user = await User.findByPk(id, include)
 		if (!user) throw new AppError('User not found', 404)
 		return user
 	} catch (error) {

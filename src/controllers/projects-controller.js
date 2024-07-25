@@ -173,7 +173,6 @@ const createProjectController = async (projectData, user) => {
 			where: { title, userId: user.id },
 			defaults: { description, image },
 		})
-		console.log(project)
 		if (!created) throw new AppError('This project already exists in the database!', 400)
 		if (!technologies || technologies.length < 1)
 			throw new AppError('Add at least one technology', 400)
