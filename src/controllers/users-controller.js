@@ -44,9 +44,34 @@ const getUserByIdController = async (id) => {
 	}
 }
 
-const updateUserController = async (userData, id) => {
+const updateUserByIdController = async (userData, id) => {
 	try {
 		const user = await User.findByPk(id)
+		if (user.role !== 'admin') {
+			throw new AppError('You are not authorized to delete this user', 401)
+		}
+		await User.update(
+			{
+				userName: userData.userName ?? user.userName,
+				password: userData.password ?? user.password,
+				bio: userData.bio ?? user.bio,
+				image: userData.image ?? user.image,
+			},
+			{ where: { id: id } }
+		)
+		const updatedUser = await User.findByPk(id)
+		return updatedUser
+	} catch (error) {
+		throw error
+	}
+}
+
+const updateUserProfileController = async (userData, id) => {
+	try {
+		const user = await User.findByPk(id)
+		if (user.role !== 'user') {
+			throw new AppError('You are not authorized to delete this user', 401)
+		}
 		await User.update(
 			{
 				userName: userData.userName ?? user.userName,
@@ -96,7 +121,8 @@ const deleteUserProfileController = async (user) => {
 module.exports = {
 	getAllUsersController,
 	getUserByIdController,
-	updateUserController,
+	updateUserProfileController,
+	updateUserByIdController,
 	deleteUserByIdController,
 	deleteUserProfileController,
 }
