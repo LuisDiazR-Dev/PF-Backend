@@ -3,7 +3,10 @@ const {
 	createStripePreference,
 	paymentNotificationController,
 } = require('../controllers/mercadoPago-controller')
+
 const { getUserByIdController } = require('../controllers/users-controller')
+
+const { User, Plan } = require('../db')
 
 const mercadoPagoPreference = async (req, res) => {
 	const { title, quantity, unit_price, id } = req.body
@@ -54,7 +57,6 @@ const stripeWebhook = async (req, res) => {
 const cancelSubscriptionHandler = async (req, res) => {
 	try {
 		const { userId } = req.body
-		console.log('Received cancel request with userId:', userId)
 		if (!userId) {
 			return res.status(400).json({ error: 'User ID is required' })
 		}
