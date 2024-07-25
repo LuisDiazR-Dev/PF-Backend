@@ -31,8 +31,8 @@ const getUserByIdController = async (id) => {
 						},
 						{
 							model: Tag,
-							as: 'tags'
-						}
+							as: 'tags',
+						},
 					],
 				},
 			],
@@ -44,9 +44,35 @@ const getUserByIdController = async (id) => {
 	}
 }
 
-const updateUserController = async (userData, id) => {
+const updateUserByIdController = async (userData, id, loggedUser) => {
+	try {
+		const userAdmin = await User.findByPk(loggedUser.id)
+		if (userAdmin.role !== 'admin') {
+			throw new AppError('You are not authorized to delete this user', 401)
+		}
+		const user = await User.findByPk(id)
+		await User.update(
+			{
+				userName: userData.userName ?? user.userName,
+				password: userData.password ?? user.password,
+				bio: userData.bio ?? user.bio,
+				image: userData.image ?? user.image,
+			},
+			{ where: { id: id } }
+		)
+		const updatedUser = await User.findByPk(id)
+		return updatedUser
+	} catch (error) {
+		throw error
+	}
+}
+
+const updateUserProfileController = async (userData, id) => {
 	try {
 		const user = await User.findByPk(id)
+		if (user.role !== 'user') {
+			throw new AppError('You are not authorized to delete this user', 401)
+		}
 		await User.update(
 			{
 				userName: userData.userName ?? user.userName,
@@ -78,9 +104,26 @@ const deleteUserByIdController = async (id, user) => {
 	}
 }
 
+const deleteUserProfileController = async (user) => {
+	try {
+		const userToDelete = await User.findByPk(user.id)
+		if (!userToDelete) throw new AppError('User not found', 404)
+		if (user.role !== 'user') {
+			throw new AppError('You are not authorized to delete this user', 401)
+		}
+		await User.destroy({ where: { id: user.id } })
+		return { message: 'User deleted successfully' }
+	} catch (error) {
+		console.error(`Error deleting user: ${error.message}`)
+		throw new AppError(error.message || `Error deleting user`, error.statusCode || 500)
+	}
+}
+
 module.exports = {
 	getAllUsersController,
 	getUserByIdController,
-	updateUserController,
+	updateUserProfileController,
+	updateUserByIdController,
 	deleteUserByIdController,
+	deleteUserProfileController,
 }
