@@ -31,8 +31,8 @@ const getUserByIdController = async (id) => {
 						},
 						{
 							model: Tag,
-							as: 'tags'
-						}
+							as: 'tags',
+						},
 					],
 				},
 			],
@@ -78,9 +78,25 @@ const deleteUserByIdController = async (id, user) => {
 	}
 }
 
+const deleteUserProfileController = async (user) => {
+	try {
+		const userToDelete = await User.findByPk(user.id)
+		if (!userToDelete) throw new AppError('User not found', 404)
+		if (user.role !== 'user') {
+			throw new AppError('You are not authorized to delete this user', 401)
+		}
+		await User.destroy({ where: { id: user.id } })
+		return { message: 'User deleted successfully' }
+	} catch (error) {
+		console.error(`Error deleting user: ${error.message}`)
+		throw new AppError(error.message || `Error deleting user`, error.statusCode || 500)
+	}
+}
+
 module.exports = {
 	getAllUsersController,
 	getUserByIdController,
 	updateUserController,
 	deleteUserByIdController,
+	deleteUserProfileController,
 }
