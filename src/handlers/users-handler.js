@@ -51,7 +51,8 @@ const updateUserById = async (req, res) => {
 	try {
 		const { id } = req.params
 		const userData = req.body
-		const response = await updateUserByIdController(userData, id)
+		const loggedUser = req.user;
+		const response = await updateUserByIdController(userData, id, loggedUser)
 		res.status(200).json(response)
 	} catch (error) {
 		res.status(500).send(error.message)

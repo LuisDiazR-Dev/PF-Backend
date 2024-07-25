@@ -44,12 +44,13 @@ const getUserByIdController = async (id) => {
 	}
 }
 
-const updateUserByIdController = async (userData, id) => {
+const updateUserByIdController = async (userData, id, loggedUser) => {
 	try {
-		const user = await User.findByPk(id)
-		if (user.role !== 'admin') {
+		const userAdmin = await User.findByPk(loggedUser.id)
+		if (userAdmin.role !== 'admin') {
 			throw new AppError('You are not authorized to delete this user', 401)
 		}
+		const user = await User.findByPk(id)
 		await User.update(
 			{
 				userName: userData.userName ?? user.userName,
