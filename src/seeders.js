@@ -1,4 +1,4 @@
-const { User, Project, Technology, Plan } = require('./db')
+const { User, Project, Technology, Plan, Tag } = require('./db')
 
 const createSeeders = async () => {
 	try {
@@ -252,351 +252,425 @@ const createSeeders = async () => {
 			},
 		]
 
-		console.log(`Free and premium plans have been added to the database!`)
+		console.log('Free and premium plans have been added to the database!')
 
-        const createdUsers = await Promise.all(
-            users.map(async (user) => {
-                const [createdUser] = await User.findOrCreate({
-                    where: user,
-                })
-                return createdUser
-            })
-        )   
+		const createdUsers = await Promise.all(
+			users.map(async (user) => {
+				const [createdUser] = await User.findOrCreate({
+					where: user,
+				})
+				return createdUser
+			})
+		)
 
-        const projects = [
-            {
-                title: 'Project Management App',
-                description: 'An app to manage programming projects effectively',
-                tags: ['management', 'productivity', 'collaboration'],
-                image:
-                    'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
-                technologies: ['JavaScript', 'React', 'Node.js'],
-                userId: createdUsers[0].id,
-            },
-            {
-                title: 'E-commerce Platform',
-                description: 'A scalable e-commerce platform with multiple features',
-                tags: ['e-commerce', 'sales', 'shopping'],
-                image:
-                    'https://img.freepik.com/vector-gratis/analisis-datos-estadisticos-administracion-financiera-diagrama-circular-segmentos-coloridos-grafico-circular-negocios-estadistica-auditoria-consultoria_335657-2325.jpg?ga=GA1.1.809440281.1720916925&semt=sph',
-                technologies: ['Python', 'Django', 'PostgreSQL'],
-                userId: createdUsers[1].id,
-            },
-            {
-                title: 'Social Networking Site',
-                description: 'A site to connect with friends and family',
-                tags: ['social', 'networking', 'community'],
-                image:
-                    'https://img.freepik.com/foto-gratis/papeles-comerciales-naturaleza-muerta-varias-piezas-mecanismo_23-2149352652.jpg?ga=GA1.1.809440281.1720916925&semt=sph',
-                technologies: ['Ruby', 'Rails', 'SQLite'],
-                userId: createdUsers[2].id,
-            },
-            {
-                title: 'Fitness Tracker',
-                description: 'An app to track fitness activities and goals',
-                tags: ['fitness', 'health', 'tracking'],
-                image:
-                    'https://img.freepik.com/vector-gratis/ilustracion-concepto-colaboracion_114360-3960.jpg?ga=GA1.1.809440281.1720916925&semt=sph',
-                technologies: ['Java', 'Spring Boot', 'MySQL'],
-                userId: createdUsers[3].id,
-            },
-            {
-                title: 'Recipe Sharing Platform',
-                description: 'A platform to share and discover new recipes',
-                tags: ['cooking', 'recipes', 'food'],
-                image:
-                    'https://img.freepik.com/vector-gratis/encabezado-tipografico-desarrollador-frontend-mejora-diseno-interfaz-sitio-web-programacion-pagina-web-codificacion-prueba-profesion-ti-ilustracion-vector-plano-aislado_613284-304.jpg?ga=GA1.1.809440281.1720916925&semt=sph',
-                technologies: ['PHP', 'Laravel', 'MongoDB'],
-                userId: createdUsers[4].id,
-            },
-            {
-                title: 'Music Streaming Service',
-                description: 'A service to stream and discover new music',
-                tags: ['music', 'streaming', 'entertainment'],
-                image:
-                    'https://img.freepik.com/fotos-premium/innovaciones-desarrollo-software_810293-130724.jpg?ga=GA1.1.809440281.1720916925&semt=sph',
-                technologies: ['Java', 'Spring Boot', 'PostgreSQL'],
-                userId: createdUsers[5].id,
-            },
-            {
-                title: 'Weather Forecast App',
-                description: 'An app to get the latest weather forecasts',
-                tags: ['weather', 'forecast', 'environment'],
-                image:
-                    'https://img.freepik.com/fotos-premium/hombre-que-sostiene-telefono-inteligente-api-interfaz-programacion-aplicaciones-desarrollo-software-tecnologia_220873-5934.jpg?ga=GA1.1.809440281.1720916925&semt=sph',
-                technologies: ['JavaScript', 'React', 'Node.js'],
-                userId: createdUsers[6].id,
-            },
-            {
-                title: 'Travel Booking Platform',
-                description: 'A platform to book travel tickets and accommodations',
-                tags: ['travel', 'booking', 'tourism'],
-                image:
-                    'https://img.freepik.com/foto-gratis/concepto-pagina-inicio-barra-busqueda_23-2150040212.jpg?ga=GA1.1.809440281.1720916925&semt=sph',
-                technologies: ['Python', 'Django', 'MySQL'],
-                userId: createdUsers[7].id,
-            },
-            {
-                title: 'Online Learning Platform',
-                description: 'A platform to offer and take online courses',
-                tags: ['education', 'learning', 'courses'],
-                image:
-                    'https://img.freepik.com/fotos-premium/empresarios-estan-discutiendo-graficos-informes-analisis-marketing-marketing-digital-e-informacion-graficos-seo-optimizar-marketing-contenido-palabra-clave-investigacion-contenido_36325-4571.jpg?ga=GA1.1.809440281.1720916925&semt=sph',
-                technologies: ['Ruby', 'Rails', 'PostgreSQL'],
-                userId: createdUsers[8].id,
-            },
-            {
-                title: 'Job Search Website',
-                description: 'A website to search and apply for jobs',
-                tags: ['jobs', 'career', 'employment'],
-                image:
-                    'https://img.freepik.com/foto-gratis/concepto-collage-html-css-persona_23-2150062004.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
-                technologies: ['PHP', 'Laravel', 'SQLite'],
-                userId: createdUsers[9].id,
-            },
-            {
-                title: 'Online Marketplace',
-                description: 'A platform to buy and sell products online',
-                tags: ['marketplace', 'shopping', 'sales'],
-                image:
-                    'https://img.freepik.com/foto-gratis/persona-frente-computadora-trabajando-html_23-2150040412.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
-                technologies: ['JavaScript', 'React', 'Node.js'],
-                userId: createdUsers[10].id,
-            },
-            {
-                title: 'Photo Sharing App',
-                description: 'An app to share and discover photos',
-                tags: ['photos', 'sharing', 'social'],
-                image:
-                    'https://img.freepik.com/foto-gratis/concepto-tecnologia-desarrollador-programacion-aplicaciones-software_53876-120917.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
-                technologies: ['Python', 'Django', 'PostgreSQL'],
-                userId: createdUsers[11].id,
-            },
-            {
-                title: 'Task Management Tool',
-                description: 'A tool to manage and organize tasks',
-                tags: ['tasks', 'management', 'productivity'],
-                image:
-                    'https://img.freepik.com/fotos-premium/codigo-programacion-desarrollador-software-codigo-script-computadora-abstracto-enfoque-selectivo_372999-11179.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
-                technologies: ['Ruby', 'Rails', 'MySQL'],
-                userId: createdUsers[12].id,
-            },
-            {
-                title: 'Real Estate Platform',
-                description: 'A platform to buy, sell, and rent properties',
-                tags: ['real estate', 'properties', 'sales'],
-                image:
-                    'https://img.freepik.com/foto-gratis/experiencia-programacion-persona-que-trabaja-codigos-computadora_23-2150010119.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
-                technologies: ['PHP', 'Laravel', 'PostgreSQL'],
-                userId: createdUsers[13].id,
-            },
-            {
-                title: 'Fitness App',
-                description: 'An app to track fitness activities and workouts',
-                tags: ['fitness', 'health', 'tracking'],
-                image:
-                    'https://img.freepik.com/fotos-premium/redactor-codigo-ide-proyecto-javascript-abierto-usando-reaccionar_673750-294.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
-                technologies: ['Java', 'Spring Boot', 'MongoDB'],
-                userId: createdUsers[14].id,
-            },
-            {
-                title: 'Event Management System',
-                description: 'A system to manage and organize events',
-                tags: ['events', 'management', 'organization'],
-                image:
-                    'https://img.freepik.com/fotos-premium/primer-plano-senal-informacion_1048944-23817061.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
-                technologies: ['JavaScript', 'React', 'Node.js'],
-                userId: createdUsers[15].id,
-            },
-            {
-                title: 'Online Survey Tool',
-                description: 'A tool to create and conduct online surveys',
-                tags: ['surveys', 'feedback', 'research'],
-                image:
-                    'https://img.freepik.com/foto-gratis/experiencia-programacion-persona-que-trabaja-codigos-computadora_23-2150010125.jpg?ga=GA1.1.809440281.1720916925&semt=sph',
-                technologies: ['Python', 'Django', 'MySQL'],
-                userId: createdUsers[16].id,
-            },
-            {
-                title: 'Budget Management App',
-                description: 'An app to manage and track budgets',
-                tags: ['budget', 'finance', 'tracking'],
-                image:
-                    'https://img.freepik.com/foto-gratis/codigo-programa-computadora_1385-635.jpg?ga=GA1.1.809440281.1720916925&semt=sph',
-                technologies: ['Ruby', 'Rails', 'PostgreSQL'],
-                userId: createdUsers[17].id,
-            },
-            {
-                title: 'Blog Platform',
-                description: 'A platform to create and share blog posts',
-                tags: ['blog', 'writing', 'sharing'],
-                image:
-                    'https://img.freepik.com/vector-gratis/ilustracion-concepto-modo-horizontal_114360-5119.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
-                technologies: ['PHP', 'Laravel', 'SQLite'],
-                userId: createdUsers[18].id,
-            },
-            {
-                title: 'Video Streaming Service',
-                description: 'A service to stream and watch videos',
-                tags: ['video', 'streaming', 'entertainment'],
-                image:
-                    'https://img.freepik.com/fotos-premium/hombre-sostiene-pantalla-tira-video_858586-88.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
-                technologies: ['JavaScript', 'React', 'Node.js'],
-                userId: createdUsers[19].id,
-            },
-            {
-                title: 'Customer Support Chatbot',
-                description: 'A chatbot to provide customer support',
-                tags: ['chatbot', 'support', 'AI'],
-                image:
-                    'https://img.freepik.com/vector-gratis/ilustracion-concepto-sistema-organizacion_114360-885.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
-                technologies: ['Python', 'Django', 'PostgreSQL'],
-                userId: createdUsers[20].id,
-            },
-            {
-                title: 'Meditation App',
-                description: 'An app to guide and track meditation sessions',
-                tags: ['meditation', 'health', 'wellness'],
-                image:
-                    'https://img.freepik.com/vector-premium/desarrollador-web-responsive-design_24911-30993.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
-                technologies: ['Ruby', 'Rails', 'MySQL'],
-                userId: createdUsers[1].id,
-            },
-            {
-                title: 'Online Quiz Platform',
-                description: 'A platform to create and take quizzes',
-                tags: ['quiz', 'education', 'learning'],
-                image:
-                    'https://img.freepik.com/vector-gratis/dibujado-mano-ilustracion-sql-diseno-plano_23-2149245996.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
-                technologies: ['PHP', 'Laravel', 'PostgreSQL'],
-                userId: createdUsers[2].id,
-            },
-            {
-                title: 'Food Delivery App',
-                description: 'An app to order food from restaurants',
-                tags: ['food', 'delivery', 'ordering'],
-                image:
-                    'https://img.freepik.com/vector-premium/desarrollo-aplicaciones-tecnologicas_88272-5052.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
-                technologies: ['Java', 'Spring Boot', 'MongoDB'],
-                userId: createdUsers[3].id,
-            },
-            {
-                title: 'Language Learning App',
-                description: 'An app to learn new languages',
-                tags: ['languages', 'education', 'learning'],
-                image:
-                    'https://img.freepik.com/vector-gratis/desarrolladores-software-trabajando-codificacion-scripts-ingeniero-programacion-caracteres-php-python-javascript-otros-lenguajes_90220-243.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
-                technologies: ['JavaScript', 'React', 'Node.js'],
-                userId: createdUsers[4].id,
-            },
-            {
-                title: 'Home Automation System',
-                description: 'A system to automate and control home devices',
-                tags: ['home', 'automation', 'IoT'],
-                image:
-                    'https://img.freepik.com/vector-gratis/ilustracion-api-diseno-plano-dibujado-mano_23-2149365021.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
-                technologies: ['Python', 'Django', 'MySQL'],
-                serId: createdUsers[5].id,
-            },
-        ]
+		const projects = [
+			{
+				title: 'Project Management App',
+				description: 'An app to manage programming projects effectively',
+				tags: ['management', 'productivity', 'collaboration'],
+				image:
+					'https://img.freepik.com/foto-gratis/fotografia-lateral-editor-codigo-que-utiliza-react-js_181624-61842.jpg?t=st=1720916999~exp=1720920599~hmac=d8a2806277e04bc4c916f77520e6c8369ee55ab8b14e50b7b9f70ef6f957969e&w=1800',
+				technologies: ['JavaScript', 'React', 'Node.js'],
+				userId: createdUsers[0].id,
+			},
+			{
+				title: 'E-commerce Platform',
+				description: 'A scalable e-commerce platform with multiple features',
+				tags: ['e-commerce', 'sales', 'shopping'],
+				image:
+					'https://img.freepik.com/vector-gratis/analisis-datos-estadisticos-administracion-financiera-diagrama-circular-segmentos-coloridos-grafico-circular-negocios-estadistica-auditoria-consultoria_335657-2325.jpg?ga=GA1.1.809440281.1720916925&semt=sph',
+				technologies: ['Python', 'Django', 'PostgreSQL'],
+				userId: createdUsers[1].id,
+			},
+			{
+				title: 'Social Networking Site',
+				description: 'A site to connect with friends and family',
+				tags: ['social', 'networking', 'community'],
+				image:
+					'https://img.freepik.com/foto-gratis/papeles-comerciales-naturaleza-muerta-varias-piezas-mecanismo_23-2149352652.jpg?ga=GA1.1.809440281.1720916925&semt=sph',
+				technologies: ['Ruby', 'Rails', 'SQLite'],
+				userId: createdUsers[2].id,
+			},
+			{
+				title: 'Fitness Tracker',
+				description: 'An app to track fitness activities and goals',
+				tags: ['fitness', 'health', 'tracking'],
+				image:
+					'https://img.freepik.com/vector-gratis/ilustracion-concepto-colaboracion_114360-3960.jpg?ga=GA1.1.809440281.1720916925&semt=sph',
+				technologies: ['Java', 'Spring Boot', 'MySQL'],
+				userId: createdUsers[3].id,
+			},
+			{
+				title: 'Recipe Sharing Platform',
+				description: 'A platform to share and discover new recipes',
+				tags: ['cooking', 'recipes', 'food'],
+				image:
+					'https://img.freepik.com/vector-gratis/encabezado-tipografico-desarrollador-frontend-mejora-diseno-interfaz-sitio-web-programacion-pagina-web-codificacion-prueba-profesion-ti-ilustracion-vector-plano-aislado_613284-304.jpg?ga=GA1.1.809440281.1720916925&semt=sph',
+				technologies: ['PHP', 'Laravel', 'MongoDB'],
+				userId: createdUsers[4].id,
+			},
+			{
+				title: 'Music Streaming Service',
+				description: 'A service to stream and discover new music',
+				tags: ['music', 'streaming', 'entertainment'],
+				image:
+					'https://img.freepik.com/fotos-premium/innovaciones-desarrollo-software_810293-130724.jpg?ga=GA1.1.809440281.1720916925&semt=sph',
+				technologies: ['Java', 'Spring Boot', 'PostgreSQL'],
+				userId: createdUsers[5].id,
+			},
+			{
+				title: 'Weather Forecast App',
+				description: 'An app to get the latest weather forecasts',
+				tags: ['weather', 'forecast', 'environment'],
+				image:
+					'https://img.freepik.com/fotos-premium/hombre-que-sostiene-telefono-inteligente-api-interfaz-programacion-aplicaciones-desarrollo-software-tecnologia_220873-5934.jpg?ga=GA1.1.809440281.1720916925&semt=sph',
+				technologies: ['JavaScript', 'React', 'Node.js'],
+				userId: createdUsers[6].id,
+			},
+			{
+				title: 'Travel Booking Platform',
+				description: 'A platform to book travel tickets and accommodations',
+				tags: ['travel', 'booking', 'tourism'],
+				image:
+					'https://img.freepik.com/foto-gratis/concepto-pagina-inicio-barra-busqueda_23-2150040212.jpg?ga=GA1.1.809440281.1720916925&semt=sph',
+				technologies: ['Python', 'Django', 'MySQL'],
+				userId: createdUsers[7].id,
+			},
+			{
+				title: 'Online Learning Platform',
+				description: 'A platform to offer and take online courses',
+				tags: ['education', 'learning', 'courses'],
+				image:
+					'https://img.freepik.com/fotos-premium/empresarios-estan-discutiendo-graficos-informes-analisis-marketing-marketing-digital-e-informacion-graficos-seo-optimizar-marketing-contenido-palabra-clave-investigacion-contenido_36325-4571.jpg?ga=GA1.1.809440281.1720916925&semt=sph',
+				technologies: ['Ruby', 'Rails', 'PostgreSQL'],
+				userId: createdUsers[8].id,
+			},
+			{
+				title: 'Job Search Website',
+				description: 'A website to search and apply for jobs',
+				tags: ['jobs', 'career', 'employment'],
+				image:
+					'https://img.freepik.com/foto-gratis/concepto-collage-html-css-persona_23-2150062004.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+				technologies: ['PHP', 'Laravel', 'SQLite'],
+				userId: createdUsers[9].id,
+			},
+			{
+				title: 'Online Marketplace',
+				description: 'A platform to buy and sell products online',
+				tags: ['marketplace', 'shopping', 'sales'],
+				image:
+					'https://img.freepik.com/foto-gratis/persona-frente-computadora-trabajando-html_23-2150040412.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+				technologies: ['JavaScript', 'React', 'Node.js'],
+				userId: createdUsers[10].id,
+			},
+			{
+				title: 'Photo Sharing App',
+				description: 'An app to share and discover photos',
+				tags: ['photos', 'sharing', 'social'],
+				image:
+					'https://img.freepik.com/foto-gratis/concepto-tecnologia-desarrollador-programacion-aplicaciones-software_53876-120917.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+				technologies: ['Python', 'Django', 'PostgreSQL'],
+				userId: createdUsers[11].id,
+			},
+			{
+				title: 'Task Management Tool',
+				description: 'A tool to manage and organize tasks',
+				tags: ['tasks', 'management', 'productivity'],
+				image:
+					'https://img.freepik.com/fotos-premium/codigo-programacion-desarrollador-software-codigo-script-computadora-abstracto-enfoque-selectivo_372999-11179.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+				technologies: ['Ruby', 'Rails', 'MySQL'],
+				userId: createdUsers[12].id,
+			},
+			{
+				title: 'Real Estate Platform',
+				description: 'A platform to buy, sell, and rent properties',
+				tags: ['real estate', 'properties', 'sales'],
+				image:
+					'https://img.freepik.com/foto-gratis/experiencia-programacion-persona-que-trabaja-codigos-computadora_23-2150010119.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+				technologies: ['PHP', 'Laravel', 'PostgreSQL'],
+				userId: createdUsers[13].id,
+			},
+			{
+				title: 'Fitness App',
+				description: 'An app to track fitness activities and workouts',
+				tags: ['fitness', 'health', 'tracking'],
+				image:
+					'https://img.freepik.com/fotos-premium/redactor-codigo-ide-proyecto-javascript-abierto-usando-reaccionar_673750-294.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+				technologies: ['Java', 'Spring Boot', 'MongoDB'],
+				userId: createdUsers[14].id,
+			},
+			{
+				title: 'Event Management System',
+				description: 'A system to manage and organize events',
+				tags: ['events', 'management', 'organization'],
+				image:
+					'https://img.freepik.com/fotos-premium/primer-plano-senal-informacion_1048944-23817061.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+				technologies: ['JavaScript', 'React', 'Node.js'],
+				userId: createdUsers[15].id,
+			},
+			{
+				title: 'Online Survey Tool',
+				description: 'A tool to create and conduct online surveys',
+				tags: ['surveys', 'feedback', 'research'],
+				image:
+					'https://img.freepik.com/foto-gratis/experiencia-programacion-persona-que-trabaja-codigos-computadora_23-2150010125.jpg?ga=GA1.1.809440281.1720916925&semt=sph',
+				technologies: ['Python', 'Django', 'MySQL'],
+				userId: createdUsers[16].id,
+			},
+			{
+				title: 'Budget Management App',
+				description: 'An app to manage and track budgets',
+				tags: ['budget', 'finance', 'tracking'],
+				image:
+					'https://img.freepik.com/foto-gratis/codigo-programa-computadora_1385-635.jpg?ga=GA1.1.809440281.1720916925&semt=sph',
+				technologies: ['Ruby', 'Rails', 'PostgreSQL'],
+				userId: createdUsers[17].id,
+			},
+			{
+				title: 'Blog Platform',
+				description: 'A platform to create and share blog posts',
+				tags: ['blog', 'writing', 'sharing'],
+				image:
+					'https://img.freepik.com/vector-gratis/ilustracion-concepto-modo-horizontal_114360-5119.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+				technologies: ['PHP', 'Laravel', 'SQLite'],
+				userId: createdUsers[18].id,
+			},
+			{
+				title: 'Video Streaming Service',
+				description: 'A service to stream and watch videos',
+				tags: ['video', 'streaming', 'entertainment'],
+				image:
+					'https://img.freepik.com/fotos-premium/hombre-sostiene-pantalla-tira-video_858586-88.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+				technologies: ['JavaScript', 'React', 'Node.js'],
+				userId: createdUsers[19].id,
+			},
+			{
+				title: 'Customer Support Chatbot',
+				description: 'A chatbot to provide customer support',
+				tags: ['chatbot', 'support', 'AI'],
+				image:
+					'https://img.freepik.com/vector-gratis/ilustracion-concepto-sistema-organizacion_114360-885.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+				technologies: ['Python', 'Django', 'PostgreSQL'],
+				userId: createdUsers[20].id,
+			},
+			{
+				title: 'Meditation App',
+				description: 'An app to guide and track meditation sessions',
+				tags: ['meditation', 'health', 'wellness'],
+				image:
+					'https://img.freepik.com/vector-premium/desarrollador-web-responsive-design_24911-30993.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+				technologies: ['Ruby', 'Rails', 'MySQL'],
+				userId: createdUsers[1].id,
+			},
+			{
+				title: 'Online Quiz Platform',
+				description: 'A platform to create and take quizzes',
+				tags: ['quiz', 'education', 'learning'],
+				image:
+					'https://img.freepik.com/vector-gratis/dibujado-mano-ilustracion-sql-diseno-plano_23-2149245996.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+				technologies: ['PHP', 'Laravel', 'PostgreSQL'],
+				userId: createdUsers[2].id,
+			},
+			{
+				title: 'Food Delivery App',
+				description: 'An app to order food from restaurants',
+				tags: ['food', 'delivery', 'ordering'],
+				image:
+					'https://img.freepik.com/vector-premium/desarrollo-aplicaciones-tecnologicas_88272-5052.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+				technologies: ['Java', 'Spring Boot', 'MongoDB'],
+				userId: createdUsers[3].id,
+			},
+			{
+				title: 'Language Learning App',
+				description: 'An app to learn new languages',
+				tags: ['languages', 'education', 'learning'],
+				image:
+					'https://img.freepik.com/vector-gratis/desarrolladores-software-trabajando-codificacion-scripts-ingeniero-programacion-caracteres-php-python-javascript-otros-lenguajes_90220-243.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+				technologies: ['JavaScript', 'React', 'Node.js'],
+				userId: createdUsers[4].id,
+			},
+			{
+				title: 'Home Automation System',
+				description: 'A system to automate and control home devices',
+				tags: ['home', 'automation', 'IoT'],
+				image:
+					'https://img.freepik.com/vector-gratis/ilustracion-api-diseno-plano-dibujado-mano_23-2149365021.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+				technologies: ['Python', 'Django', 'MySQL'],
+				userId: createdUsers[5].id,
+			},
+		]
 
-        const technologies = [
-            'MongoDB',
-            'Spring Boot',
-            'MySQL',
-            'Laravel',
-            'Django',
-            'Node.js',
-            'JavaScript',
-            'Python',
-            'Java',
-            'C#',
-            'C++',
-            'Ruby',
-            'PHP',
-            'Swift',
-            'TypeScript',
-            'Go',
-            'Kotlin',
-            'Rust',
-            'Scala',
-            'Objective-C',
-            'Perl',
-            'R',
-            'Dart',
-            'Elixir',
-            'Haskell',
-            'Lua',
-            'MATLAB',
-            'Clojure',
-            'Shell',
-            'SQL',
-            'HTML',
-            'CSS',
-            'Sass',
-            'Less',
-            'XML',
-            'JSON',
-            'YAML',
-            'Markdown',
-            'GraphQL',
-            'PL/SQL',
-            'Transact-SQL',
-            'VHDL',
-            'Verilog',
-            'Assembly',
-            'Fortran',
-            'COBOL',
-            'Pascal',
-            'Ada',
-            'Lisp',
-            'Scheme',
-            'F#',
-            'VB.NET',
-            'Groovy',
-            'Crystal',
-            'Nim',
-            'React',
-            'PostgreSQL',
-            'Rails',
-            'SQLite',
-        ]
+		const technologies = [
+			'MongoDB',
+			'Spring Boot',
+			'MySQL',
+			'Laravel',
+			'Django',
+			'Node.js',
+			'JavaScript',
+			'Python',
+			'Java',
+			'C#',
+			'C++',
+			'Ruby',
+			'PHP',
+			'Swift',
+			'TypeScript',
+			'Go',
+			'Kotlin',
+			'Rust',
+			'Scala',
+			'Objective-C',
+			'Perl',
+			'R',
+			'Dart',
+			'Elixir',
+			'Haskell',
+			'Lua',
+			'MATLAB',
+			'Clojure',
+			'Shell',
+			'SQL',
+			'HTML',
+			'CSS',
+			'Sass',
+			'Less',
+			'XML',
+			'JSON',
+			'YAML',
+			'Markdown',
+			'GraphQL',
+			'PL/SQL',
+			'Transact-SQL',
+			'VHDL',
+			'Verilog',
+			'Assembly',
+			'Fortran',
+			'COBOL',
+			'Pascal',
+			'Ada',
+			'Lisp',
+			'Scheme',
+			'F#',
+			'VB.NET',
+			'Groovy',
+			'Crystal',
+			'Nim',
+			'React',
+			'PostgreSQL',
+			'Rails',
+			'SQLite',
+		]
 
-        await Promise.all(
-            technologies.map(async (tech) => {
-                await Technology.findOrCreate({
-                    where: { name: tech },
-                });
-            })
-        );  
-        console.log('All technologies have been added to the database.')
+		await Promise.all(
+			technologies.map(async (tech) => {
+				await Technology.findOrCreate({
+					where: { name: tech },
+				})
+			})
+		)
+		console.log('All technologies have been added to the database.')
 
-        for (const projectData of projects) {
-            const user = createdUsers.find((u) => u.id === projectData.userId)
+		const tags = [
+			'management',
+			'productivity',
+			'collaboration',
+			'e-commerce',
+			'sales',
+			'shopping',
+			'social',
+			'networking',
+			'community',
+			'fitness',
+			'health',
+			'tracking',
+			'cooking',
+			'recipes',
+			'food',
+			'music',
+			'streaming',
+			'entertainment',
+			'weather',
+			'forecast',
+			'environment',
+			'travel',
+			'booking',
+			'tourism',
+			'education',
+			'learning',
+			'courses',
+			'jobs',
+			'career',
+			'employment',
+			'marketplace',
+			'photos',
+			'sharing',
+			'tasks',
+			'real estate',
+			'properties',
+			'events',
+			'organization',
+			'surveys',
+			'feedback',
+			'research',
+			'budget',
+			'finance',
+			'blog',
+			'writing',
+			'video',
+			'chatbot',
+			'support',
+			'AI',
+			'meditation',
+			'wellness',
+			'quiz',
+			'delivery',
+			'ordering',
+			'languages',
+			'home',
+			'automation',
+			'IoT',
+		]
 
-            const [newProject, created] = await Project.findOrCreate({
-                where: {
-                    title: projectData.title,
-                    description: projectData.description,
-                    tags: projectData.tags,
-                    image: projectData.image,
-                    userId: user.id,
-                },
-            })
+		await Promise.all(
+			tags.map(async (tag) => {
+				await Tag.findOrCreate({
+					where: { tagName: tag },
+				})
+			})
+		)
+		console.log('All tags have been added to the database')
 
-            const newTechnologies = await Promise.all(
-                projectData.technologies.map(
-                    async (technology) => (await Technology.findAll({ where: { name: technology } }))[0]
-                )
-            )
+		for (const projectData of projects) {
+			const user = createdUsers.find((u) => u.id === projectData.userId)
 
-            if (!created) await newProject.addTechnologies(newTechnologies)
-        }
+			const [newProject, created] = await Project.findOrCreate({
+				where: {
+					title: projectData.title,
+					description: projectData.description,
+					image: projectData.image,
+					userId: user.id,
+				},
+			})
 
-        console.log('Users and Projects alredy created!')
-    } catch (error) {
-        console.log(error)
-    }
+			const newTechnologies = await Promise.all(
+				projectData.technologies.map(
+					async (technology) => (await Technology.findAll({ where: { name: technology } }))[0]
+				)
+			)
+
+			const newTags = await Promise.all(
+				projectData.tags.map(async (tag) => (await Tag.findAll({ where: { tagName: tag } }))[0])
+			)
+
+			await newProject.addTechnologies(newTechnologies)
+			await newProject.addTags(newTags)
+		}
+
+		console.log('Users and Projects alredy created!')
+	} catch (error) {
+		console.log(error)
+	}
 }
 
-module.exports = createSeeders
+module.exports = createSeeders
