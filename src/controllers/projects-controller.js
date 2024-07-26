@@ -217,7 +217,7 @@ const createProjectController = async (projectData, user) => {
 const restoreProjectController = async (id) => {
 	try {
 		const project = await Project.findOne({
-			where: { id: id },
+			where: { id },
 			paranoid: false,
 			include: [
 				{
