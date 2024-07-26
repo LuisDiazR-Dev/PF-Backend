@@ -32,7 +32,7 @@ sequelize.models = Object.fromEntries(capsEntries)
 
 const { User, Project, Technology, Plan, Tag, Like, Contract, Review } = sequelize.models
 
-User.hasMany(Project, { foreignKey: 'userId', as: 'projects' })
+User.hasMany(Project, { foreignKey: 'userId', as: 'projects', onDelete: 'cascade' })
 Project.belongsTo(User, { foreignKey: 'userId', as: 'user' })
 
 Project.belongsToMany(Technology, { through: 'project_tech', as: 'technologies' })

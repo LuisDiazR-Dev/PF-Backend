@@ -99,12 +99,12 @@ const getProjectByIdController = async (id, user) => {
 
 		if (!projectData) throw new AppError(`Project with id ${id} not found`, 404)
 
-		const project = user ? {
+		const project = user
+			? {
 					...projectData.dataValues,
 					liked: projectData.likes.some((like) => like.userId == user.id),
-				} :
-				projectData.dataValues
-			console.log(project);
+			  }
+			: projectData.dataValues
 
 		return project
 	} catch (error) {
@@ -168,44 +168,56 @@ const getDeletedProjectByIdController = async (id) => {
 
 const createProjectController = async (projectData, user) => {
 	try {
-		const { title, description, tags, technologies, image } = projectData
-		const [project, created] = await Project.findOrCreate({
-			where: { title, userId: user.id },
-			defaults: { description, image },
+	  const { title, description, tags, technologies, image } = projectData;
+	  const [project, created] = await Project.findOrCreate({
+		where: { title, userId: user.id },
+		defaults: { description, image },
+	  });
+	  if (!created) throw new AppError('This project already exists in the database!', 400);
+	  if (!technologies || technologies.length < 1) throw new AppError('Add at least one technology', 400);
+	  if (!tags || tags.length < 1) throw new AppError('Add at least one tag', 400);
+	  console.log(tags, 'este es el console de tags');
+  
+	  const techNames = technologies.map((tech) => (typeof tech === 'string' ? tech : tech.name));
+	  const tagInstances = await Promise.all(
+		tags.map(async (tag) => {
+		  const [newTag] = await Tag.findOrCreate({ where: { tagName: tag.tagName } });
+		  return newTag;
 		})
-		if (!created) throw new AppError('This project already exists in the database!', 400)
-		if (!technologies || technologies.length < 1)
-			throw new AppError('Add at least one technology', 400)
-		if (!tags || tags.length < 1) throw new AppError('Add at least on tag', 400)
-
-		const techNames = technologies.map((tech) => (typeof tech === 'string' ? tech : tech.name))
-		const tagNames = tags.map((tag) => (typeof tag === 'string' ? tag : tag.tagName))
-
-		const techInstances = await Technology.findAll({ where: { name: techNames } })
-		const tagInstances = await Tag.findAll({ where: { tagName: tagNames } })
-
-		if (techInstances.length !== techNames.length)
-			throw new AppError('Some technologies were not found in the database', 400)
-		if (tagInstances.length !== tagNames.length)
-			throw new AppError('Some tags were not found in the database', 400)
-
-		await project.addTechnologies(techInstances)
-		await project.addTags(tagInstances)
-
-		return {
-			...project.toJSON(),
-			technologies: techNames,
-			tags: tagNames,
-		}
+	  );
+  
+	  const techInstances = await Technology.findAll({ where: { name: techNames } });
+	  console.log(tagInstances);
+  
+	  if (techInstances.length !== techNames.length)
+		throw new AppError('Some technologies were not found in the database', 400);
+  
+	  await project.addTechnologies(techInstances);
+	  await project.addTags(tagInstances);
+	  const newProject = await Project.findByPk(project.id, {
+		include: [
+		  {
+			model: Technology,
+			as: 'technologies',
+		  },
+		  {
+			model: Tag,
+			as: 'tags',
+		  },
+		],
+	  });
+	  return newProject;
 	} catch (error) {
-		throw new AppError('Error creating a project', 500)
+	  console.error(error);
+	  throw new AppError('Error creating a project', 500);
 	}
-}
+  };
+  
 
 const restoreProjectController = async (id) => {
 	try {
 		const project = await Project.findOne({
-			where: { id: id },
+			where: { id },
 			paranoid: false,
 			include: [
 				{
