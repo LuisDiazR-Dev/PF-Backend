@@ -57,19 +57,14 @@ const getUserByIdController = async (id) => {
 }
 
 const updateUserProfileController = async (userData, currentUser) => {
+	const data = userData.userData
 	try {
 		const updatingUser = await User.findByPk(currentUser.id)
 		if (!updatingUser || updatingUser.role !== 'user') {
 			throw new AppError('You are not authorized to update this user', 401)
 		}
 		await updatingUser.update(
-			{
-				userName: userData.userName ?? updatingUser.userName,
-				password: userData.password ?? updatingUser.password,
-				bio: userData.bio ?? updatingUser.bio,
-				aboutMe: userData.aboutMe ?? updatingUser.aboutMe,
-				image: userData.image ?? updatingUser.image,
-			},
+			data,
 			{ where: { id: updatingUser.id } }
 		)
 		const updatedUser = await User.findByPk(updatingUser.id)
@@ -99,7 +94,7 @@ const updateUserByIdController = async (userData, currentUser) => {
 			},
 			{ where: { id: userData.id } }
 		)
-		const updatedUser = await User.findByPk(userData.id)
+		const updatedUser = await User.findByPk(id)
 		return updatedUser
 	} catch (error) {
 		throw error
@@ -122,13 +117,17 @@ const deleteUserByIdController = async (id, user) => {
 }
 
 const deleteUserProfileController = async (user) => {
+	console.log(user.id)
+	const id = user.id
 	try {
+		console.log("AMBATAKAAAAM")
 		const userToDelete = await User.findByPk(user.id)
 		if (!userToDelete) throw new AppError('User not found', 404)
 		if (user.role !== 'user') {
 			throw new AppError('You are not authorized to delete this user', 401)
 		}
-		await User.destroy({ where: { id: user.id } })
+		console.log("SU")
+		await User.destroy({ where: { id } })
 		return { message: 'User deleted successfully' }
 	} catch (error) {
 		console.error(`Error deleting user: ${error.message}`)
