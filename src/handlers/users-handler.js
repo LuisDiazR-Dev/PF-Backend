@@ -30,6 +30,7 @@ const getUserProfile = async (req, res) => {
 	try {
 		const { id } = req.user
 		const response = await getUserByIdController(id)
+		console.log(response);
 		res.status(200).json(response)
 	} catch (error) {
 		res.status(500).send(error.message)
