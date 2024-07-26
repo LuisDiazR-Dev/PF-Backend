@@ -1,7 +1,6 @@
-const { User, Project, Technology, Tag, Plan } = require('../db')
+const { User, Project, Technology, Tag, Plan, Contract } = require('../db')
 const { Op } = require('sequelize')
 const AppError = require('../utils/index')
-const Contract = require('../models/Contract')
 
 const include = [
 	{
@@ -20,13 +19,18 @@ const include = [
 	},
 	{
 		model: Contract,
-		as: 'contract',
+		as: 'sentContracts',
+	},
+	{
+		model: Contract,
+		as: 'receivedContracts',
 	},
 	{
 		model: Plan,
-		as: 'plan'
-	}
+		as: 'plan',
+	},
 ]
+
 const getAllUsersController = async (search) => {
 	try {
 		let where = {}
@@ -44,7 +48,7 @@ const getAllUsersController = async (search) => {
 
 const getUserByIdController = async (id) => {
 	try {
-		const user = await User.findByPk(id, include)
+		const user = await User.findByPk(id)
 		if (!user) throw new AppError('User not found', 404)
 		return user
 	} catch (error) {

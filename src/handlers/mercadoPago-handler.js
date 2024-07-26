@@ -2,22 +2,15 @@ const {
 	createPreference,
 	createStripePreference,
 	paymentNotificationController,
+	cancelSubscriptionController,
 } = require('../controllers/mercadoPago-controller')
-
-const { getUserByIdController } = require('../controllers/users-controller')
-
 const { User, Plan } = require('../db')
 
 const mercadoPagoPreference = async (req, res) => {
-	const { title, quantity, unit_price, id } = req.body
-
 	try {
-		const loggedUser = await getUserByIdController(id)
-		const userId = loggedUser.id
-		if (!userId) {
-			return res.status(400).json({ message: 'User not found ' })
-		}
-		const response = await createPreference(title, quantity, unit_price, userId)
+		const user = req.user
+		const { title, quantity, unit_price } = req.body
+		const response = await createPreference(title, quantity, unit_price, user)
 		res.status(200).json(response)
 	} catch (error) {
 		res.status(500).send(error.message)
@@ -54,32 +47,20 @@ const stripeWebhook = async (req, res) => {
 	}
 }
 
-const cancelSubscriptionHandler = async (req, res) => {
+const cancelSubscription = async (req, res) => {
 	try {
-		const { userId } = req.body
-		if (!userId) {
-			return res.status(400).json({ error: 'User ID is required' })
-		}
-		const user = await User.findByPk(userId)
-		if (!user) {
-			return res.status(404).json({ error: 'User not found' })
-		}
-		const freePlan = await Plan.findOne({ where: { planName: 'Free' } })
-		if (!freePlan) {
-			return res.status(404).json({ error: 'Free plan not found' })
-		}
-		user.planName = freePlan.planName
-		await user.save()
-		return res.status(200).json({ message: 'Subscription canceled and user updated to free plan' })
+		const user = req.user
+		const response = await cancelSubscriptionController(user)
+		return res.status(200).json(response)
 	} catch (error) {
-		return res.status(500).json({ error: 'Internal server error' })
+		return res.status(500).json(error.message)
 	}
 }
 
 module.exports = {
 	mercadoPagoPreference,
 	mercadoPagoNotification,
-	cancelSubscriptionHandler,
+	cancelSubscription,
 	stripeWebhook,
 	stripePreference,
 }
