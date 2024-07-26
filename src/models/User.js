@@ -51,6 +51,17 @@ module.exports = (sequelize) => {
 					},
 				},
 			},
+			aboutMe: {
+				type: DataTypes.STRING,
+				allowNull: false,
+				defaultValue: '',
+				validate: {
+					len: {
+						args: [0, 5000],
+						msg: 'Bio should be up to 5000 characters',
+					},
+				},
+			},
 			image: {
 				type: DataTypes.STRING,
 				allowNull: false,

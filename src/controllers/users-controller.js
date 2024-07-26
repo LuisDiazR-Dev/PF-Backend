@@ -67,6 +67,7 @@ const updateUserProfileController = async (userData, currentUser) => {
 				userName: userData.userName ?? updatingUser.userName,
 				password: userData.password ?? updatingUser.password,
 				bio: userData.bio ?? updatingUser.bio,
+				aboutMe: userData.aboutMe ?? updatingUser.aboutMe,
 				image: userData.image ?? updatingUser.image,
 			},
 			{ where: { id: updatingUser.id } }
@@ -93,6 +94,7 @@ const updateUserByIdController = async (userData, currentUser) => {
 				userName: userData.userName ?? updatingUser.userName,
 				password: userData.password ?? updatingUser.password,
 				bio: userData.bio ?? updatingUser.bio,
+				aboutMe: userData.aboutMe ?? updatingUser.aboutMe,
 				image: userData.image ?? updatingUser.image,
 			},
 			{ where: { id: userData.id } }
