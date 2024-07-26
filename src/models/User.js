@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize')
 const { Plan } = require('./Plan')
 
 module.exports = (sequelize) => {
-	sequelize.define(
+	const User = sequelize.define(
 		'user',
 		{
 			id: {
@@ -51,6 +51,17 @@ module.exports = (sequelize) => {
 					},
 				},
 			},
+			aboutMe: {
+				type: DataTypes.STRING,
+				allowNull: false,
+				defaultValue: '',
+				validate: {
+					len: {
+						args: [0, 5000],
+						msg: 'Bio should be up to 5000 characters',
+					},
+				},
+			},
 			image: {
 				type: DataTypes.STRING,
 				allowNull: false,
@@ -66,7 +77,7 @@ module.exports = (sequelize) => {
 				type: DataTypes.STRING,
 				references: {
 					model: Plan,
-					key: 'planName',
+					key: 'planName',					
 				},
 			},
 		},
@@ -75,4 +86,11 @@ module.exports = (sequelize) => {
 		},
 		{ timestamps: true, paranoid: true }
 	)
+	 User.beforeCreate((user) => {
+			if (user.role === 'user' && !user.planName) {
+				user.planName = 'Free'			
+			}
+		})
+
+	return User
 }

@@ -28,7 +28,7 @@ const loginUserController = async (email, password) => {
 			process.env.ACCESS_TOKEN_SECRET
 			// { expiresIn: '1h' }
 		)
-		return { user: user, token: accessToken }
+		return { user, token: accessToken }
 	} catch (error) {
 		console.error("Error login:", error)
 		throw error
