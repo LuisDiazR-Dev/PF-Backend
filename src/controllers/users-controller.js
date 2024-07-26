@@ -48,7 +48,7 @@ const getAllUsersController = async (search) => {
 
 const getUserByIdController = async (id) => {
 	try {
-		const user = await User.findByPk(id)
+		const user = await User.findByPk(id, { include })
 		if (!user) throw new AppError('User not found', 404)
 		return user
 	} catch (error) {
