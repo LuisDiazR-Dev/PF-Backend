@@ -1,7 +1,5 @@
 const { Router } = require('express')
 const paymentRouter = Router()
-const { verifyToken } = require('../middlewares/auth-middleware')
-
 const {
 	mercadoPagoPreference,
 	mercadoPagoNotification,
@@ -9,6 +7,8 @@ const {
 	stripeWebhook,
 	stripePreference,
 } = require('../handlers/mercadoPago-handler')
+
+const { verifyToken } = require('../middlewares/auth-middleware')
 
 paymentRouter.post('/preference', verifyToken, mercadoPagoPreference)
 paymentRouter.post('/notification', mercadoPagoNotification)

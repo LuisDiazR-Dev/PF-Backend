@@ -1,5 +1,4 @@
 const { Router } = require('express')
-const projectRouter = Router()
 const {
 	getAllProjects,
 	getProjectById,
@@ -13,6 +12,7 @@ const {
 
 const { verifyToken, authenticate } = require('../middlewares/auth-middleware')
 
+const projectRouter = Router()
 projectRouter.get('/', authenticate, getAllProjects)
 projectRouter.get('/deleted', verifyToken, getDeletedProjects)
 projectRouter.get('/deleted/:id', verifyToken, getDeletedProjectById)
