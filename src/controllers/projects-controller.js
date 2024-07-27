@@ -1,31 +1,26 @@
-const { User, Project, Technology, Tag, Like } = require('../db')
+const { User, Project, Technology, Tag, Like, Plan } = require('../db')
 const { Op } = require('sequelize')
 const AppError = require('../utils/index')
 const { updateProject } = require('../handlers/projects-handler')
 
-const getAllProjectsController = async (queries, user) => {
-	const { title, tags, technologies, sort, page = 1, pageSize = 10 } = queries
+const getAllProjectsController = async (queries, currentUser) => {
+	const { title, tags, technologies, sort, page = 1, pageSize = 10 } = queries;
 
-	let where = {
-		deletedAt: null,
-	}
-	let order = []
-	let offset = (page - 1) * parseInt(pageSize, 10)
-	let limit = parseInt(pageSize, 10)
+	let where = { deletedAt: null };
+	let order = [];
+	let offset = (page - 1) * parseInt(pageSize, 10);
+	let limit = parseInt(pageSize, 10);
 
 	try {
-		if (sort === 'a-z') order = [['title', 'ASC']]
-		if (sort === 'z-a') order = [['title', 'DESC']]
-		if (sort === 'new') order = [['createdAt', 'DESC']]
-		if (sort === 'old') order = [['createdAt', 'ASC']]
+		if (sort === 'a-z') order = [['title', 'ASC']];
+		if (sort === 'z-a') order = [['title', 'DESC']];
+		if (sort === 'new') order = [['createdAt', 'DESC']];
+		if (sort === 'old') order = [['createdAt', 'ASC']];
 
-		if (title) where[Op.or] = [{ title: { [Op.iLike]: `%${title}%` } }]
+		if (title) where[Op.or] = [{ title: { [Op.iLike]: `%${title}%` } }];
 
 		const include = [
-			{
-				model: User,
-				as: 'user',
-			},
+			{ model: User, as: 'user' },
 			{
 				model: Technology,
 				as: 'technologies',
@@ -46,7 +41,16 @@ const getAllProjectsController = async (queries, user) => {
 				attributes: ['userId'],
 				required: false,
 			},
-		]
+		];
+
+		if (currentUser) {
+			const user = await User.findByPk(currentUser.id, {
+				include: [{ model: Plan, as: 'plan' }]
+			}); 
+			if (user && user.dataValues.planName === 'Free') {
+				limit = 20
+			}
+		}
 
 		const projectsData = await Project.findAndCountAll({
 			limit,
@@ -54,24 +58,26 @@ const getAllProjectsController = async (queries, user) => {
 			order,
 			where,
 			include,
-		})
+		});
 
 		const projects = projectsData.rows.map((project) => {
-			if (user)
+			if (currentUser)
 				return {
 					...project.dataValues,
-					liked: project.likes.some((like) => like.userId == user.id),
-				}
+					liked: project.likes.some((like) => like.userId == currentUser.id),
+				};
 			else {
-				return project.dataValues
+				return project.dataValues;
 			}
-		})
+		});
 
-		return projects
+		return projects;
 	} catch (error) {
-		throw new Error(`Error fetching projects: ${error.message}`)
+		console.error(error);
+		throw new Error(`Error fetching projects: ${error.message}`);
 	}
 }
+
 
 const getProjectByIdController = async (id, user) => {
 	try {
