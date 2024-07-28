@@ -1,7 +1,8 @@
 const { User } = require('../db')
 const { Op } = require('sequelize')
-const AppError =require('../utils/errors-util')
-const { getUserIncludes } = require('../utils/users-utils')
+const AppError = require('../utils/error-util')
+const { getUserIncludes } = require('../utils/user-utils')
+const { findOrCreateLinks } = require('../controllers/link-controller')
 
 const getAllUsersController = async (search) => {
 	try {
@@ -36,8 +37,7 @@ const updateUserProfileController = async ({ userData }, { id }) => {
 		if (!updatingUser || updatingUser.role !== 'user') {
 			throw new AppError('You are not authorized to update this user', 401)
 		}
-		await updatingUser.update(userData, { where: userData.id })
-		const updatedUser = await User.findByPk(updatingUser.id)
+		const updatedUser = await updateUserByIdController(userData, id)
 		return updatedUser
 	} catch (error) {
 		console.error('Error updating project:', error)
@@ -45,23 +45,27 @@ const updateUserProfileController = async ({ userData }, { id }) => {
 	}
 }
 
-const updateUserByIdController = async (userData) => {
+const updateUserByIdController = async (userData, id) => {
 	try {
-		const updatingUser = await User.findByPk(userData.id)
-		if (!updatingUser) {
+		const user = await User.findByPk(id)
+		if (!user) {
 			throw new AppError('User not found', 404)
 		}
-		await updatingUser.update(
-			{
-				userName: userData.userName ?? updatingUser.userName,
-				password: userData.password ?? updatingUser.password,
-				bio: userData.bio ?? updatingUser.bio,
-				aboutMe: userData.aboutMe ?? updatingUser.aboutMe,
-				image: userData.image ?? updatingUser.image,
-			},
-			{ where: { id: userData.id } }
-		)
+		await user.update({
+			userName: userData.userName ?? user.userName,
+			password: userData.password ?? user.password,
+			bio: userData.bio ?? user.bio,
+			aboutMe: userData.aboutMe ?? user.aboutMe,
+			image: userData.image ?? user.image,
+		})
+
+		if (userData.links) {
+			const linkInstances = await findOrCreateLinks(userData.links)
+			await user.setLinks(linkInstances)
+		}
+
 		const updatedUser = await User.findByPk(userData.id)
+
 		return updatedUser
 	} catch (error) {
 		console.error('Error updating project:', error)
@@ -69,23 +73,7 @@ const updateUserByIdController = async (userData) => {
 	}
 }
 
-const deleteUserProfileController = async (user) => {
-	try {
-		const id = user.id
-		const userToDelete = await User.findByPk(user.id)
-		if (!userToDelete) throw new AppError('User not found', 404)
-		if (user.role !== 'user') {
-			throw new AppError('You are not authorized to delete this user', 401)
-		}
-		await User.destroy({ where: { id } })
-		return { message: 'User deleted successfully' }
-	} catch (error) {
-		console.error('Error getting deleted user:', error)
-		throw new AppError(error.message || 'Error deleting user', error.status || 500)
-	}
-}
-
-const deleteUserByIdController = async (id) => {
+const deleteUserController = async (id) => {
 	try {
 		const userToDelete = await User.findByPk(id)
 		if (!userToDelete) throw new AppError('User not found', 404)
@@ -93,7 +81,7 @@ const deleteUserByIdController = async (id) => {
 		return { message: 'User deleted successfully' }
 	} catch (error) {
 		console.error(`Error deleting user by Id: ${error.message}`)
-		throw new AppError(error.message || `Error deleting user`, error.statusCode || 500)
+		throw new AppError(`Error deleting user`, 500)
 	}
 }
 
@@ -141,7 +129,9 @@ const restoreUserController = async (id) => {
 
 		if (!user) throw new AppError('No user found with the given id', 404)
 
-		return user
+		await user.restore()
+
+		return { message: 'User restored successfully' }
 	} catch (error) {
 		console.error('Error restoring user', error)
 		throw new AppError('Error restoring user', 500)
@@ -153,8 +143,7 @@ module.exports = {
 	getUserByIdController,
 	updateUserProfileController,
 	updateUserByIdController,
-	deleteUserByIdController,
-	deleteUserProfileController,
+	deleteUserController,
 	getDeletedUsersController,
 	getDeletedUserByIdController,
 	restoreUserController,

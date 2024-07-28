@@ -8,13 +8,12 @@ const {
 	getDeletedProjectsController,
 	getDeletedProjectByIdController,
 	updateProjectByIdController,
-} = require('../controllers/projects-controller')
+} = require('../controllers/project-controller')
 
 const getAllProjects = async (req, res) => {
 	try {
 		const queries = req.query
-		const user = req.user ? req.user : undefined
-		const response = await getAllProjectsController(queries, user)
+		const response = await getAllProjectsController(queries)
 		res.status(200).json(response)
 	} catch (error) {
 		res.status(500).json({ error: error.message })

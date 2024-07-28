@@ -3,11 +3,11 @@ const {
 	getUserByIdController,
 	updateUserProfileController,
 	updateUserByIdController,
-	deleteUserByIdController,
+	deleteUserController,
 	getDeletedUsersController,
 	getDeletedUserByIdController,
 	restoreUserController,
-} = require('../controllers/users-controller')
+} = require('../controllers/user-controller')
 
 const getAllUsers = async (req, res) => {
 	try {
@@ -44,8 +44,9 @@ const getUserProfile = async (req, res) => {
 
 const updateUserProfile = async (req, res) => {
 	try {
+		const user = req.user
 		const userData = req.body
-		const response = await updateUserProfileController(userData)
+		const response = await updateUserProfileController(userData, user)
 		res.status(200).json(response)
 	} catch (error) {
 		console.error('Error updating user profile:', error)
@@ -55,9 +56,9 @@ const updateUserProfile = async (req, res) => {
 
 const updateUserById = async (req, res) => {
 	try {
-		const user = req.user
+		const id = req.params.id
 		const userData = req.body
-		const response = await updateUserByIdController(userData, user)
+		const response = await updateUserByIdController(userData, id)
 		res.status(200).json(response)
 	} catch (error) {
 		console.error('Error updating user profile:', error)
@@ -68,7 +69,7 @@ const updateUserById = async (req, res) => {
 const deleteUserProfile = async (req, res) => {
 	try {
 		const user = req.user
-		const response = await deleteUserByIdController(user)
+		const response = await deleteUserController(user.id)
 		res.status(200).json(response)
 	} catch (error) {
 		console.error('Error deleting user profile:', error)
@@ -79,7 +80,7 @@ const deleteUserProfile = async (req, res) => {
 const deleteUserById = async (req, res) => {
 	try {
 		const { id } = req.params
-		const response = await deleteUserByIdController(id)
+		const response = await deleteUserController(id)
 		res.status(200).json(response)
 	} catch (error) {
 		console.error('Error deleting user by id:', error)

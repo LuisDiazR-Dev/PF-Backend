@@ -1,6 +1,6 @@
 const {
 	toggleProjectLikeController,
-} = require('../controllers/likes-controller')
+} = require('../controllers/like-controller')
 
 const toggleProjectLike = async (req, res) => {
 	try {

@@ -6,7 +6,7 @@ const {
 	deleteUserReviewController,
 	// updateUserReviewByIdController,
 	// deleteUserReviewByIdController,
-} = require('../controllers/reviews-controller')
+} = require('../controllers/review-controller')
 
 const getAllReviews = async (req, res) => {
 	try {

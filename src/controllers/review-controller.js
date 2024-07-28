@@ -1,5 +1,5 @@
 const { Review } = require('../db')
-const AppError =require('../utils/errors-util')
+const AppError =require('../utils/error-util')
 
 const getAllReviewsController = async () => {
 	try {

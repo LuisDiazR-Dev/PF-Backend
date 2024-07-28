@@ -1,4 +1,4 @@
-const { Project, Technology, Tag, Contract, Plan } = require('../db')
+const { Project, Technology, Tag, Contract, Plan, Link } = require('../db')
 const { Op } = require('sequelize')
 
 const getUserIncludes = (queries = {}) => {
@@ -28,6 +28,10 @@ const getUserIncludes = (queries = {}) => {
 		{
 			model: Plan,
 			as: 'plan',
+		},
+		{
+			model: Link,
+			as: 'links',
 		},
 	]
 

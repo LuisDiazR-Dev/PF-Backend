@@ -59,7 +59,8 @@ module.exports = (sequelize) => {
 			image: {
 				type: DataTypes.STRING,
 				allowNull: false,
-				defaultValue: 'https://img.freepik.com/psd-gratis/ilustracion-3d-avatar-o-perfil-humano_23-2150671118.jpg?ga=GA1.1.809440281.1720916925',
+				defaultValue:
+					'https://img.freepik.com/psd-gratis/ilustracion-3d-avatar-o-perfil-humano_23-2150671118.jpg?ga=GA1.1.809440281.1720916925',
 				isUrl: true,
 			},
 			role: {
@@ -71,20 +72,21 @@ module.exports = (sequelize) => {
 				type: DataTypes.STRING,
 				references: {
 					model: Plan,
-					key: 'planName',					
+					key: 'planName',
 				},
 			},
 		},
 		{
 			tableName: 'users',
-		},
-		{ timestamps: true, paranoid: true }
+			timestamps: true,
+			paranoid: true,
+		}
 	)
-	 User.beforeCreate((user) => {
-			if (user.role === 'user' && !user.planName) {
-				user.planName = 'Free'			
-			}
-		})
+	User.beforeCreate((user) => {
+		if (user.role === 'user' && !user.planName) {
+			user.planName = 'Free'
+		}
+	})
 
 	return User
 }
