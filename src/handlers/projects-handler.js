@@ -7,6 +7,7 @@ const {
 	restoreProjectController,
 	getDeletedProjectsController,
 	getDeletedProjectByIdController,
+	updateProjectByIDController,
 } = require('../controllers/projects-controller')
 
 const getAllProjects = async (req, res) => {
@@ -76,11 +77,12 @@ const restoreProject = async (req, res) => {
 
 const updateProject = async (req, res) => {
 	try {
+		console.log('hola');
 		const { id } = req.params
-		const projectData = { ...req.body, id }
+		const projectData = req.body 
 		const { id: userId, role: userRole } = req.user
 
-		const response = await updateProjectController(projectData, userId, userRole)
+		const response = await updateProjectController({...projectData, id}, userId, userRole)
 		res.status(200).json(response)
 	} catch (error) {
 		console.error('Error updating project:', error)
@@ -99,6 +101,20 @@ const deleteProject = async (req, res) => {
 	}
 }
 
+const updateProjectByID = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const projectData =  req.body;
+
+        const response = await updateProjectByIDController({...projectData,id});
+        res.status(200).json(response);
+    } catch (error) {
+        console.error('Error updating project by ID:', error);
+        res.status(error.statusCode || 500).json({ error: error.message });
+    }
+};
+
+
 module.exports = {
 	getAllProjects,
 	getProjectById,
@@ -108,4 +124,5 @@ module.exports = {
 	restoreProject,
 	getDeletedProjects,
 	getDeletedProjectById,
+	updateProjectByID,
 }

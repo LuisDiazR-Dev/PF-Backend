@@ -5,7 +5,7 @@ const {
 
 const { verifyToken } = require('../middlewares/auth-middleware')
 
-const likeRouter = Router()
-likeRouter.post('/projects', verifyToken, toggleProjectLike)
+const likesRouter = Router()
+likesRouter.post('/projects', verifyToken, toggleProjectLike)
 
-module.exports = likeRouter
+module.exports = likesRouter

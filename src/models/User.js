@@ -33,12 +33,6 @@ module.exports = (sequelize) => {
 			password: {
 				type: DataTypes.STRING,
 				allowNull: false,
-				validate: {
-					len: {
-						args: [6, 30],
-						msg: 'Password should be between 6 and 30 characters',
-					},
-				},
 			},
 			bio: {
 				type: DataTypes.STRING,
@@ -48,6 +42,17 @@ module.exports = (sequelize) => {
 					len: {
 						args: [0, 300],
 						msg: 'Bio should be up to 300 characters',
+					},
+				},
+			},
+			aboutMe: {
+				type: DataTypes.STRING,
+				allowNull: false,
+				defaultValue: '',
+				validate: {
+					len: {
+						args: [0, 5000],
+						msg: 'Bio should be up to 5000 characters',
 					},
 				},
 			},
