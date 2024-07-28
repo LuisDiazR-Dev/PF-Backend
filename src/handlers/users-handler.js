@@ -4,6 +4,9 @@ const {
 	updateUserProfileController,
 	updateUserByIdController,
 	deleteUserByIdController,
+	getDeletedUsersController,
+	getDeletedUserByIdController,
+	restoreUserController,
 } = require('../controllers/users-controller')
 
 const getAllUsers = async (req, res) => {
@@ -12,6 +15,7 @@ const getAllUsers = async (req, res) => {
 		const response = await getAllUsersController(search)
 		res.status(200).json(response)
 	} catch (error) {
+		console.error('Error fetching users:', error)
 		res.status(500).send(error.message)
 	}
 }
@@ -22,6 +26,7 @@ const getUserById = async (req, res) => {
 		const response = await getUserByIdController(id)
 		res.status(200).json(response)
 	} catch (error) {
+		console.error('Error fetching user by id:', error)
 		res.status(500).send(error.message)
 	}
 }
@@ -30,42 +35,32 @@ const getUserProfile = async (req, res) => {
 	try {
 		const { id } = req.user
 		const response = await getUserByIdController(id)
-		console.log(response);
 		res.status(200).json(response)
 	} catch (error) {
+		console.error('Error fetching user profile:', error)
 		res.status(500).send(error.message)
 	}
 }
 
 const updateUserProfile = async (req, res) => {
 	try {
-		const user = req.user
 		const userData = req.body
-		const response = await updateUserProfileController(userData, user)
+		const response = await updateUserProfileController(userData)
 		res.status(200).json(response)
 	} catch (error) {
+		console.error('Error updating user profile:', error)
 		res.status(500).send(error.message)
 	}
 }
 
 const updateUserById = async (req, res) => {
 	try {
-		const user = req.user;
+		const user = req.user
 		const userData = req.body
 		const response = await updateUserByIdController(userData, user)
 		res.status(200).json(response)
 	} catch (error) {
-		res.status(500).send(error.message)
-	}
-}
-
-const deleteUserById = async (req, res) => {
-	try {
-		const { id } = req.params
-		const user = req.user
-		const response = await deleteUserByIdController(id, user)
-		res.status(200).json(response)
-	} catch (error) {
+		console.error('Error updating user profile:', error)
 		res.status(500).send(error.message)
 	}
 }
@@ -76,7 +71,49 @@ const deleteUserProfile = async (req, res) => {
 		const response = await deleteUserByIdController(user)
 		res.status(200).json(response)
 	} catch (error) {
+		console.error('Error deleting user profile:', error)
 		res.status(500).send(error.message)
+	}
+}
+
+const deleteUserById = async (req, res) => {
+	try {
+		const { id } = req.params
+		const response = await deleteUserByIdController(id)
+		res.status(200).json(response)
+	} catch (error) {
+		console.error('Error deleting user by id:', error)
+		res.status(500).send(error.message)
+	}
+}
+
+const getDeletedUsers = async (req, res) => {
+	try {
+		const response = await getDeletedUsersController()
+		res.status(200).json(response)
+	} catch (error) {
+		console.error('Error fetching deleted users:', error)
+		res.status(500).json({ error: error.message })
+	}
+}
+
+const getDeletedUserById = async (req, res) => {
+	try {
+		const response = await getDeletedUserByIdController()
+		res.status(200).json(response)
+	} catch (error) {
+		console.error('Error fetching deleted user by Id:', error)
+		res.status(500).json({ error: error.message })
+	}
+}
+
+const restoreUser = async (req, res) => {
+	try {
+		const { id } = req.params
+		const response = await restoreUserController(id)
+		res.status(200).json(response)
+	} catch (error) {
+		res.status(400).json({ error: error.message })
 	}
 }
 
@@ -88,4 +125,7 @@ module.exports = {
 	updateUserById,
 	deleteUserById,
 	deleteUserProfile,
+	getDeletedUsers,
+	getDeletedUserById,
+	restoreUser,
 }
