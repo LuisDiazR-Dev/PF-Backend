@@ -8,6 +8,7 @@ const tagRouter = require('./tagRouter')
 const likesRouter = require('./likesRouter')
 const contractRouter = require('./contractRouter')
 const reviewsRouter = require('./reviewsRouter')
+const promediosRouter = require('./promedioRoute')
 
 const router = Router()
 router.use('/', authRouter)
@@ -19,5 +20,6 @@ router.use('/tags', tagRouter)
 router.use('/likes', likesRouter)
 router.use('/contract', contractRouter)
 router.use('/reviews', reviewsRouter)
+router.use('/promedios', promediosRouter)
 
 module.exports = router
