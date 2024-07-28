@@ -44,8 +44,9 @@ const getUserProfile = async (req, res) => {
 
 const updateUserProfile = async (req, res) => {
 	try {
+		const user = req.user
 		const userData = req.body
-		const response = await updateUserProfileController(userData)
+		const response = await updateUserProfileController(userData, user)
 		res.status(200).json(response)
 	} catch (error) {
 		console.error('Error updating user profile:', error)
@@ -55,9 +56,9 @@ const updateUserProfile = async (req, res) => {
 
 const updateUserById = async (req, res) => {
 	try {
-		const user = req.user
+		const id = req.params.id
 		const userData = req.body
-		const response = await updateUserByIdController(userData, user)
+		const response = await updateUserByIdController(userData, id)
 		res.status(200).json(response)
 	} catch (error) {
 		console.error('Error updating user profile:', error)

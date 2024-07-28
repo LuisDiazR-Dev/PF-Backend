@@ -2,6 +2,7 @@ const { User } = require('../db')
 const { Op } = require('sequelize')
 const AppError = require('../utils/error-util')
 const { getUserIncludes } = require('../utils/user-utils')
+const { findOrCreateLinks } = require('../controllers/link-controller')
 
 const getAllUsersController = async (search) => {
 	try {
@@ -30,13 +31,13 @@ const getUserByIdController = async (id) => {
 	}
 }
 
-const updateUserProfileController = async ({ userData }, user) => {
+const updateUserProfileController = async ({ userData }, { id }) => {
 	try {
-		const updatingUser = await User.findByPk(user.id)
+		const updatingUser = await User.findByPk(id)
 		if (!updatingUser || updatingUser.role !== 'user') {
 			throw new AppError('You are not authorized to update this user', 401)
 		}
-		const updatedUser = await updateUserByIdController(userData)
+		const updatedUser = await updateUserByIdController(userData, id)
 		return updatedUser
 	} catch (error) {
 		console.error('Error updating project:', error)
@@ -44,9 +45,9 @@ const updateUserProfileController = async ({ userData }, user) => {
 	}
 }
 
-const updateUserByIdController = async (userData) => {
+const updateUserByIdController = async (userData, id) => {
 	try {
-		const user = await User.findByPk(userData.id)
+		const user = await User.findByPk(id)
 		if (!user) {
 			throw new AppError('User not found', 404)
 		}
@@ -59,7 +60,7 @@ const updateUserByIdController = async (userData) => {
 		})
 
 		if (userData.links) {
-			const linkInstances = await finOfCreateLinks(userData.links)
+			const linkInstances = await findOrCreateLinks(userData.links)
 			await user.setLinks(linkInstances)
 		}
 
