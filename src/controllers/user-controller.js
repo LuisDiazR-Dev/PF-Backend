@@ -77,7 +77,7 @@ const deleteUserController = async (id) => {
 	try {
 		const userToDelete = await User.findByPk(id)
 		if (!userToDelete) throw new AppError('User not found', 404)
-		await User.destroy({ where: { id } })
+		await userToDelete.destroy()
 		return { message: 'User deleted successfully' }
 	} catch (error) {
 		console.error(`Error deleting user by Id: ${error.message}`)
