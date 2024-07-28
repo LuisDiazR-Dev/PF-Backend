@@ -1,5 +1,5 @@
 const PDFDocument = require('pdfkit')
-const averagePrice = require('../controllers/getPromedio-controller')
+const averagePrice = require('./getPromedio-controller')
 const path = require('path')
 const { User } = require('../db')
 
@@ -12,14 +12,12 @@ const getAdmin = async () => {
 		raw: true,
 	})
 	const adminNames = admin.map((user) => user.userName)
-	console.log(adminNames)
 	return adminNames
 }
 
 const getMetadata = async () => {
 	try {
 		const extraerInfo = await averagePrice()
-		console.log(extraerInfo + ' log de extraerInfo', extraerInfo[0].averagePrice)
 		return extraerInfo[0].averagePrice
 	} catch (error) {
 		console.error('Error getting metadata:', error)
@@ -27,9 +25,6 @@ const getMetadata = async () => {
 }
 
 const generatePDF = (res, metadata, admins) => {
-	console.log('Metadata in generatePDF:', metadata)
-	console.log(admins)
-
 	if (!metadata) {
 		res.status(500).send('Metadata is undefined')
 		return
@@ -42,9 +37,9 @@ const generatePDF = (res, metadata, admins) => {
 
 	const doc = new PDFDocument({
 		info: {
-			title: 'Sample PDF Document',
-			author: 'Max',
-			subject: 'Proyectos',
+			title: 'Income',
+			author: 'ForDevs',
+			subject: 'Projects',
 		},
 	})
 
@@ -59,10 +54,8 @@ const generatePDF = (res, metadata, admins) => {
 	doc.fillColor('black')
 	doc.font('Lexend').fontSize(20).text('ForDevs', 50, 50)
 
-	// Línea divisoria
 	doc.moveTo(50, 100).lineTo(550, 100).stroke()
 
-	// Subtítulo
 	doc
 		.fontSize(13)
 		.text('Este es el resumen mensual de ganancias para los administradores de ForDevs.', 50, 120)
@@ -76,7 +69,6 @@ const generatePDF = (res, metadata, admins) => {
 	const columnY = 220
 	const columnGap = 200
 
-	// Títulos de las columnas
 	doc
 		.fontSize(12)
 		.text('Admin', 50, columnY)
@@ -87,7 +79,6 @@ const generatePDF = (res, metadata, admins) => {
 		.lineTo(550, columnY + 15)
 		.stroke()
 
-	// Contenido de las columnas
 	admins.forEach((admin, index) => {
 		doc
 			.fontSize(11)
@@ -95,7 +86,6 @@ const generatePDF = (res, metadata, admins) => {
 			.text((metadata || 0).toFixed(2).toString(), 50 + columnGap, columnY + 20 + index * 20)
 	})
 
-	// Footer
 	const footerY = doc.page.height - 100
 	doc
 		.moveTo(50, footerY - 20)

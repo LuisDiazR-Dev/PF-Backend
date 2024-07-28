@@ -1,8 +1,18 @@
 const { User, Project, Tag, Plan, Technology } = require('./db')
+const bcrypt = require('bcrypt')
 const users = require('./_db/users')
 const projects = require('./_db/projects')
 const technologies = require('./_db/technologies')
 const plans = require('./_db/plans')
+
+const hashPasswords = async (users) => {
+	return await Promise.all(
+		users.map(async (user) => {
+			const hashedPassword = await bcrypt.hash(user.password, 10)
+			return { ...user, password: hashedPassword }
+		})
+	)
+}
 
 const createSeeders = async () => {
 	try {
@@ -10,10 +20,16 @@ const createSeeders = async () => {
 		await Promise.all(plans.map(async (plan) => await Plan.findOrCreate({ where: plan })))
 		console.log('Free and premium plans have been added to the database!')
 
+		// Hashear contraseñas de los usuarios
+		const usersWithHashedPasswords = await hashPasswords(users)
+
 		// Creación de usuarios
 		const createdUsers = await Promise.all(
-			users.map(async (user) => {
-				const [createdUser] = await User.findOrCreate({ where: user })
+			usersWithHashedPasswords.map(async (user) => {
+				const [createdUser] = await User.findOrCreate({
+					where: { email: user.email },
+					defaults: user,
+				})
 				return createdUser
 			})
 		)
