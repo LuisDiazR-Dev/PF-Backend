@@ -129,7 +129,9 @@ const restoreUserController = async (id) => {
 
 		if (!user) throw new AppError('No user found with the given id', 404)
 
-		return user
+		await user.restore()
+
+		return { message: 'User restored successfully' }
 	} catch (error) {
 		console.error('Error restoring user', error)
 		throw new AppError('Error restoring user', 500)
