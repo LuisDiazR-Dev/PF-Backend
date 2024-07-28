@@ -4,6 +4,8 @@ const {
 	getAllUsers,
 	getUserById,
 	getUserProfile,
+	getDeletedUsers,
+	getDeletedUserById,
 	updateUserProfile,
 	updateUserById,
 	deleteUserById,
@@ -16,6 +18,8 @@ const { checkAdmin } = require('../middlewares/admin_middleware')
 
 userRouter.get('/', getAllUsers)
 userRouter.get('/profile', verifyToken, getUserProfile)
+userRouter.get('/deleted', verifyToken, getDeletedUsers)
+userRouter.get('/deleted/:id', verifyToken, getDeletedUserById)
 userRouter.get('/:id', getUserById)
 userRouter.put('/profile', verifyToken, updateUserProfile)
 userRouter.put('/:id', verifyToken, checkAdmin, updateUserById)
