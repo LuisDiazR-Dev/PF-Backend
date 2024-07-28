@@ -6,7 +6,7 @@ const {
 	cancelSubscription,
 	stripeWebhook,
 	stripePreference,
-} = require('../handlers/mercadoPago-handler')
+} = require('../handlers/payment-handler')
 
 const { verifyToken } = require('../middlewares/auth-middleware')
 

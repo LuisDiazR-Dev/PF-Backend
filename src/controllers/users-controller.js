@@ -1,35 +1,7 @@
-const { User, Project, Technology, Tag, Plan, Contract } = require('../db')
+const { User } = require('../db')
 const { Op } = require('sequelize')
-const AppError = require('../utils/index')
-
-const include = [
-	{
-		model: Project,
-		as: 'projects',
-		include: [
-			{
-				model: Technology,
-				as: 'technologies',
-			},
-			{
-				model: Tag,
-				as: 'tags',
-			},
-		],
-	},
-	{
-		model: Contract,
-		as: 'sentContracts',
-	},
-	{
-		model: Contract,
-		as: 'receivedContracts',
-	},
-	{
-		model: Plan,
-		as: 'plan',
-	},
-]
+const AppError =require('../utils/errors-util')
+const { getUserIncludes } = require('../utils/users-utils')
 
 const getAllUsersController = async (search) => {
 	try {
@@ -39,49 +11,42 @@ const getAllUsersController = async (search) => {
 				{ userName: { [Op.iLike]: `%${search}%` } },
 				{ email: { [Op.iLike]: `%${search}%` } },
 			]
-		const users = await User.findAll({ where, include })
+		const users = await User.findAll({ where, include: getUserIncludes() })
 		return users
 	} catch (error) {
-		throw error
+		console.error('Error fetching users:', error)
+		throw new Error(`Error fetching users: ${error.message}`)
 	}
 }
 
 const getUserByIdController = async (id) => {
 	try {
-		const user = await User.findByPk(id, { include })
+		const user = await User.findByPk(id, { include: getUserIncludes() })
 		if (!user) throw new AppError('User not found', 404)
 		return user
 	} catch (error) {
-		throw error
+		console.error(`Error fetching project with id ${id}`, error)
+		throw new AppError(`Error fetching project with id ${id}`, 500)
 	}
 }
 
-const updateUserProfileController = async (userData, currentUser) => {
-	const data = userData.userData
-	const {id} = data
+const updateUserProfileController = async ({ userData }, { id }) => {
 	try {
-		const updatingUser = await User.findByPk(currentUser.id)
+		const updatingUser = await User.findByPk(id)
 		if (!updatingUser || updatingUser.role !== 'user') {
 			throw new AppError('You are not authorized to update this user', 401)
 		}
-		await updatingUser.update(
-			data,
-			{ where: { id } }
-		)
+		await updatingUser.update(userData, { where: userData.id })
 		const updatedUser = await User.findByPk(updatingUser.id)
 		return updatedUser
 	} catch (error) {
-		console.error(error)
-		throw error
+		console.error('Error updating project:', error)
+		throw new AppError('Error updating project', 500)
 	}
 }
 
-const updateUserByIdController = async (userData, currentUser) => {
+const updateUserByIdController = async (userData) => {
 	try {
-		const userAdmin = await User.findByPk(currentUser.id)
-		if (!userAdmin || userAdmin.role !== 'admin') {
-			throw new AppError('You are not authorized to update this user', 401)
-		}
 		const updatingUser = await User.findByPk(userData.id)
 		if (!updatingUser) {
 			throw new AppError('User not found', 404)
@@ -99,28 +64,14 @@ const updateUserByIdController = async (userData, currentUser) => {
 		const updatedUser = await User.findByPk(userData.id)
 		return updatedUser
 	} catch (error) {
-		throw error
-	}
-}
-
-const deleteUserByIdController = async (id, user) => {
-	try {
-		const userToDelete = await User.findByPk(id)
-		if (!userToDelete) throw new AppError('User not found', 404)
-		if (user.role !== 'admin') {
-			throw new AppError('You are not authorized to delete this user', 401)
-		}
-		await User.destroy({ where: { id } })
-		return { message: 'User deleted successfully' }
-	} catch (error) {
-		console.error(`Error deleting user: ${error.message}`)
-		throw new AppError(error.message || `Error deleting user`, error.statusCode || 500)
+		console.error('Error updating project:', error)
+		throw new AppError('Error updating project', 500)
 	}
 }
 
 const deleteUserProfileController = async (user) => {
-	const id = user.id
 	try {
+		const id = user.id
 		const userToDelete = await User.findByPk(user.id)
 		if (!userToDelete) throw new AppError('User not found', 404)
 		if (user.role !== 'user') {
@@ -129,8 +80,71 @@ const deleteUserProfileController = async (user) => {
 		await User.destroy({ where: { id } })
 		return { message: 'User deleted successfully' }
 	} catch (error) {
-		console.error(`Error deleting user: ${error.message}`)
+		console.error('Error getting deleted user:', error)
+		throw new AppError(error.message || 'Error deleting user', error.status || 500)
+	}
+}
+
+const deleteUserByIdController = async (id) => {
+	try {
+		const userToDelete = await User.findByPk(id)
+		if (!userToDelete) throw new AppError('User not found', 404)
+		await User.destroy({ where: { id } })
+		return { message: 'User deleted successfully' }
+	} catch (error) {
+		console.error(`Error deleting user by Id: ${error.message}`)
 		throw new AppError(error.message || `Error deleting user`, error.statusCode || 500)
+	}
+}
+
+const getDeletedUsersController = async () => {
+	try {
+		let where = { deletedAt: { [Op.not]: null } }
+
+		const users = await User.findAll({
+			where,
+			paranoid: false,
+			include: getUserIncludes(),
+		})
+
+		return users
+	} catch (error) {
+		console.error('Error getting deleted user:', error)
+		throw new AppError('Error fetching deleted user', 500)
+	}
+}
+
+const getDeletedUserByIdController = async (id) => {
+	try {
+		const user = await User.findOne({
+			where: { id },
+			paranoid: false,
+			include: getUserIncludes(),
+		})
+
+		if (!user) throw new AppError('No user found with the given id', 404)
+
+		return user
+	} catch (error) {
+		console.error('Error fetching deleted project by Id', error)
+		throw new AppError('Error fetching deleted user', 500)
+	}
+}
+
+const restoreUserController = async (id) => {
+	try {
+		const user = await User.findOne({
+			where: { id },
+			paranoid: false,
+			include: getUserIncludes(),
+		})
+
+		if (!user) throw new AppError('No user found with the given id', 404)
+
+		return user
+	} catch (error) {
+		console.error('Error restoring user', error)
+		throw new AppError('Error restoring user', 500)
 	}
 }
 
@@ -141,4 +155,7 @@ module.exports = {
 	updateUserByIdController,
 	deleteUserByIdController,
 	deleteUserProfileController,
+	getDeletedUsersController,
+	getDeletedUserByIdController,
+	restoreUserController,
 }

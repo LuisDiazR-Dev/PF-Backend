@@ -16,6 +16,18 @@ const getAllTechsController = async (name) => {
 	}
 }
 
+const findOrCreateTechnologies = async (technologies) => {
+	return Promise.all(
+		technologies.map(async (techName) => {
+			const [technology] = await Technology.findOrCreate({
+				where: { name: techName },
+			})
+			return technology
+		})
+	)
+}
+
 module.exports = {
 	getAllTechsController,
+	findOrCreateTechnologies,
 }

@@ -8,7 +8,7 @@ const {
 	restoreProject,
 	getDeletedProjects,
 	getDeletedProjectById,
-	updateProjectByID,
+	updateProjectById,
 } = require('../handlers/projects-handler')
 
 const { verifyToken, authenticate } = require('../middlewares/auth-middleware')
@@ -22,7 +22,7 @@ projectRouter.get('/:id', authenticate, getProjectById)
 projectRouter.post('/', verifyToken, createProject)
 projectRouter.post('/restore/:id', verifyToken, restoreProject)
 projectRouter.put('/profile/:id', verifyToken, updateProject)
-projectRouter.put('/:id', checkAdmin , updateProjectByID)
+projectRouter.put('/:id', checkAdmin , updateProjectById)
 projectRouter.delete('/:id', verifyToken, deleteProject)
 
 module.exports = projectRouter

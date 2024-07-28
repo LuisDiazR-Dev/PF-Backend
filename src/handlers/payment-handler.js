@@ -3,7 +3,7 @@ const {
 	createStripePreference,
 	paymentNotificationController,
 	cancelSubscriptionController,
-} = require('../controllers/mercadoPago-controller')
+} = require('../controllers/payment-controller')
 const { User, Plan } = require('../db')
 
 const mercadoPagoPreference = async (req, res) => {
