@@ -19,9 +19,6 @@ const createSeeders = async () => {
 		await Promise.all(plans.map(async (plan) => await Plan.findOrCreate({ where: plan })))
 		console.log('Free and premium plans have been added to the database!')
 
-		// Hashear contraseñas de los usuarios
-		const usersWithHashedPasswords = await hashPasswords(users)
-
 
         // Hashear contraseñas de los usuarios
         const usersWithHashedPasswords = await hashPasswords(users);
