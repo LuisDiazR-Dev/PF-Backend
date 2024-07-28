@@ -1,10 +1,9 @@
-const { getAllTechsController } = require('../controllers/technology-controller')
+const { getAllTechnologiesController } = require('../controllers/technology-controller')
 
-const getAllTechs = async (req, res) => {    
-
-    const { name } = req.query;
+const getAllTechnologies = async (req, res) => {    
     try {
-        const response = await getAllTechsController(name)
+        const { name } = req.query;
+        const response = await getAllTechnologiesController(name)
         return res.status(200).json(response)
     } catch (error) {
         return res.status(500).json({ error: error.message })
@@ -12,5 +11,5 @@ const getAllTechs = async (req, res) => {
 }
 
 module.exports = {
-    getAllTechs
+    getAllTechnologies
 }

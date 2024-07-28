@@ -1,7 +1,7 @@
 const { Op } = require('sequelize')
 const { Technology } = require('../db')
 
-const getAllTechsController = async (name) => {
+const getAllTechnologiesController = async (name) => {
 	try {
 		let where = {}
 		if (name) {
@@ -9,8 +9,8 @@ const getAllTechsController = async (name) => {
 				name: { [Op.iLike]: `%${name}%` },
 			}
 		}
-		const allTechs = await Technology.findAll({ where })
-		return allTechs
+		const allTechnologies = await Technology.findAll({ where })
+		return allTechnologies
 	} catch (error) {
 		throw new Error('Technologies not found')
 	}
@@ -28,6 +28,6 @@ const findOrCreateTechnologies = async (technologies) => {
 }
 
 module.exports = {
-	getAllTechsController,
+	getAllTechnologiesController,
 	findOrCreateTechnologies,
 }
