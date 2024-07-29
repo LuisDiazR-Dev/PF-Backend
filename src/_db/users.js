@@ -7,6 +7,10 @@ module.exports = [
         aboutMe: 'I am a UX/UI designer passionate about creating exceptional digital experiences. My goal is to blend aesthetics and functionality to deliver innovative interface solutions.',
         image: 'https://img.freepik.com/psd-gratis/ilustracion-3d-avatar-o-perfil-humano_23-2150671118.jpg?ga=GA1.1.809440281.1720916925',
         planName: 'Premium',
+        links: [
+            { name: 'LinkedIn', url: 'https://www.linkedin.com/in/janesmith' },
+            { name: 'GitHub', url: 'https://github.com/janesmith' }
+        ],
     },
     {
         userName: 'JohnDoe789',
@@ -16,6 +20,10 @@ module.exports = [
         aboutMe: 'Fullstack developer experienced in building complete web applications. I love tackling technical challenges and finding efficient solutions to complex problems.',
         image: 'https://img.freepik.com/fotos-premium/personaje-dibujos-animados-fondo-azul-generado-ia_1029473-129016.jpg?ga=GA1.1.809440281.1720916925',
         planName: 'Free',
+        links: [
+            { name: 'LinkedIn', url: 'https://www.linkedin.com/in/johndoe' },
+            { name: 'GitHub', url: 'https://github.com/johndoe' }
+        ],
     },
     {
         userName: 'AliceJohnson101',
@@ -25,6 +33,10 @@ module.exports = [
         aboutMe: 'Data scientist with a focus on advanced analytics and predictive modeling. My passion is transforming data into actionable insights for informed decision-making.',
         image: 'https://img.freepik.com/psd-gratis/ilustracion-3d-avatar-o-perfil-humano_23-2150671138.jpg?ga=GA1.1.809440281.1720916925',
         planName: 'Free',
+        links: [
+            { name: 'LinkedIn', url: 'https://www.linkedin.com/in/alicejohnson' },
+            { name: 'GitHub', url: 'https://github.com/alicejohnson' }
+        ],
     },
     {
         userName: 'BobBrown202',
@@ -34,6 +46,10 @@ module.exports = [
         aboutMe: 'Project manager with experience in leading teams and coordinating resources to deliver projects on time and within budget. I specialize in strategic planning and efficient execution.',
         image: 'https://img.freepik.com/psd-gratis/ilustracion-3d-avatar-o-perfil-humano_23-2150671116.jpg?ga=GA1.1.809440281.1720916925',
         planName: 'Free',
+        links: [
+            { name: 'LinkedIn', url: 'https://www.linkedin.com/in/bobbrown' },
+            { name: 'GitHub', url: 'https://github.com/bobbrown' }
+        ],
     },
     {
         userName: 'CharlieDavis303',
@@ -43,6 +59,10 @@ module.exports = [
         aboutMe: 'Backend developer with a strong understanding of system architecture and databases. I am dedicated to building robust and scalable solutions for web applications.',
         image: 'https://img.freepik.com/psd-gratis/ilustracion-3d-avatar-linea_23-2151303048.jpg?ga=GA1.1.809440281.1720916925',
         planName: 'Free',
+        links: [
+            { name: 'LinkedIn', url: 'https://www.linkedin.com/in/charliedavis' },
+            { name: 'GitHub', url: 'https://github.com/charliedavis' }
+        ],
     },
     {
         userName: 'DanaEvans404',
@@ -52,6 +72,10 @@ module.exports = [
         aboutMe: 'Creative graphic designer with an eye for detail and a passion for visual design. My goal is to create impactful graphics that effectively communicate messages.',
         image: 'https://img.freepik.com/psd-gratis/ilustracion-3d-avatar-linea_23-2151303063.jpg?ga=GA1.1.809440281.1720916925',
         planName: 'Free',
+        links: [
+            { name: 'LinkedIn', url: 'https://www.linkedin.com/in/danaevans' },
+            { name: 'GitHub', url: 'https://github.com/danaevans' }
+        ],
     },
     {
         userName: 'EvanGarcia505',
@@ -59,8 +83,12 @@ module.exports = [
         password: 'evanpassword',
         bio: 'Marketing specialist',
         aboutMe: 'Marketing specialist with experience in digital strategies and advertising campaigns. I focus on driving brand growth through innovative marketing techniques.',
-        image: 'https://img.freepik.com/psd-gratis/ilustracion-3d-avatar-o-perfil-humano_23-2150671122.jpg?ga=GA1.1.809440281.1720916925',
+        image: 'https://img.freepik.com/psd-gratis/ilustracion-3d-avatar-linea_23-2151303097.jpg?ga=GA1.1.809440281.1720916925',
         planName: 'Free',
+        links: [
+            { name: 'LinkedIn', url: 'https://www.linkedin.com/in/evangarcia' },
+            { name: 'GitHub', url: 'https://github.com/evangarcia' }
+        ],
     },
     {
         userName: 'FionaHarris606',
@@ -70,6 +98,10 @@ module.exports = [
         aboutMe: 'Sales manager with a focus on maximizing revenue and developing long-term client relationships. My experience centers around sales team management and strategy.',
         image: 'https://img.freepik.com/psd-gratis/ilustracion-3d-avatar-linea_23-2151303097.jpg?ga=GA1.1.809440281.1720916925',
         planName: 'Free',
+        links: [
+            { name: 'LinkedIn', url: 'https://www.linkedin.com/in/fionaharris' },
+            { name: 'GitHub', url: 'https://github.com/fionaharris' }
+        ],
     },
     {
         userName: 'GeorgeIbrahim707',
@@ -79,6 +111,10 @@ module.exports = [
         aboutMe: 'Frontend developer with a strong design sense and solid web technology experience. I specialize in creating intuitive and engaging user interfaces.',
         image: 'https://img.freepik.com/psd-gratis/render-3d-personaje-avatar_23-2150611765.jpg?ga=GA1.1.809440281.1720916925',
         planName: 'Free',
+        links: [
+            { name: 'LinkedIn', url: 'https://www.linkedin.com/in/georgeibrahim' },
+            { name: 'GitHub', url: 'https://github.com/georgeibrahim' }
+        ],
     },
     {
         userName: 'HannahJackson808',
@@ -88,6 +124,10 @@ module.exports = [
         aboutMe: 'SEO specialist focused on improving search engine visibility. My passion is helping businesses achieve their organic traffic and online performance goals.',
         image: 'https://img.freepik.com/psd-gratis/3d-ilustracion-persona-gafas_23-2149436185.jpg?ga=GA1.1.809440281.1720916925',
         planName: 'Free',
+        links: [
+            { name: 'LinkedIn', url: 'https://www.linkedin.com/in/hannahjackson' },
+            { name: 'GitHub', url: 'https://github.com/hannahjackson' }
+        ],
     },
     {
         userName: 'IanKing909',
@@ -97,42 +137,36 @@ module.exports = [
         aboutMe: 'Content writer with a talent for crafting engaging and persuasive texts. My goal is to communicate ideas clearly and effectively, adapting style to the target audience.',
         image: 'https://img.freepik.com/psd-gratis/ilustracion-3d-avatar-o-perfil-humano_23-2150671126.jpg?ga=GA1.1.809440281.1720916925',
         planName: 'Free',
+        links: [
+            { name: 'LinkedIn', url: 'https://www.linkedin.com/in/ianking' },
+            { name: 'GitHub', url: 'https://github.com/ianking' }
+        ],
     },
     {
         userName: 'JulieLopez010',
         email: 'julielopez@example.com',
         password: 'juliepassword',
         bio: 'HR manager',
-        aboutMe: 'HR manager with experience in talent management and organizational development. I focus on building effective teams and fostering a positive work environment.',
-        image: 'https://img.freepik.com/psd-gratis/ilustracion-3d-avatar-o-perfil-humano_23-2150671138.jpg?ga=GA1.1.809440281.1720916925',
+        aboutMe: 'HR manager with experience in talent management and organizational development. I focus on fostering a positive work environment and supporting employee growth.',
+        image: 'https://img.freepik.com/psd-gratis/ilustracion-3d-avatar-o-perfil-humano_23-2150671158.jpg?ga=GA1.1.809440281.1720916925',
         planName: 'Free',
+        links: [
+            { name: 'LinkedIn', url: 'https://www.linkedin.com/in/julielopez' },
+            { name: 'GitHub', url: 'https://github.com/julielopez' }
+        ],
     },
     {
-        userName: 'KyleMartin111',
-        email: 'kylemartin@example.com',
-        password: 'kylepassword',
-        bio: 'Business analyst',
-        aboutMe: 'Business analyst with a focus on process optimization and data-driven decision making. My goal is to improve efficiency and effectiveness in business operations.',
-        image: 'https://img.freepik.com/fotos-premium/personaje-dibujos-animados-fondo-azul-generado-ia_1029473-129016.jpg?ga=GA1.1.809440281.1720916925',
+        userName: 'KevinMartinez111',
+        email: 'kevinmartinez@example.com',
+        password: 'kevinpassword',
+        bio: 'Systems analyst',
+        aboutMe: 'Systems analyst with expertise in analyzing and improving IT systems. I enjoy solving complex technical problems and ensuring systems meet business needs.',
+        image: 'https://img.freepik.com/psd-gratis/ilustracion-3d-avatar-o-perfil-humano_23-2150671147.jpg?ga=GA1.1.809440281.1720916925',
         planName: 'Free',
-    },
-    {
-        userName: 'LauraNelson212',
-        email: 'lauranelson@example.com',
-        password: 'laurapassword',
-        bio: 'Accountant',
-        aboutMe: 'Accountant with experience in financial management and reporting. I am dedicated to ensuring accuracy and integrity in business finances.',
-        image: 'https://img.freepik.com/psd-gratis/ilustracion-3d-avatar-linea_23-2151303063.jpg?ga=GA1.1.809440281.1720916925',
-        planName: 'Free',
-    },
-    {
-        userName: 'MikeOlsen313',
-        email: 'mikeolsen@example.com',
-        password: 'mikepassword',
-        bio: 'Software engineer',
-        aboutMe: 'Software engineer with experience in developing custom software solutions. I enjoy solving complex problems through programming and system engineering.',
-        image: 'https://img.freepik.com/psd-gratis/ilustracion-3d-avatar-o-perfil-humano_23-2150671159.jpg?ga=GA1.1.809440281.1720916925',
-        planName: 'Free',
+        links: [
+            { name: 'LinkedIn', url: 'https://www.linkedin.com/in/kevinmartinez' },
+            { name: 'GitHub', url: 'https://github.com/kevinmartinez' }
+        ],
     },
     {
         userName: 'IvanBell',
