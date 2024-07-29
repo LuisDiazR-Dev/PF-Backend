@@ -32,26 +32,44 @@ const getUserByIdController = async (id) => {
 	}
 }
 
-const updateUserProfileController = async ({ userData }, { id }) => {
-	try {
-		const updatingUser = await User.findByPk(id);
-		if (!updatingUser || updatingUser.role !== 'user') {
-			throw new AppError('You are not authorized to update this user', 401);
-		}
+const updateUserProfileController = async (userData, user) => {
+    const { currentPassword, newPassword, ...updateData } = userData;
 
-		if (userData.password) {
-			userData.password = await bcrypt.hash(userData.password, 10);
-		}
+    console.log('Datos recibidos en el backend:', userData); // Log para verificar los datos recibidos
 
-		await updatingUser.update(userData);
-		const updatedUser = await User.findByPk(id);
+    try {
+        // Encuentra al usuario por su ID
+        const userRecord = await User.findByPk(user.id);
+        if (!userRecord) {
+            console.log('Usuario no encontrado');
+            return { status: 404, message: 'Usuario no encontrado' };
+        }
 
-		return updatedUser;
-	} catch (error) {
-		console.error('Error updating project:', error);
-		throw new AppError('Error updating project', 500);
-	}
+        // Verifica y actualiza la contraseña si se proporciona
+        if (currentPassword && newPassword) {
+            const isMatch = await bcrypt.compare(currentPassword, userRecord.password);
+            if (!isMatch) {
+                console.log('Contraseña actual incorrecta');
+                return { status: 400, message: 'Contraseña actual incorrecta' };
+            }
+
+            // Hashea la nueva contraseña
+            const hashedPassword = await bcrypt.hash(newPassword, 10);
+            updateData.password = hashedPassword;
+        }
+
+        // Actualiza el usuario con los datos proporcionados
+        await userRecord.update(updateData);
+        const updatedUser = await User.findByPk(user.id); // Obtener el usuario actualizado
+
+        return { status: 200, message: 'Usuario actualizado exitosamente', user: updatedUser };
+    } catch (error) {
+        console.error('Error al actualizar el usuario:', error);
+        return { status: 500, message: 'Error al actualizar el usuario' };
+    }
 };
+
+
 const updateUserByIdController = async (userData, id) => {
 	try {
 		const user = await User.findByPk(id)
