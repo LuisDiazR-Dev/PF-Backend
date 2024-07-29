@@ -14,8 +14,8 @@ module.exports = (sequelize) => {
 				allowNull: false,
 				validate: {
 					len: {
-						args: [3, 30],
-						msg: 'Title should be between 3 and 30 characters',
+						args: [3, 100],
+						msg: 'Title should be between 3 and 100 characters',
 					},
 				},
 			},

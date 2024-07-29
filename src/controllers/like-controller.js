@@ -1,4 +1,5 @@
 const { Like } = require('../db')
+const AppError = require('../utils/error-util')
 
 const toggleProjectLikeController = async ({ userId, projectId }) => {
 	try {
@@ -13,7 +14,8 @@ const toggleProjectLikeController = async ({ userId, projectId }) => {
 
 		return 'Project liked'
 	} catch (error) {
-		throw error
+		console.error(error)
+		throw new AppError('Error toggling project like', 500)
 	}
 }
 

@@ -16,6 +16,18 @@ const getAllTagsController = async (name) => {
 	}
 }
 
+const findOrCreateTags = async (tags) => {
+	return Promise.all(
+		tags.map(async (tagName) => {
+			const [tag] = await Tag.findOrCreate({
+				where: { tagName },
+			})
+			return tag
+		})
+	)
+}
+
 module.exports = {
 	getAllTagsController,
+	findOrCreateTags,
 }

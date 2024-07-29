@@ -13,6 +13,11 @@ const {
 const client = new mercadopago.MercadoPagoConfig({
 	accessToken: MP_TEST_ACCESS_TOKEN,
 })
+
+const clientStripe = new stripe(
+	'sk_test_51PfcjxApzRY4HXw3SaIcmqMxh742spkGCG0ne5zCdsJATcsRky6mzglZe5n7lsGXzGZF6YAee3smMVgx8f8MdAcq00jf92UHM2'
+)
+
 const createPreference = async (title, quantity, unit_price, user) => {
 	try {
 		if (!user.id) {
@@ -74,10 +79,6 @@ const cancelSubscriptionController = async (currentUser) => {
 		throw error
 	}
 }
-
-const clientStripe = new stripe(
-	'sk_test_51PfcjxApzRY4HXw3SaIcmqMxh742spkGCG0ne5zCdsJATcsRky6mzglZe5n7lsGXzGZF6YAee3smMVgx8f8MdAcq00jf92UHM2'
-)
 
 const createStripePreference = async (title, quantity, unit_price) => {
 	const pesos = unit_price

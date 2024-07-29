@@ -1,23 +1,30 @@
 const { Contract, User } = require('../db')
 const { Op } = require('sequelize')
-const AppError = require('../utils')
+const AppError = require('../utils/error-util')
 
 const createContractController = async (contractData) => {
-	const { senderId, receiverId, subject, projectDescription, budget, currency, availableTime, status } =
-		contractData
+	const {
+		senderId,
+		receiverId,
+		subject,
+		projectDescription,
+		budget,
+		currency,
+		availableTime,
+		status,
+	} = contractData
 	try {
 		const sender = await User.findByPk(senderId)
-
 		const receiver = await User.findByPk(receiverId)
 
 		if (!sender || !receiver) {
-			throw new Error('Sender or receiver not found')
+			throw new AppError('Sender or receiver not found', 404)
 		}
 
 		const [contract, created] = await Contract.findOrCreate({
 			where: {
-				senderId: sender?.id,
-				receiverId: receiver?.id,
+				senderId,
+				receiverId,
 				subject,
 				projectDescription,
 				budget,
@@ -26,11 +33,15 @@ const createContractController = async (contractData) => {
 				status: status || 'pending',
 			},
 		})
-		if (!created) throw new Error("You've already sent the form")
+
+		if (!created) {
+			throw new AppError("You've already sent the contract", 409)
+		}
+
 		return contract
 	} catch (error) {
-		console.error('Error sending contract message:', error)
-		throw new Error('Error sending')
+		console.error('Error creating contract:', error)
+		throw new AppError('Error creating contract', 500)
 	}
 }
 
@@ -45,7 +56,7 @@ const getAllContractsController = async () => {
 		return allContracts
 	} catch (error) {
 		console.error('Error fetching all contracts:', error)
-		throw new Error('Error fetching all contracts')
+		throw new AppError('Error fetching all contracts', 500)
 	}
 }
 
@@ -59,13 +70,13 @@ const getContractByIdController = async (id, userId) => {
 		})
 
 		if (!contract || (contract.senderId !== userId && contract.receiverId !== userId)) {
-			throw new Error('Contract not found or access denied')
+			throw new AppError('Contract not found or access denied', 403)
 		}
 
 		return contract
 	} catch (error) {
-		console.error('Error fetching the contract', error)
-		throw new Error('Error fetching contract')
+		console.error('Error fetching the contract:', error)
+		throw new AppError('Error fetching contract', 500)
 	}
 }
 
@@ -83,7 +94,7 @@ const getUserContractsController = async (userId) => {
 		return contracts
 	} catch (error) {
 		console.error('Error fetching user contracts:', error)
-		throw new Error('Error fetching user contracts')
+		throw new AppError('Error fetching user contracts', 500)
 	}
 }
 
@@ -93,23 +104,58 @@ const deleteContractByIdController = async (contractId, user) => {
 		if (!contractToDelete) throw new AppError('Contract not found', 404)
 
 		// Verificar si el usuario tiene permisos para eliminar el contrato
-		if (user.role === 'user' && contractToDelete.receiverId === user.id) {
+		if (
+			user.role === 'admin' ||
+			(user.role === 'user' && contractToDelete.receiverId === user.id)
+		) {
 			await Contract.destroy({ where: { id: contractId } })
 			return { message: 'Contract deleted successfully' }
 		} else {
-			throw new AppError('You are not authorized to delete this contract', 401)
+			throw new AppError('You are not authorized to delete this contract', 403)
 		}
 	} catch (error) {
 		console.error(`Error deleting contract: ${error.message}`)
-		throw new AppError(error.message || `Error deleting contract`, error.statusCode || 500)
+		throw new AppError(error.message || 'Error deleting contract', error.statusCode || 500)
 	}
 }
 
+const getDeletedContractController = async () => {
+	try {
+		const deletedContracts = await Contract.findAll({
+			paranoid: false,
+			where: { deletedAt: { [Op.ne]: null } },
+		})
+		return deletedContracts
+	} catch (error) {
+		console.error('Error fetching deleted contracts:', error)
+		throw new AppError('Error fetching deleted contracts', 500)
+	}
+}
+
+const updateContractStatusController = async (contractId, status) => {
+	try {
+		const contract = await Contract.findByPk(contractId)
+		if (!contract) {
+			throw new AppError('Contract not found', 404)
+		}
+		console.log("Este es el contrato:", contract, contract.status)
+
+		contract.status = status
+		await contract.save()
+
+		return contract
+	} catch (error) {
+		console.error('Error updating contract status:', error)
+		throw new AppError('Error updating contract status', 500)
+	}
+}
 
 module.exports = {
-    createContractController,
-    getAllContractsController,
-    getUserContractsController,
+	createContractController,
+	getAllContractsController,
 	getContractByIdController,
-	deleteContractByIdController
+	getUserContractsController,
+	deleteContractByIdController,
+	getDeletedContractController,
+	updateContractStatusController,
 }
