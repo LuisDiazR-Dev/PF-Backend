@@ -18,6 +18,10 @@ const clientStripe = new stripe(
 	'sk_test_51PfcjxApzRY4HXw3SaIcmqMxh742spkGCG0ne5zCdsJATcsRky6mzglZe5n7lsGXzGZF6YAee3smMVgx8f8MdAcq00jf92UHM2'
 )
 
+const stripeSession = require('stripe')(
+	'sk_test_51PfcjxApzRY4HXw3SaIcmqMxh742spkGCG0ne5zCdsJATcsRky6mzglZe5n7lsGXzGZF6YAee3smMVgx8f8MdAcq00jf92UHM2'
+)
+
 const createPreference = async (title, quantity, unit_price, user) => {
 	try {
 		if (!user.id) {
@@ -98,10 +102,56 @@ const createStripePreference = async (title, quantity, unit_price) => {
 		],
 		mode: 'payment',
 		success_url: `${process.env.FRONT_LOCAL_SUCCESS}?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: process.env.FRONT_LOCAL_FAILURE,
+		cancel_url: process.env.FRONT_LOCAL_FAILURE,
 	})
 	console.log(session)
 	return session.url
+}
+
+const paymentStripeController = async (sessionId, user) => {
+	try {
+		const session = await stripeSession.checkout.sessions.retrieve(sessionId)
+
+		if (!session) {
+			console.log('No session found with the provided ID.')
+			return { status: 404, message: 'No session found with the provided ID.' }
+		}
+		const paymentIntentId = session.payment_intent
+
+		if (paymentIntentId) {
+			const paymentIntent = await stripeSession.paymentIntents.retrieve(paymentIntentId)
+			console.log(`PaymentIntent status: ${paymentIntent.status}`)
+
+			if (paymentIntent.status === 'succeeded') {
+				const userId = await User.findByPk(user)
+				if (!userId) {
+					console.log('User not found.')
+					return { status: 404, message: 'User not found.' }
+				}
+
+				const freePlan = await Plan.findOne({ where: { planName: 'Premium' } })
+				if (!freePlan) {
+					console.log('Free plan not found.')
+					return { status: 404, message: 'Free plan not found.' }
+				}
+
+				userId.planName = freePlan.planName
+				await userId.save()
+				// await youArePremium()
+				// console.log('User updated to premium')
+				return { status: 200, message: 'User updated to premium' }
+			} else {
+				console.log('PaymentIntent not succeeded.')
+				return { status: 400, message: 'PaymentIntent not succeeded.' }
+			}
+		} else {
+			console.log('No PaymentIntent associated with this Checkout Session.')
+			return { status: 404, message: 'No PaymentIntent associated with this Checkout Session.' }
+		}
+	} catch (error) {
+		console.error(error)
+		return { status: 500, message: `Error retrieving PaymentIntent: ${error.message}` }
+	}
 }
 
 //* Tarjeta visa Argentina prueba 4000000320000021 COD 123 EXP 12/26
@@ -111,4 +161,5 @@ module.exports = {
 	paymentNotificationController,
 	createStripePreference,
 	cancelSubscriptionController,
+	paymentStripeController,
 }
