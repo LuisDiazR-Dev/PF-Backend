@@ -97,8 +97,8 @@ const createStripePreference = async (title, quantity, unit_price) => {
 			},
 		],
 		mode: 'payment',
-		success_url: process.env.FRONT_DEPLOY,
-		cancel_url: process.env.FRONT_DEPLOY,
+		success_url: `${process.env.FRONT_LOCAL_SUCCESS}?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: process.env.FRONT_LOCAL_FAILURE,
 	})
 	console.log(session)
 	return session.url
