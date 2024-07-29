@@ -3,7 +3,13 @@ const {
 	createStripePreference,
 	paymentNotificationController,
 	cancelSubscriptionController,
+	paymentStripeController,
 } = require('../controllers/payment-controller')
+
+const stripe = require('stripe')(
+	'sk_test_51PfcjxApzRY4HXw3SaIcmqMxh742spkGCG0ne5zCdsJATcsRky6mzglZe5n7lsGXzGZF6YAee3smMVgx8f8MdAcq00jf92UHM2'
+)
+
 const { User, Plan } = require('../db')
 
 const mercadoPagoPreference = async (req, res) => {
@@ -38,9 +44,10 @@ const stripePreference = async (req, res) => {
 }
 
 const stripeWebhook = async (req, res) => {
-	const payment = req.body
+	const sessionId = req.query.session_id
+	const user = '15e71432-d7c4-445e-a873-d79090afe549'
 	try {
-		const response = await paymentNotificationController(payment)
+		const response = await paymentStripeController(sessionId, user)
 		res.status(200).json(response)
 	} catch (error) {
 		res.status(500).send(error.message)

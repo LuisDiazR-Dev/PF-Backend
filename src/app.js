@@ -16,10 +16,6 @@ app.use((req, res, next) => {
 	next()
 })
 
-//* Middleware para parsear el cuerpo de la solicitud como raw para el webhook de Stripe
-
-app.use('/payment/webhook', bodyParser.raw({ type: 'application/json' }))
-
 app.use(router)
 
 module.exports = app
