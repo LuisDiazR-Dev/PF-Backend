@@ -1,12 +1,12 @@
 const transporter = require('../mailer/mailer')
 
 const youArePremium = async (payment) => {
-    const email = payment.data.emailUser
+    const email = payment || payment.data.emailUser
     console.log(payment)
 	try {
 		await transporter.sendMail({
 			from: "ForDevs 👾",
-			to: "ibarra.gl.2017@gmail.com",
+			to: email,
 			subject: 'Thank You for Subscribing to ForDevs Premium! 👾 ',
 			text: 'Thank you for subscribing to ForDevs Premium. You now have access to all our premium features.',
 			html: `
