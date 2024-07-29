@@ -45,14 +45,10 @@ const getUserProfile = async (req, res) => {
 const updateUserProfile = async (req, res) => {
     try {
         const user = req.user;
-        console.log('Usuario autenticado:', user); // Log para verificar los datos de autenticación
         const userData = req.body;
-        console.log('Datos enviados al controlador:', userData); // Log para verificar los datos enviados al controlador
-
         const response = await updateUserProfileController(userData, user);
         res.status(response.status).json({ message: response.message, user: response.user });
     } catch (error) {
-        console.error('Error updating user profile:', error);
         res.status(500).send(error.message);
     }
 };
