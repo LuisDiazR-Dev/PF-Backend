@@ -3,6 +3,7 @@ const { Op } = require('sequelize')
 const AppError = require('../utils/error-util')
 const { getUserIncludes } = require('../utils/user-utils')
 const { findOrCreateLinks } = require('../controllers/link-controller')
+const bcrypt = require('bcrypt');
 
 const getAllUsersController = async (search) => {
 	try {
@@ -33,18 +34,24 @@ const getUserByIdController = async (id) => {
 
 const updateUserProfileController = async ({ userData }, { id }) => {
 	try {
-		const updatingUser = await User.findByPk(id)
+		const updatingUser = await User.findByPk(id);
 		if (!updatingUser || updatingUser.role !== 'user') {
-			throw new AppError('You are not authorized to update this user', 401)
+			throw new AppError('You are not authorized to update this user', 401);
 		}
-		const updatedUser = await updateUserByIdController(userData, id)
-		return updatedUser
-	} catch (error) {
-		console.error('Error updating project:', error)
-		throw new AppError('Error updating project', 500)
-	}
-}
 
+		if (userData.password) {
+			userData.password = await bcrypt.hash(userData.password, 10);
+		}
+
+		await updatingUser.update(userData);
+		const updatedUser = await User.findByPk(id);
+
+		return updatedUser;
+	} catch (error) {
+		console.error('Error updating project:', error);
+		throw new AppError('Error updating project', 500);
+	}
+};
 const updateUserByIdController = async (userData, id) => {
 	try {
 		const user = await User.findByPk(id)
