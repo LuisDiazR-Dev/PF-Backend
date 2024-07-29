@@ -1,20 +1,30 @@
 const { User } = require('../db')
 const { Op } = require('sequelize')
 const AppError = require('../utils/error-util')
-const { getUserIncludes } = require('../utils/user-utils')
 const { findOrCreateLinks } = require('../controllers/link-controller')
 const bcrypt = require('bcrypt');
+const {
+	getUserIncludes,
+	getUserOrder,
+	getWhereCondition,
+	getPagination,
+} = require('../utils/user-utils')
 
-const getAllUsersController = async (search) => {
+const getAllUsersController = async (queries) => {
 	try {
-		let where = {}
-		if (search)
-			where[Op.or] = [
-				{ userName: { [Op.iLike]: `%${search}%` } },
-				{ email: { [Op.iLike]: `%${search}%` } },
-			]
-		const users = await User.findAll({ where, include: getUserIncludes() })
-		return users
+		const order = getUserOrder(queries)
+		const where = getWhereCondition(queries)
+		const include = getUserIncludes(queries)
+		const { offset, limit } = getPagination(queries)
+		const users = await User.findAndCountAll({
+			limit,
+			offset,
+			order,
+			where,
+			include,
+		})
+
+		return users.rows.map((project) => project.dataValues)
 	} catch (error) {
 		console.error('Error fetching users:', error)
 		throw new Error(`Error fetching users: ${error.message}`)
