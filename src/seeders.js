@@ -1,17 +1,18 @@
-const { User, Project, Tag, Plan, Technology } = require('./db');
-const bcrypt = require('bcrypt');
-const users = require('./_db/users');
-const projects = require('./_db/projects');
-const technologies = require('./_db/technologies');
-const plans = require('./_db/plans');
-
+const { User, Project, Tag, Plan, Technology, Link } = require('./db')
+const bcrypt = require('bcrypt')
+const users = require('./_db/users')
+const projects = require('./_db/projects')
+const technologies = require('./_db/technologies')
+const plans = require('./_db/plans')
 
 const hashPasswords = async (users) => {
-    return await Promise.all(users.map(async (user) => {
-        const hashedPassword = await bcrypt.hash(user.password, 10);
-        return { ...user, password: hashedPassword };
-    }));
-};
+	return await Promise.all(
+		users.map(async (user) => {
+			const hashedPassword = await bcrypt.hash(user.password, 10)
+			return { ...user, password: hashedPassword }
+		})
+	)
+}
 
 const createSeeders = async () => {
 	try {
@@ -19,18 +20,44 @@ const createSeeders = async () => {
 		await Promise.all(plans.map(async (plan) => await Plan.findOrCreate({ where: plan })))
 		console.log('Free and premium plans have been added to the database!')
 
+		// Hashear contraseñas de los usuarios
+		const usersWithHashedPasswords = await hashPasswords(users)
 
-        // Hashear contraseñas de los usuarios
-        const usersWithHashedPasswords = await hashPasswords(users);
+		// Creación de usuarios
+		const createdUsers = await Promise.all(
+			usersWithHashedPasswords.map(async (user) => {
+				const [createdUser, created] = await User.findOrCreate({
+					where: { email: user.email },
+					defaults: {
+						userName: user.userName,
+						password: user.password,
+						bio: user.bio,
+						aboutMe: user.aboutMe,
+						image: user.image,
+						planName: user.planName
+					},
+				})
 
-        // Creación de usuarios
-        const createdUsers = await Promise.all(
-            usersWithHashedPasswords.map(async (user) => {
-                const [createdUser] = await User.findOrCreate({ where: { email: user.email }, defaults: user });
-                return createdUser;
-            })
-        );
-        console.log('Users have been added to the database!');
+				if (user.links && created) {
+					await Promise.all(
+						user.links.map(async (link) => {
+							if (createdUser.id) {
+								await Link.findOrCreate({
+									where: {
+										name: link.name,
+										url: link.url,
+										userId: createdUser.id,
+									},
+								})
+							} else {
+								console.error(`No user ID found for user: ${user.email}`)
+							}
+						})
+					)
+				}
+				return createdUser
+			})
+		)
 
 		// Creación de tecnologías
 		const createdTechnologies = await Promise.all(
