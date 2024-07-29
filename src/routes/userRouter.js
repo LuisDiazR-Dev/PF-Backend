@@ -13,10 +13,10 @@ const {
 	restoreUser,
 } = require('../handlers/user-handler')
 
-const { verifyToken } = require('../middlewares/auth-middleware')
+const { verifyToken, authenticate } = require('../middlewares/auth-middleware')
 const { checkAdmin } = require('../middlewares/admin_middleware')
 
-userRouter.get('/', getAllUsers)
+userRouter.get('/', authenticate, getAllUsers)
 userRouter.get('/profile', verifyToken, getUserProfile)
 userRouter.get('/deleted', verifyToken, getDeletedUsers)
 userRouter.get('/deleted/:id', verifyToken, getDeletedUserById)

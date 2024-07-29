@@ -13,7 +13,8 @@ const {
 const getAllProjects = async (req, res) => {
 	try {
 		const queries = req.query
-		const response = await getAllProjectsController(queries)
+		const user = req.user ? req.user : undefined
+		const response = await getAllProjectsController(queries, user)
 		res.status(200).json(response)
 	} catch (error) {
 		res.status(500).json({ error: error.message })

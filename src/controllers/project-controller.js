@@ -10,12 +10,12 @@ const {
 	getPagination,
 } = require('../utils/project-util')
 
-const getAllProjectsController = async (queries) => {
+const getAllProjectsController = async (queries, user) => {
 	try {
 		const order = getProjectOrder(queries)
 		const where = getWhereCondition(queries)
 		const include = getProjectIncludes(queries)
-		const { offset, limit } = getPagination(queries)
+		const { offset, limit } = await getPagination(queries, user)
 
 		const projects = await Project.findAndCountAll({
 			limit,
