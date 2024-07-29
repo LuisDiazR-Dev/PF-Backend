@@ -12,7 +12,8 @@ const {
 const getAllUsers = async (req, res) => {
 	try {
 		const query = req.query
-		const response = await getAllUsersController(query)
+		const user = req.user ? req.user : undefined
+		const response = await getAllUsersController(query, user)
 		res.status(200).json(response)
 	} catch (error) {
 		console.error('Error fetching users:', error)

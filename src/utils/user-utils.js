@@ -72,11 +72,11 @@ const getWhereCondition = ({ search }) => {
 	let where = { deletedAt: null }
 
 	if (search) {
-        where[Op.or] = [
-            { userName: { [Op.iLike]: `%${search}%` } },
-            { email: { [Op.iLike]: `%${search}%` } }
-        ];
-    }
+		where[Op.or] = [
+			{ userName: { [Op.iLike]: `%${search}%` } },
+			{ email: { [Op.iLike]: `%${search}%` } },
+		]
+	}
 
 	return where
 }
@@ -85,13 +85,24 @@ const getPagination = async ({ page = 1, pageSize = 10 }, currentUser) => {
 	const offset = (page - 1) * parseInt(pageSize, 10)
 	let limit = parseInt(pageSize, 10)
 	if (currentUser) {
-		const user = await User.findByPk(currentUser.id, {
-			include: [{ model: Plan, as: 'plan' }],
-		})
-		if (user && user.dataValues.planName === 'Free') {
-			limit = 20
+		try {
+			const user = await User.findByPk(currentUser.id, {
+				include: [{ model: Plan, as: 'plan' }],
+			})
+
+			if (user) {
+				if (user.dataValues.planName === 'Free') {
+					limit = 10
+				}
+			} else return
+		} catch (error) {
+			console.error('Error fetching user data:', error)
+			limit = 10
 		}
+	} else {
+		limit = 10
 	}
+
 	return { offset, limit }
 }
 
@@ -99,5 +110,5 @@ module.exports = {
 	getUserIncludes,
 	getUserOrder,
 	getWhereCondition,
-	getPagination
+	getPagination,
 }
