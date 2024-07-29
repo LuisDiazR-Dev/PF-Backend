@@ -188,7 +188,7 @@ module.exports = [
 		image:
 			'https://img.freepik.com/vector-gratis/ilustracion-concepto-sistema-organizacion_114360-885.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
 		technologies: ['Python', 'Django', 'PostgreSQL'],
-		email: users[20].email,
+		email: users[19].email,
 	},
 	{
 		title: 'Meditation App',
@@ -422,7 +422,7 @@ module.exports = [
 		image:
 			'https://img.freepik.com/vector-premium/portfolio-digital_202137-3684.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
 		technologies: ['HTML', 'CSS', 'JavaScript'],
-		email: users[20].email,
+		email: users[1].email,
 	},
 	{
 		title: 'Local Event Finder',
@@ -602,7 +602,7 @@ module.exports = [
 		image:
 			'https://img.freepik.com/vector-premium/galeria-arte_202137-3647.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
 		technologies: ['Python', 'Flask', 'Three.js'],
-		email: users[20].email,
+		email: users[10].email,
 	},
 	{
 		title: 'Language Learning Game',
@@ -782,6 +782,6 @@ module.exports = [
 		image:
 			'https://img.freepik.com/vector-premium/guia-viajes_202137-3681.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
 		technologies: ['JavaScript', 'React', 'Google Maps API'],
-		email: users[20].email,
+		email: users[15].email,
 	},
 ]

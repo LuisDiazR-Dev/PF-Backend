@@ -1,4 +1,4 @@
-const { Project, Technology, Tag, Contract, Plan, Link } = require('../db')
+const { User, Project, Technology, Tag, Contract, Plan, Link } = require('../db')
 const { Op } = require('sequelize')
 
 const getUserIncludes = (queries = {}) => {
@@ -57,6 +57,47 @@ const getUserIncludes = (queries = {}) => {
 	return includes
 }
 
+const getUserOrder = (queries) => {
+	switch (queries.sort) {
+		case 'a-z':
+			return [['userName', 'ASC']]
+		case 'z-a':
+			return [['userName', 'DESC']]
+		default:
+			return []
+	}
+}
+
+const getWhereCondition = ({ search }) => {
+	let where = { deletedAt: null }
+
+	if (search) {
+        where[Op.or] = [
+            { userName: { [Op.iLike]: `%${search}%` } },
+            { email: { [Op.iLike]: `%${search}%` } }
+        ];
+    }
+
+	return where
+}
+
+const getPagination = async ({ page = 1, pageSize = 10 }, currentUser) => {
+	const offset = (page - 1) * parseInt(pageSize, 10)
+	let limit = parseInt(pageSize, 10)
+	if (currentUser) {
+		const user = await User.findByPk(currentUser.id, {
+			include: [{ model: Plan, as: 'plan' }],
+		})
+		if (user && user.dataValues.planName === 'Free') {
+			limit = 20
+		}
+	}
+	return { offset, limit }
+}
+
 module.exports = {
 	getUserIncludes,
+	getUserOrder,
+	getWhereCondition,
+	getPagination
 }
