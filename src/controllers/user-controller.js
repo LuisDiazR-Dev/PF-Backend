@@ -10,12 +10,13 @@ const {
 	getPagination,
 } = require('../utils/user-utils')
 
-const getAllUsersController = async (queries) => {
+const getAllUsersController = async (queries, user) => {
 	try {
 		const order = getUserOrder(queries)
 		const where = getWhereCondition(queries)
 		const include = getUserIncludes(queries)
-		const { offset, limit } = getPagination(queries)
+		const { offset, limit } = await getPagination(queries, user)
+
 		const users = await User.findAndCountAll({
 			limit,
 			offset,

@@ -1,4 +1,4 @@
-const { User, Technology, Tag, Like } = require('../db')
+const { User, Technology, Tag, Like, Plan } = require('../db')
 const { Op } = require('sequelize')
 
 const getProjectIncludes = (queries = {}) => {
@@ -22,29 +22,29 @@ const getProjectIncludes = (queries = {}) => {
 			attributes: ['userId'],
 			required: false,
 		},
-	];
+	]
 
 	if (queries.exclude) {
-		const excludeModels = queries.exclude.split(',');
-		includes = includes.filter(include => !excludeModels.includes(include.as));
+		const excludeModels = queries.exclude.split(',')
+		includes = includes.filter((include) => !excludeModels.includes(include.as))
 	}
 
 	if (queries.technologies) {
-		const technologyInclude = includes.find(include => include.as === 'technologies');
+		const technologyInclude = includes.find((include) => include.as === 'technologies')
 		if (technologyInclude) {
-			technologyInclude.where = { name: { [Op.in]: queries.technologies.split(',') } };
+			technologyInclude.where = { name: { [Op.in]: queries.technologies.split(',') } }
 		}
 	}
 
 	if (queries.tags) {
-		const tagInclude = includes.find(include => include.as === 'tags');
+		const tagInclude = includes.find((include) => include.as === 'tags')
 		if (tagInclude) {
-			tagInclude.where = { tagName: { [Op.iLike]: `%${queries.tags.split(',').join('%')}%` } };
+			tagInclude.where = { tagName: { [Op.iLike]: `%${queries.tags.split(',').join('%')}%` } }
 		}
 	}
 
-	return includes;
-};
+	return includes
+}
 
 const getProjectOrder = (queries) => {
 	switch (queries.sort) {
@@ -72,17 +72,30 @@ const getWhereCondition = (queries) => {
 }
 
 const getPagination = async ({ page = 1, pageSize = 10 }, currentUser) => {
-	const offset = (page - 1) * parseInt(pageSize, 10)
-	let limit = parseInt(pageSize, 10)
+	const offset = (page - 1) * parseInt(pageSize, 10);
+	let limit = parseInt(pageSize, 10);	
 	if (currentUser) {
-		const user = await User.findByPk(currentUser.id, {
-			include: [{ model: Plan, as: 'plan' }],
-		})
-		if (user && user.dataValues.planName === 'Free') {
-			limit = 20
+		try {
+			const user = await User.findByPk(currentUser.id, {
+				include: [{ model: Plan, as: 'plan' }],
+			});
+
+			if (user) {
+				if (user.dataValues.planName === 'Free') {
+					limit = 20;
+				}
+			} else return
+		} catch (error) {
+			console.error('Error fetching user data:', error);
+			limit = 20;
 		}
+	} else {
+		limit = 20;
 	}
-	return { offset, limit }
+	console.log(offset, limit);
+
+	return { offset, limit };
 }
+
 
 module.exports = { getProjectIncludes, getProjectOrder, getWhereCondition, getPagination }
