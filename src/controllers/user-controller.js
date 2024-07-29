@@ -42,26 +42,31 @@ const getUserByIdController = async (id) => {
 	}
 }
 
-const updateUserProfileController = async ({ userData }, { id }) => {
-	try {
-		const updatingUser = await User.findByPk(id);
-		if (!updatingUser || updatingUser.role !== 'user') {
-			throw new AppError('You are not authorized to update this user', 401);
-		}
+const updateUserProfileController = async (userData, user) => {
+    const { currentPassword, newPassword, ...updateData } = userData;
+    try {
+        const userRecord = await User.findByPk(user.id);
+        if (!userRecord) {
+            return { status: 404, message: 'Usuario no encontrado' };
+        }
+        if (currentPassword && newPassword) {
+            const isMatch = await bcrypt.compare(currentPassword, userRecord.password);
+            if (!isMatch) {
+                return { status: 400, message: 'Contraseña actual incorrecta' };
+            }
+            const hashedPassword = await bcrypt.hash(newPassword, 10);
+            updateData.password = hashedPassword;
+        }
+        await userRecord.update(updateData);
+        const updatedUser = await User.findByPk(user.id); 
 
-		if (userData.password) {
-			userData.password = await bcrypt.hash(userData.password, 10);
-		}
-
-		await updatingUser.update(userData);
-		const updatedUser = await User.findByPk(id);
-
-		return updatedUser;
-	} catch (error) {
-		console.error('Error updating project:', error);
-		throw new AppError('Error updating project', 500);
-	}
+        return { status: 200, message: 'Usuario actualizado exitosamente', user: updatedUser };
+    } catch (error) {
+        return { status: 500, message: 'Error al actualizar el usuario' };
+    }
 };
+
+
 const updateUserByIdController = async (userData, id) => {
 	try {
 		const user = await User.findByPk(id)
