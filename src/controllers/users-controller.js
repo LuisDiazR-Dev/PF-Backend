@@ -58,6 +58,7 @@ const getUserByIdController = async (id) => {
 
 const updateUserProfileController = async (userData, currentUser) => {
 	const data = userData.userData
+	// const {id} = data
 	try {
 		const updatingUser = await User.findByPk(currentUser.id)
 		if (!updatingUser || updatingUser.role !== 'user') {
@@ -66,10 +67,12 @@ const updateUserProfileController = async (userData, currentUser) => {
 		await updatingUser.update(
 			data,
 			{ where: { id: updatingUser.id } }
+			// { where: { id } }
 		)
 		const updatedUser = await User.findByPk(updatingUser.id)
 		return updatedUser
 	} catch (error) {
+		console.error(error)
 		throw error
 	}
 }
@@ -117,7 +120,7 @@ const deleteUserByIdController = async (id, user) => {
 }
 
 const deleteUserProfileController = async (user) => {
-	console.log(user.id)
+	// console.log(user.id)
 	const id = user.id
 	try {
 		console.log("AMBATAKAAAAM")
@@ -126,7 +129,7 @@ const deleteUserProfileController = async (user) => {
 		if (user.role !== 'user') {
 			throw new AppError('You are not authorized to delete this user', 401)
 		}
-		console.log("SU")
+		// console.log("SU")
 		await User.destroy({ where: { id } })
 		return { message: 'User deleted successfully' }
 	} catch (error) {

@@ -5,16 +5,15 @@ const fs = require('fs')
 const path = require('path')
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME } = process.env
 
- const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`, {
- 	logging: false,
- 	native: false,
- })
+const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`, {
+	logging: false,
+	native: false,
+})
 
 //const sequelize = new Sequelize(DB_DEPLOY, {
 //	logging: false,
 //	native: false,
 //})
-
 
 // const sequelize = new Sequelize(DB_DEPLOY, {
 // 	logging: false,
@@ -50,11 +49,11 @@ Tag.belongsToMany(Project, { through: 'project_tag', as: 'projects' })
 User.belongsTo(Plan, { foreignKey: 'planName', as: 'plan' })
 Plan.hasMany(User, { foreignKey: 'planName', as: 'users' })
 
-User.hasMany(Like, { foreignKey: 'userId', as: 'likes' });
-Like.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+User.hasMany(Like, { foreignKey: 'userId', as: 'likes' })
+Like.belongsTo(User, { foreignKey: 'userId', as: 'user' })
 
-Project.hasMany(Like, { foreignKey: 'projectId', as: 'likes' });
-Like.belongsTo(Project, { foreignKey: 'projectId', as: 'project' });
+Project.hasMany(Like, { foreignKey: 'projectId', as: 'likes' })
+Like.belongsTo(Project, { foreignKey: 'projectId', as: 'project' })
 
 User.hasMany(Contract, { foreignKey: 'senderId', as: 'sentContracts' })
 Contract.belongsTo(User, { foreignKey: 'senderId', as: 'sender' })
@@ -62,8 +61,8 @@ Contract.belongsTo(User, { foreignKey: 'senderId', as: 'sender' })
 User.hasMany(Contract, { foreignKey: 'receiverId', as: 'receivedContracts' })
 Contract.belongsTo(User, { foreignKey: 'receiverId', as: 'receiver' })
 
-User.hasMany(Review, { foreignKey: 'userId', as: 'reviews' });
-Review.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+User.hasMany(Review, { foreignKey: 'userId', as: 'reviews' })
+Review.belongsTo(User, { foreignKey: 'userId', as: 'user' })
 
 module.exports = {
 	...sequelize.models,

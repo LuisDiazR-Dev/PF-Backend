@@ -1,30 +1,26 @@
-const { User, Project, Technology, Tag, Like } = require('../db')
+const { User, Project, Technology, Tag, Like, Plan } = require('../db')
 const { Op } = require('sequelize')
 const AppError = require('../utils/index')
+const { updateProject } = require('../handlers/projects-handler')
 
-const getAllProjectsController = async (queries, user) => {
-	const { title, tags, technologies, sort, page = 1, pageSize = 10 } = queries
+const getAllProjectsController = async (queries, currentUser) => {
+	const { title, tags, technologies, sort, page = 1, pageSize = 10 } = queries;
 
-	let where = {
-		deletedAt: null,
-	}
-	let order = []
-	let offset = (page - 1) * parseInt(pageSize, 10)
-	let limit = parseInt(pageSize, 10)
+	let where = { deletedAt: null };
+	let order = [];
+	let offset = (page - 1) * parseInt(pageSize, 10);
+	let limit = parseInt(pageSize, 10);
 
 	try {
-		if (sort === 'a-z') order = [['title', 'ASC']]
-		if (sort === 'z-a') order = [['title', 'DESC']]
-		if (sort === 'new') order = [['createdAt', 'DESC']]
-		if (sort === 'old') order = [['createdAt', 'ASC']]
+		if (sort === 'a-z') order = [['title', 'ASC']];
+		if (sort === 'z-a') order = [['title', 'DESC']];
+		if (sort === 'new') order = [['createdAt', 'DESC']];
+		if (sort === 'old') order = [['createdAt', 'ASC']];
 
-		if (title) where[Op.or] = [{ title: { [Op.iLike]: `%${title}%` } }]
+		if (title) where[Op.or] = [{ title: { [Op.iLike]: `%${title}%` } }];
 
 		const include = [
-			{
-				model: User,
-				as: 'user',
-			},
+			{ model: User, as: 'user' },
 			{
 				model: Technology,
 				as: 'technologies',
@@ -45,7 +41,16 @@ const getAllProjectsController = async (queries, user) => {
 				attributes: ['userId'],
 				required: false,
 			},
-		]
+		];
+
+		if (currentUser) {
+			const user = await User.findByPk(currentUser.id, {
+				include: [{ model: Plan, as: 'plan' }]
+			}); 
+			if (user && user.dataValues.planName === 'Free') {
+				limit = 20
+			}
+		}
 
 		const projectsData = await Project.findAndCountAll({
 			limit,
@@ -53,24 +58,26 @@ const getAllProjectsController = async (queries, user) => {
 			order,
 			where,
 			include,
-		})
+		});
 
 		const projects = projectsData.rows.map((project) => {
-			if (user)
+			if (currentUser)
 				return {
 					...project.dataValues,
-					liked: project.likes.some((like) => like.userId == user.id),
-				}
+					liked: project.likes.some((like) => like.userId == currentUser.id),
+				};
 			else {
-				return project.dataValues
+				return project.dataValues;
 			}
-		})
+		});
 
-		return projects
+		return projects;
 	} catch (error) {
-		throw new Error(`Error fetching projects: ${error.message}`)
+		console.error(error);
+		throw new Error(`Error fetching projects: ${error.message}`);
 	}
 }
+
 
 const getProjectByIdController = async (id, user) => {
 	try {
@@ -168,51 +175,51 @@ const getDeletedProjectByIdController = async (id) => {
 
 const createProjectController = async (projectData, user) => {
 	try {
-	  const { title, description, tags, technologies, image } = projectData;
-	  const [project, created] = await Project.findOrCreate({
-		where: { title, userId: user.id },
-		defaults: { description, image },
-	  });
-	  if (!created) throw new AppError('This project already exists in the database!', 400);
-	  if (!technologies || technologies.length < 1) throw new AppError('Add at least one technology', 400);
-	  if (!tags || tags.length < 1) throw new AppError('Add at least one tag', 400);
-	  console.log(tags, 'este es el console de tags');
-  
-	  const techNames = technologies.map((tech) => (typeof tech === 'string' ? tech : tech.name));
-	  const tagInstances = await Promise.all(
-		tags.map(async (tag) => {
-		  const [newTag] = await Tag.findOrCreate({ where: { tagName: tag.tagName } });
-		  return newTag;
+		const { title, description, tags, technologies, image } = projectData
+		const [project, created] = await Project.findOrCreate({
+			where: { title, userId: user.id },
+			defaults: { description, image },
 		})
-	  );
-  
-	  const techInstances = await Technology.findAll({ where: { name: techNames } });
-	  console.log(tagInstances);
-  
-	  if (techInstances.length !== techNames.length)
-		throw new AppError('Some technologies were not found in the database', 400);
-  
-	  await project.addTechnologies(techInstances);
-	  await project.addTags(tagInstances);
-	  const newProject = await Project.findByPk(project.id, {
-		include: [
-		  {
-			model: Technology,
-			as: 'technologies',
-		  },
-		  {
-			model: Tag,
-			as: 'tags',
-		  },
-		],
-	  });
-	  return newProject;
+		if (!created) throw new AppError('This project already exists in the database!', 400)
+		if (!technologies || technologies.length < 1)
+			throw new AppError('Add at least one technology', 400)
+		if (!tags || tags.length < 1) throw new AppError('Add at least one tag', 400)
+		console.log(tags, 'este es el console de tags')
+
+		const techNames = technologies.map((tech) => (typeof tech === 'string' ? tech : tech.name))
+		const tagInstances = await Promise.all(
+			tags.map(async (tag) => {
+				const [newTag] = await Tag.findOrCreate({ where: { tagName: tag.tagName } })
+				return newTag
+			})
+		)
+
+		const techInstances = await Technology.findAll({ where: { name: techNames } })
+		console.log(tagInstances)
+
+		if (techInstances.length !== techNames.length)
+			throw new AppError('Some technologies were not found in the database', 400)
+
+		await project.addTechnologies(techInstances)
+		await project.addTags(tagInstances)
+		const newProject = await Project.findByPk(project.id, {
+			include: [
+				{
+					model: Technology,
+					as: 'technologies',
+				},
+				{
+					model: Tag,
+					as: 'tags',
+				},
+			],
+		})
+		return newProject
 	} catch (error) {
-	  console.error(error);
-	  throw new AppError('Error creating a project', 500);
+		console.error(error)
+		throw new AppError('Error creating a project', 500)
 	}
-  };
-  
+}
 
 const restoreProjectController = async (id) => {
 	try {
@@ -243,6 +250,7 @@ const restoreProjectController = async (id) => {
 
 const updateProjectController = async (projectData, userId, userRole) => {
 	try {
+		console.log(projectData, userId, userRole)
 		const project = await Project.findByPk(projectData.id)
 		if (!project) throw new AppError('Project not found', 404)
 
@@ -300,6 +308,73 @@ const updateProjectController = async (projectData, userId, userRole) => {
 	}
 }
 
+const updateProjectByIDController = async (projectData,) => {
+	try {
+		const { title, description, tags, technologies, image, id } = projectData
+		// Encuentra el proyecto usando el id desde los parámetros
+		const project = await Project.findByPk(id)
+
+		if (!project) {
+			throw new AppError('Project not found', 404)
+		}
+
+		// Actualiza el proyecto
+		await project.update({
+			title: title ?? project.title,
+			description: description ?? project.description,
+			image: image ?? project.image,
+		})
+
+		// Maneja las etiquetas
+		if (tags) {
+			console.log(tags)
+			const tagInstances = await Promise.all(
+				tags.map(async (tagName) => {
+					const [tag] = await Tag.findOrCreate({
+						where: { tagName },
+					})
+					return tag
+				})
+			)
+			await project.setTags(tagInstances)
+		}
+
+		// Maneja las tecnologías
+		if (technologies) {
+			console.log(technologies)
+			const technologyInstances = await Promise.all(
+				technologies.map(async (techName) => {
+					const [technology] = await Technology.findOrCreate({
+						where: { name: techName },
+					})
+					return technology
+				})
+			)
+			await project.setTechnologies(technologyInstances)
+		}
+
+		// Recupera el proyecto actualizado
+		const updatedProject = await Project.findByPk(id, {
+			include: [
+				{
+					model: Technology,
+					as: 'technologies',
+				},
+				{
+					model: Tag,
+					as: 'tags',
+				},
+			],
+		})
+
+		// Responde con el proyecto actualizado
+		return updatedProject
+	} catch (error) {
+		console.error('Error updating project:', error)
+		throw new AppError('Error updating project', 500)
+	}
+}
+
 const deleteProjectController = async (id, user) => {
 	try {
 		const project = await Project.findByPk(id)
@@ -324,4 +399,5 @@ module.exports = {
 	restoreProjectController,
 	getDeletedProjectsController,
 	getDeletedProjectByIdController,
+	updateProjectByIDController,
 }
