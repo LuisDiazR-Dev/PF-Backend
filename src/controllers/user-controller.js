@@ -61,7 +61,7 @@ const updateUserProfileController = async (userData, user) => {
             updateData.password = hashedPassword;
         }
 
-        // Llama a updateUserByIdController para realizar la actualización
+        // Actualiza el usuario
         const updatedUser = await updateUserByIdController(updateData, user.id);
 
         return { status: 200, message: 'Usuario actualizado exitosamente', user: updatedUser };
@@ -70,6 +70,8 @@ const updateUserProfileController = async (userData, user) => {
         return { status: 500, message: 'Error al actualizar el usuario' };
     }
 };
+
+
 
 
 
@@ -83,7 +85,6 @@ const updateUserByIdController = async (userData, id) => {
             throw new AppError('User not found', 404);
         }
 
-        // Actualiza los datos del usuario
         await user.update({
             userName: userData.userName ?? user.userName,
             password: userData.password ?? user.password,
@@ -92,28 +93,24 @@ const updateUserByIdController = async (userData, id) => {
             image: userData.image ?? user.image,
         });
 
-        // Manejo de enlaces opcionales
         if (userData.links && Array.isArray(userData.links)) {
             const linkInstances = await findOrCreateLinks(userData.links);
-
-            // Actualiza los enlaces asociados al usuario
             await user.setLinks(linkInstances);
         } else {
             console.log('No links data provided.');
         }
 
-        // Vuelve a cargar el usuario con los enlaces actualizados
         const updatedUser = await User.findByPk(id, {
             include: [{ model: Link, as: 'links' }]
         });
 
-        console.log(`User updated successfully: ${JSON.stringify(updatedUser)}`);
         return updatedUser;
     } catch (error) {
         console.error('Error updating user:', error);
         throw new AppError('Error updating user', 500);
     }
 };
+
 
 const deleteUserController = async (id) => {
 	try {
