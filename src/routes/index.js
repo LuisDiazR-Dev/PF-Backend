@@ -9,7 +9,7 @@ const likeRouter = require('./likeRouter')
 const linkRouter = require('./linkRouter')
 const contractRouter = require('./contractRouter')
 const reviewRouter = require('./reviewRouter')
-const incomesRouter = require('./incomeRoute')
+const metadataRouter = require('./metaDataRoute')
 
 const router = Router()
 router.use('/', authRouter)
@@ -22,6 +22,6 @@ router.use('/likes', likeRouter)
 router.use('/links', linkRouter)
 router.use('/contracts', contractRouter)
 router.use('/reviews', reviewRouter)
-router.use('/incomes', incomesRouter)
+router.use('/metadata', metadataRouter)
 
 module.exports = router
