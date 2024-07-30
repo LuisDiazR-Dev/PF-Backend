@@ -15,11 +15,11 @@ const getAllUsersController = async (queries, user) => {
 		const order = getUserOrder(queries)
 		const where = getWhereCondition(queries)
 		const include = getUserIncludes(queries)
-		const { offset, limit } = await getPagination(queries, user)
+		const pagination = await getPagination(queries, user)
 
 		const users = await User.findAndCountAll({
-			limit,
-			offset,
+			limit: pagination.limit,
+			offset: pagination.offset,
 			order,
 			where,
 			include,
