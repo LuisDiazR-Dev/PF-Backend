@@ -1,7 +1,7 @@
 const transporter = require('../mailer/mailer')
 
 const sendContractNotification = async (senderEmail, receiverEmail, contractData) => {
-	const { projectDescription, budget, availableTime } = contractData
+	const { projectDescription, budget, currency, availableTime } = contractData
 
 	const emailOptions = {
 		from: 'ForDevs 👾',
@@ -64,7 +64,7 @@ const sendContractNotification = async (senderEmail, receiverEmail, contractData
                 <h2>Hello!</h2>
                 <p>👋 You have received a new contract request from <strong>${senderEmail}</strong>.</p>
                 <p><strong>Project Description:</strong> ${projectDescription}</p>
-                <p><strong>Budget:</strong> $${budget}</p>
+                <p><strong>Budget:</strong> ${budget} ${currency}</p>
                 <p><strong>Available Time:</strong> ${availableTime}</p>
                 <p>Please log in to your account to accept or reject the contract.</p>
                 <p>Best regards,<br>The ForDevs Team 🥸</p>

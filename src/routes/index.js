@@ -20,7 +20,7 @@ router.use('/payment', paymentRouter)
 router.use('/tags', tagRouter)
 router.use('/likes', likeRouter)
 router.use('/links', linkRouter)
-router.use('/contract', contractRouter)
+router.use('/contracts', contractRouter)
 router.use('/reviews', reviewRouter)
 router.use('/incomes', incomesRouter)
 
