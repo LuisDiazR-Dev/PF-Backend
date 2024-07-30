@@ -7,6 +7,7 @@ const generateExel = async (res, response) => {
 
 		//* ENCABEZADOS
 		worksheet.columns = [
+			{ header: 'Fecha de creacion', key: 'CretedAt',width: 20 },
 			{ header: 'Nombre', key: 'Nombre', width: 15 },
 			{ header: 'Role', key: 'Role', width: 10 },
 			{ header: 'Ganancia', key: 'Ganancia', width: 20 },
@@ -20,6 +21,7 @@ const generateExel = async (res, response) => {
 		console.log(data, ' log de data')
 
 		const transformedData = data.map((item) => ({
+			CretedAt: new Date(),	
 			Nombre: '',
 			Role: '',
 			Ganancia: item.roundedAveragePrice,
