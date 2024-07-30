@@ -1,4 +1,4 @@
-const { User } = require('../db')
+const { User, Link } = require('../db')
 const { Op } = require('sequelize')
 const AppError = require('../utils/error-util')
 const { findOrCreateLinks } = require('../controllers/link-controller')
@@ -45,11 +45,13 @@ const getUserByIdController = async (id) => {
 
 const updateUserProfileController = async (userData, user) => {
     const { currentPassword, newPassword, ...updateData } = userData;
+
     try {
         const userRecord = await User.findByPk(user.id);
         if (!userRecord) {
             return { status: 404, message: 'Usuario no encontrado' };
         }
+
         if (currentPassword && newPassword) {
             const isMatch = await bcrypt.compare(currentPassword, userRecord.password);
             if (!isMatch) {
@@ -58,43 +60,60 @@ const updateUserProfileController = async (userData, user) => {
             const hashedPassword = await bcrypt.hash(newPassword, 10);
             updateData.password = hashedPassword;
         }
-        await userRecord.update(updateData);
-        const updatedUser = await User.findByPk(user.id); 
+
+        // Llama a updateUserByIdController para realizar la actualización
+        const updatedUser = await updateUserByIdController(updateData, user.id);
 
         return { status: 200, message: 'Usuario actualizado exitosamente', user: updatedUser };
     } catch (error) {
+        console.error('Error updating user profile:', error);
         return { status: 500, message: 'Error al actualizar el usuario' };
     }
 };
 
 
+
 const updateUserByIdController = async (userData, id) => {
-	try {
-		const user = await User.findByPk(id)
-		if (!user) {
-			throw new AppError('User not found', 404)
-		}
-		await user.update({
-			userName: userData.userName ?? user.userName,
-			password: userData.password ?? user.password,
-			bio: userData.bio ?? user.bio,
-			aboutMe: userData.aboutMe ?? user.aboutMe,
-			image: userData.image ?? user.image,
-		})
+    try {
+        const user = await User.findByPk(id, {
+            include: [{ model: Link, as: 'links' }]
+        });
 
-		if (userData.links) {
-			const linkInstances = await findOrCreateLinks(userData.links)
-			await user.setLinks(linkInstances)
-		}
+        if (!user) {
+            throw new AppError('User not found', 404);
+        }
 
-		const updatedUser = await User.findByPk(userData.id)
+        // Actualiza los datos del usuario
+        await user.update({
+            userName: userData.userName ?? user.userName,
+            password: userData.password ?? user.password,
+            bio: userData.bio ?? user.bio,
+            aboutMe: userData.aboutMe ?? user.aboutMe,
+            image: userData.image ?? user.image,
+        });
 
-		return updatedUser
-	} catch (error) {
-		console.error('Error updating project:', error)
-		throw new AppError('Error updating project', 500)
-	}
-}
+        // Manejo de enlaces opcionales
+        if (userData.links && Array.isArray(userData.links)) {
+            const linkInstances = await findOrCreateLinks(userData.links);
+
+            // Actualiza los enlaces asociados al usuario
+            await user.setLinks(linkInstances);
+        } else {
+            console.log('No links data provided.');
+        }
+
+        // Vuelve a cargar el usuario con los enlaces actualizados
+        const updatedUser = await User.findByPk(id, {
+            include: [{ model: Link, as: 'links' }]
+        });
+
+        console.log(`User updated successfully: ${JSON.stringify(updatedUser)}`);
+        return updatedUser;
+    } catch (error) {
+        console.error('Error updating user:', error);
+        throw new AppError('Error updating user', 500);
+    }
+};
 
 const deleteUserController = async (id) => {
 	try {

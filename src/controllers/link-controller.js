@@ -12,6 +12,7 @@ const getAllLinksController = async () => {
 const findOrCreateLinks = async (links) => {
 	return Promise.all(
 		links.map(async (linkData) => {
+			console.log(linkData);
 			const [link] = await Link.findOrCreate({
 				where: linkData,
 			})
