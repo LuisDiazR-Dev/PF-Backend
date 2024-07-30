@@ -48,12 +48,18 @@ const updateUserProfile = async (req, res) => {
         const user = req.user;
         const userData = req.body;
         const response = await updateUserProfileController(userData, user);
-        res.status(200).json(response);
+
+        // Envía una respuesta basada en el status que devuelve updateUserProfileController
+        res.status(response.status).json({
+            message: response.message,
+            user: response.user
+        });
     } catch (error) {
-		console.error(error);
-        res.status(500).send(error.message);
+        console.error('Error in updateUserProfile handler:', error);
+        res.status(500).json({ message: 'Error al actualizar el perfil', error: error.message });
     }
 };
+
 
 const updateUserById = async (req, res) => {
 	try {

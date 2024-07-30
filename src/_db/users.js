@@ -7,10 +7,7 @@ module.exports = [
         aboutMe: 'I am a UX/UI designer passionate about creating exceptional digital experiences. My goal is to blend aesthetics and functionality to deliver innovative interface solutions.',
         image: 'https://img.freepik.com/psd-gratis/ilustracion-3d-avatar-o-perfil-humano_23-2150671118.jpg?ga=GA1.1.809440281.1720916925',
         planName: 'Premium',
-        links: [
-            { name: 'LinkedIn', url: 'https://www.linkedin.com/in/janesmith' },
-            { name: 'GitHub', url: 'https://github.com/janesmith' }
-        ],
+        links: [ ],
     },
     {
         userName: 'JohnDoe789',
