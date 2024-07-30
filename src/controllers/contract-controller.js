@@ -138,7 +138,6 @@ const updateContractStatusController = async (contractId, status) => {
 		if (!contract) {
 			throw new AppError('Contract not found', 404)
 		}
-		console.log("Este es el contrato:", contract, contract.status)
 
 		contract.status = status
 		await contract.save()

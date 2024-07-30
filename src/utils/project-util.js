@@ -92,7 +92,6 @@ const getPagination = async ({ page = 1, pageSize = 10 }, currentUser) => {
 	} else {
 		limit = 20;
 	}
-	console.log(offset, limit);
 
 	return { offset, limit };
 }
