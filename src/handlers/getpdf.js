@@ -1,4 +1,4 @@
-const { getMetadata, generatePDF, getAdmin } = require('../controllers/getPdfPromedios')
+const { getMetadata, generatePDF, getAdmin } = require('../controllers/getPdfIncome-controller')
 
 const getPdfHandler = async (req, res) => {
 	try {

@@ -17,8 +17,9 @@ const averagePrice = async () => {
 			},
 			raw: true,
 		})
-
-		return result
+		const averagePrice = result[0].averagePrice
+		const roundedAveragePrice = averagePrice ? parseFloat(averagePrice).toFixed(2) : null
+		return roundedAveragePrice
 	} catch (error) {
 		console.log('Error al calcular el promedio del precio:', error)
 		return null
