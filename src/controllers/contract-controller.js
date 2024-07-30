@@ -21,7 +21,7 @@ const createContractController = async (contractData) => {
 			throw new AppError('Sender or receiver not found', 404)
 		}
 
-		const [contract, created] = await Contract.findOrCreate({
+		const contract = await Contract.findOrCreate({
 			where: {
 				senderId,
 				receiverId,
@@ -33,10 +33,6 @@ const createContractController = async (contractData) => {
 				status: status || 'pending',
 			},
 		})
-
-		if (!created) {
-			throw new AppError("You've already sent the contract", 409)
-		}
 
 		return contract
 	} catch (error) {
