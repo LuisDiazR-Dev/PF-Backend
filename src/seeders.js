@@ -26,36 +26,34 @@ const createSeeders = async () => {
 		// Creación de usuarios
 		const createdUsers = await Promise.all(
 			usersWithHashedPasswords.map(async (user) => {
-				const [createdUser, created] = await User.findOrCreate({
-					where: { email: user.email },
-					defaults: {
-						userName: user.userName,
-						password: user.password,
-						bio: user.bio,
-						aboutMe: user.aboutMe,
-						image: user.image,
-						planName: user.planName
-					},
-				})
+				try {
+					const { links, email, ...userData } = user
+					const [createdUser, created] = await User.findOrCreate({
+						where: { email },
+						defaults: userData,
+					})
 
-				if (user.links && created) {
-					await Promise.all(
-						user.links.map(async (link) => {
-							if (createdUser.id) {
-								await Link.findOrCreate({
-									where: {
-										name: link.name,
-										url: link.url,
-										userId: createdUser.id,
-									},
-								})
-							} else {
-								console.error(`No user ID found for user: ${user.email}`)
-							}
-						})
-					)
+					if (links && created) {
+						await Promise.all(
+							links.map(async (link) => {
+								if (createdUser.id) {
+									await Link.findOrCreate({
+										where: {
+											name: link.name,
+											url: link.url,
+											userId: createdUser.id,
+										},
+									})
+								} else {
+									console.error(`No user ID found for user: ${user.email}`)
+								}
+							})
+						)
+					}
+					return createdUser
+				} catch (error) {
+					console.error(error)
 				}
-				return createdUser
 			})
 		)
 
@@ -102,8 +100,8 @@ const createSeeders = async () => {
 			)
 			await newProject.setTechnologies(projectTechnologies)
 		}
-
 		console.log('All projects have been added to the database!')
+		console.log('Users alredy created!')
 	} catch (error) {
 		console.error('Error creating seed data:', error)
 	}
