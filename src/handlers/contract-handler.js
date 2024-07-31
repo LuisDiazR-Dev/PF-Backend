@@ -101,6 +101,7 @@ const updateContractStatus = async (req, res) => {
 
 const createCommission = async (req, res, next) => {
 	const { rate, amount, contractId } = req.body
+	console.log(req.body)
 	try {
 		const commission = await createCommissionController({ rate, amount, contractId })
 		res.status(201).json(commission)
