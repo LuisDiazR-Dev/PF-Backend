@@ -15,7 +15,11 @@ const getAllProjectsController = async (queries, user) => {
 		const order = getProjectOrder(queries)
 		const where = getWhereCondition(queries)
 		const include = getProjectIncludes(queries)
+<<<<<<< Updated upstream
 		const { offset, limit } = await getPagination(queries, user) || {}
+=======
+		const { offset, limit } = (await getPagination(queries, user)) || {}
+>>>>>>> Stashed changes
 
 		const projects = await Project.findAndCountAll({
 			limit,
