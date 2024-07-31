@@ -1,4 +1,4 @@
-const { User, Project, Technology, Tag, Contract, Plan, Link } = require('../db')
+const { User, Project, Technology, Tag, Contract, Plan, Link, Review } = require('../db')
 const { Op } = require('sequelize')
 
 const getUserIncludes = (queries = {}) => {
@@ -14,6 +14,7 @@ const getUserIncludes = (queries = {}) => {
 				{
 					model: Tag,
 					as: 'tags',
+					order: [["tagName", "ASC"]]
 				},
 			],
 		},
@@ -33,6 +34,17 @@ const getUserIncludes = (queries = {}) => {
 			model: Link,
 			as: 'links',
 		},
+		{
+			model: Review,
+			as: 'reviewsReceived',
+			include: [
+				{
+					model: User,
+					as: 'reviewer',
+					attributes: ['id', 'userName', 'image']
+				}
+			]
+		}
 	]
 
 	if (queries.exclude) {

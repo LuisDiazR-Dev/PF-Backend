@@ -10,12 +10,11 @@ const {
     // deleteUserByIdReview
 } = require('../handlers/review-handler')
 
-const { checkAdmin } = require('../middlewares/admin_middleware')
 const { checkPremium } = require('../middlewares/premium_moddleware')
-const { verifyToken } = require('../middlewares/auth-middleware')
+const { verifyToken, authenticate } = require('../middlewares/auth-middleware')
 
 const reviewRouter = Router()
-reviewRouter.get('/', verifyToken, checkAdmin, getAllReviews)
+reviewRouter.get('/', authenticate, getAllReviews)
 reviewRouter.get('/:id', verifyToken, getReviewById)
 reviewRouter.get('/users/:id', verifyToken, getUserReviews)
 reviewRouter.post('/', verifyToken, checkPremium, createReview)

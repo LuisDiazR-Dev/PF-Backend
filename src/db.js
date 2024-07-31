@@ -61,11 +61,14 @@ Contract.belongsTo(User, { foreignKey: 'senderId', as: 'sender' })
 User.hasMany(Contract, { foreignKey: 'receiverId', as: 'receivedContracts' })
 Contract.belongsTo(User, { foreignKey: 'receiverId', as: 'receiver' })
 
-User.hasMany(Review, { foreignKey: 'userId', as: 'reviews' })
-Review.belongsTo(User, { foreignKey: 'userId', as: 'user' })
+User.hasMany(Review, { foreignKey: 'reviewerId', as: 'reviewsWritten' })
+Review.belongsTo(User, { foreignKey: 'reviewedUserId', as: 'reviewedUser' })
 
-User.hasMany(Link, { foreignKey: 'userId', as: 'links' });
-Link.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+Review.belongsTo(User, { foreignKey: 'reviewerId', as: 'reviewer' })
+User.hasMany(Review, { foreignKey: 'reviewedUserId', as: 'reviewsReceived' })
+
+User.hasMany(Link, { foreignKey: 'userId', as: 'links' })
+Link.belongsTo(User, { foreignKey: 'userId', as: 'user' })
 
 Contract.hasOne(Commission, { foreignKey: 'contractId', as: 'commission' })
 Commission.belongsTo(Contract, { foreignKey: 'contractId', as: 'contract' })
