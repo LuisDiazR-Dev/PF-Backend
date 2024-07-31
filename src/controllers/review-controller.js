@@ -91,25 +91,29 @@ const deleteUserReviewController = async (reviewData) => {
 	}
 }
 
-const deleteUserReviewByIdController = async (reviewData) => {
-	try {
-        const updatingReview = await Review.findByPk(reviewData.id)
-		await Review.destroy({ where: { id: reviewData.id }}
-		)
-		const deletedReview = await Review.findByPk(updatingReview.id)
-		return 'Review deleted successfully'
-	} catch (error) {
-		throw error
-	}
-}
+
+const deleteUserReviewByIdController = async (id) => {
+    try {
+        const review = await Review.findByPk(id);
+        if (!review) {
+            throw new Error('Review not found');
+        }
+        await Review.destroy({ where: { id } });
+        return 'Review deleted successfully';
+    } catch (error) {
+		console.error(error);
+        throw error;
+    }
+};
+
 
 module.exports = {
 	getAllReviewsController,
 	getReviewByIdController,
 	getUserReviewsController,
 	createReviewController,
-	updateUserReviewController,
-	deleteUserReviewController,
-	// updateUserReviewByIdController,
-	deleteUserReviewByIdController
+    updateUserReviewController,
+    deleteUserReviewController,
+    // updateUserReviewByIdController,
+    deleteUserReviewByIdController
 }
