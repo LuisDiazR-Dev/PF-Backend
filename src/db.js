@@ -35,7 +35,7 @@ let entries = Object.entries(sequelize.models)
 let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]])
 sequelize.models = Object.fromEntries(capsEntries)
 
-const { User, Project, Technology, Plan, Tag, Like, Contract, Review, Link } = sequelize.models
+const { User, Project, Technology, Plan, Tag, Like, Contract, Review, Link, Commission } = sequelize.models
 
 User.hasMany(Project, { foreignKey: 'userId', as: 'projects', onDelete: 'cascade' })
 Project.belongsTo(User, { foreignKey: 'userId', as: 'user' })
@@ -66,6 +66,9 @@ Review.belongsTo(User, { foreignKey: 'userId', as: 'user' })
 
 User.hasMany(Link, { foreignKey: 'userId', as: 'links' });
 Link.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+
+Contract.hasOne(Commission, { foreignKey: 'contractId', as: 'commission' })
+Commission.belongsTo(Contract, { foreignKey: 'contractId', as: 'contract' })
 
 module.exports = {
 	...sequelize.models,
