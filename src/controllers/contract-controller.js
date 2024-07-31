@@ -148,13 +148,13 @@ const updateContractStatusController = async (contractId, status) => {
 const calculateCommission = (planName, budget) => {
 	let rate = 0
 	switch (
-		planName // Convertir a minúsculas para comparación insensible a mayúsculas
+		planName
 	) {
 		case 'Premium':
-			rate = 0.05 // 5% para Premium
+			rate = 0.05
 			break
 		case 'Free':
-			rate = 0.25 // 25% para Free
+			rate = 0.25
 			break
 		default:
 			throw new Error(`Unknown plan: ${planName}`)
@@ -166,32 +166,31 @@ const calculateCommission = (planName, budget) => {
 const createCommissionController = async (commissionData) => {
 	const { contractId } = commissionData
 	try {
-		// Buscar el contrato
 		const contract = await Contract.findByPk(contractId)
 		if (!contract) {
 			throw new AppError('Contract not found', 404)
 		}
 
-		// Verificar que tanto el remitente como el receptor sean usuarios
+		if (contract.status !== 'accepted') {
+			throw new AppError('Commission can only be created for accepted contracts', 400)
+		}
+
 		const sender = await User.findByPk(contract.senderId)
 		const receiver = await User.findByPk(contract.receiverId)
-		console.log(receiver)
 
 		if (!sender || !receiver) {
 			throw new AppError('Sender or receiver not found', 404)
 		}
 
-		if (sender.role !== 'user' || receiver.role !== 'user') {
-			throw new AppError('Sender and receiver must both be common users', 400)
+		if (sender.role !== 'user' || receiver.role !== 'user' || sender.planName !== 'Premium') {
+			throw new AppError('Sender and receiver must both be common users, and sender must be a Premium user', 400)
 		}
 
-		// Calcular la comisión basada en el plan del receptor
-		const commissionData = calculateCommission(receiver.planName, contract.budget)
+		const commissionCalculation = calculateCommission(receiver.planName, contract.budget)
 
-		// Crear la comisión
 		const commission = await Commission.create({
-			rate: commissionData.rate,
-			amount: commissionData.amount,
+			rate: commissionCalculation.rate,
+			amount: commissionCalculation.amount,
 			contractId,
 		})
 
