@@ -106,16 +106,20 @@ const createSeeders = async () => {
 
 		// Crear contratos
 		for (const contractData of contracts) {
-			const sender = createdUsers[Math.floor(Math.random() * createdUsers.length)]
-			let receiver = createdUsers[Math.floor(Math.random() * createdUsers.length)]
+			const senders = createdUsers.filter(
+				(user) => user.planName === 'Premium' && user.role === 'user'
+			)
+			const receivers = createdUsers.filter(
+				(user) => (user.planName === 'Free' || user.planName === 'Premium') && user.role === 'user'
+			)
+
+			const sender = senders[Math.floor(Math.random() * senders.length)]
+			let receiver = receivers[Math.floor(Math.random() * receivers.length)]
 
 			// Asegurarse de que el receptor no sea el mismo que el remitente
 			while (receiver.id === sender.id) {
-				receiver = createdUsers[Math.floor(Math.random() * createdUsers.length)]
+				receiver = receivers[Math.floor(Math.random() * receivers.length)]
 			}
-
-			// Si el receptor o el remitente no son usuarios comunes, omitir este contrato
-			if (receiver.dataValues.role !== 'user' || sender.dataValues.role !== 'user') continue
 
 			// Crear contrato
 			await Contract.create({
