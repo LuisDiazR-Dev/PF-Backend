@@ -15,6 +15,7 @@ const getProjectIncludes = (queries = {}) => {
 			as: 'tags',
 			through: { attributes: [] },
 			required: !!queries.tags,
+			order: [["tagName", "ASC"]]
 		},
 		{
 			model: Like,
@@ -81,7 +82,8 @@ const getPagination = async ({ page = 1, pageSize = 10 }, currentUser) => {
 			});
 
 			if (user) {
-				if (user.dataValues.planName === 'Free') {
+				if (user.dataValues.role === 'admin') return 
+				else if (user.dataValues.planName === 'Free') {
 					limit = 20;
 				}
 			} else return
