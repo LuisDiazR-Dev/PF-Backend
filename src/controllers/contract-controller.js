@@ -1,4 +1,4 @@
-const { Contract, User } = require('../db')
+const { Contract, User, Commission } = require('../db')
 const { Op } = require('sequelize')
 const AppError = require('../utils/error-util')
 
@@ -145,6 +145,76 @@ const updateContractStatusController = async (contractId, status) => {
 	}
 }
 
+const calculateCommission = (planName, budget) => {
+	let rate = 0
+	switch (
+		planName // Convertir a minúsculas para comparación insensible a mayúsculas
+	) {
+		case 'Premium':
+			rate = 0.05 // 5% para Premium
+			break
+		case 'Free':
+			rate = 0.25 // 25% para Free
+			break
+		default:
+			throw new Error(`Unknown plan: ${planName}`)
+	}
+	const amount = budget * rate
+	return { rate, amount }
+}
+
+const createCommissionController = async (commissionData) => {
+	const { contractId } = commissionData
+	try {
+		// Buscar el contrato
+		const contract = await Contract.findByPk(contractId)
+		if (!contract) {
+			throw new AppError('Contract not found', 404)
+		}
+
+		// Verificar que tanto el remitente como el receptor sean usuarios
+		const sender = await User.findByPk(contract.senderId)
+		const receiver = await User.findByPk(contract.receiverId)
+		console.log(receiver)
+
+		if (!sender || !receiver) {
+			throw new AppError('Sender or receiver not found', 404)
+		}
+
+		if (sender.role !== 'user' || receiver.role !== 'user') {
+			throw new AppError('Sender and receiver must both be common users', 400)
+		}
+
+		// Calcular la comisión basada en el plan del receptor
+		const commissionData = calculateCommission(receiver.planName, contract.budget)
+
+		// Crear la comisión
+		const commission = await Commission.create({
+			rate: commissionData.rate,
+			amount: commissionData.amount,
+			contractId,
+		})
+
+		return commission
+	} catch (error) {
+		console.error('Error creating commission:', error)
+		throw new AppError('Error creating commission', 500)
+	}
+}
+
+const getCommissionByContractIdController = async (contractId) => {
+	try {
+		const commission = await Commission.findOne({ where: { contractId } })
+		if (!commission) {
+			throw new AppError('Commission not found', 404)
+		}
+		return commission
+	} catch (error) {
+		console.error('Error fetching commission:', error)
+		throw new AppError('Error fetching commission', 500)
+	}
+}
+
 module.exports = {
 	createContractController,
 	getAllContractsController,
@@ -153,4 +223,6 @@ module.exports = {
 	deleteContractByIdController,
 	getDeletedContractController,
 	updateContractStatusController,
+	createCommissionController,
+	getCommissionByContractIdController,
 }
