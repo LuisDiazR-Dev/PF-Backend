@@ -6,6 +6,8 @@ const {
 	deleteContractByIdController,
 	getDeletedContractController,
 	updateContractStatusController,
+	createCommissionController,
+	getCommissionByContractIdController,
 } = require('../controllers/contract-controller')
 const { User } = require('../db')
 const sendContractNotification = require('../mailer/contract-notification')
@@ -97,6 +99,26 @@ const updateContractStatus = async (req, res) => {
 	}
 }
 
+const createCommission = async (req, res, next) => {
+	const { rate, amount, contractId } = req.body
+	try {
+		const commission = await createCommissionController({ rate, amount, contractId })
+		res.status(201).json(commission)
+	} catch (error) {
+		next(new AppError(error.message, error.statusCode || 500))
+	}
+}
+
+const getCommissionByContractId = async (req, res, next) => {
+	const { contractId } = req.params
+	try {
+		const commission = await getCommissionByContractIdController(contractId)
+		res.status(200).json(commission)
+	} catch (error) {
+		next(new AppError(error.message, error.statusCode || 500))
+	}
+}
+
 module.exports = {
 	createContract,
 	getAllContracts,
@@ -104,4 +126,6 @@ module.exports = {
 	deleteContractById,
 	getDeletedContracts,
 	updateContractStatus,
+	createCommission,
+	getCommissionByContractId,
 }

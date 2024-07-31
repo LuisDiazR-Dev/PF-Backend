@@ -1,4 +1,4 @@
-const { User, Project, Tag, Plan, Technology, Link } = require('./db')
+const { User, Project, Tag, Plan, Technology, Link, Contract, Commission } = require('./db')
 const bcrypt = require('bcrypt')
 const users = require('./_db/users')
 const projects = require('./_db/projects')
@@ -13,6 +13,22 @@ const hashPasswords = async (users) => {
 		})
 	)
 }
+
+// const calculateCommission = (planName, budget) => {
+// 	let rate = 0
+// 	switch (planName) {
+// 		case 'Premium':
+// 			rate = 0.05 // 5% para Premium
+// 			break
+// 		case 'Free':
+// 			rate = 0.25 // 25% para Free
+// 			break
+// 		default:
+// 			throw new Error(`Unknown plan: ${planName}`)
+// 	}
+// 	const amount = budget * rate
+// 	return { rate, amount }
+// }
 
 const createSeeders = async () => {
 	try {
