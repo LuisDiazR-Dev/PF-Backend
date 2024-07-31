@@ -9,8 +9,7 @@ conn
 	.then(() => {
 		server.listen(PORT, () => {
 			console.log(`Server listening on port ${PORT}`)
-			const seeders = createSeeders()
-			
+			createSeeders()
 		})
 	})
 	.catch((error) => console.error(error))

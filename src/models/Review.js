@@ -1,14 +1,10 @@
 const { DataTypes } = require('sequelize')
+const { User } = require('./User')
 
 module.exports = (sequelize) => {
 	sequelize.define(
 		'review',
 		{
-			id: {
-				type: DataTypes.UUID,
-				defaultValue: DataTypes.UUIDV4,
-				primaryKey: true,
-			},
 			rating: {
 				type: DataTypes.INTEGER,
 				allowNull: false,
@@ -18,8 +14,24 @@ module.exports = (sequelize) => {
 				},
 			},
 			comment: {
-				type: DataTypes.STRING,
+				type: DataTypes.TEXT,
+				allowNull: true,
+			},
+			reviewerId: {
+				type: DataTypes.UUID,
 				allowNull: false,
+				references: {
+					model: User,
+					key: 'id',
+				},
+			},
+			reviewedUserId: {
+				type: DataTypes.UUID,
+				allowNull: false,
+				references: {
+					model: User,
+					key: 'id',
+				},
 			},
 		},
 		{ timestamps: true }
