@@ -10,6 +10,11 @@ const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}
 	native: false,
 })
 
+//const sequelize = new Sequelize(DB_DEPLOY, {
+//	logging: false,
+//	native: false,
+//})
+
 // const sequelize = new Sequelize(DB_DEPLOY, {
 // 	logging: false,
 // 	native: false,
@@ -30,7 +35,7 @@ let entries = Object.entries(sequelize.models)
 let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]])
 sequelize.models = Object.fromEntries(capsEntries)
 
-const { User, Project, Technology, Plan, Tag, Like, Contract, Review } = sequelize.models
+const { User, Project, Technology, Plan, Tag, Like, Contract, Review, Link, Commission } = sequelize.models
 
 User.hasMany(Project, { foreignKey: 'userId', as: 'projects', onDelete: 'cascade' })
 Project.belongsTo(User, { foreignKey: 'userId', as: 'user' })
@@ -44,11 +49,11 @@ Tag.belongsToMany(Project, { through: 'project_tag', as: 'projects' })
 User.belongsTo(Plan, { foreignKey: 'planName', as: 'plan' })
 Plan.hasMany(User, { foreignKey: 'planName', as: 'users' })
 
-User.hasMany(Like, { foreignKey: 'userId', as: 'likes' });
-Like.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+User.hasMany(Like, { foreignKey: 'userId', as: 'likes' })
+Like.belongsTo(User, { foreignKey: 'userId', as: 'user' })
 
-Project.hasMany(Like, { foreignKey: 'projectId', as: 'likes' });
-Like.belongsTo(Project, { foreignKey: 'projectId', as: 'project' });
+Project.hasMany(Like, { foreignKey: 'projectId', as: 'likes' })
+Like.belongsTo(Project, { foreignKey: 'projectId', as: 'project' })
 
 User.hasMany(Contract, { foreignKey: 'senderId', as: 'sentContracts' })
 Contract.belongsTo(User, { foreignKey: 'senderId', as: 'sender' })
@@ -56,8 +61,17 @@ Contract.belongsTo(User, { foreignKey: 'senderId', as: 'sender' })
 User.hasMany(Contract, { foreignKey: 'receiverId', as: 'receivedContracts' })
 Contract.belongsTo(User, { foreignKey: 'receiverId', as: 'receiver' })
 
-User.hasMany(Review, { foreignKey: 'userId', as: 'reviews' });
-Review.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+User.hasMany(Review, { foreignKey: 'reviewerId', as: 'reviewsWritten' })
+Review.belongsTo(User, { foreignKey: 'reviewedUserId', as: 'reviewedUser' })
+
+Review.belongsTo(User, { foreignKey: 'reviewerId', as: 'reviewer' })
+User.hasMany(Review, { foreignKey: 'reviewedUserId', as: 'reviewsReceived' })
+
+User.hasMany(Link, { foreignKey: 'userId', as: 'links' })
+Link.belongsTo(User, { foreignKey: 'userId', as: 'user' })
+
+Contract.hasOne(Commission, { foreignKey: 'contractId', as: 'commission' })
+Commission.belongsTo(Contract, { foreignKey: 'contractId', as: 'contract' })
 
 module.exports = {
 	...sequelize.models,

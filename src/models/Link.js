@@ -1,36 +1,41 @@
 const { DataTypes } = require('sequelize')
+const { User } = require('./User')
 
 module.exports = (sequelize) => {
 	sequelize.define(
-		'project',
+		'link',
 		{
 			id: {
 				type: DataTypes.UUID,
 				defaultValue: DataTypes.UUIDV4,
 				primaryKey: true,
+				allowNull: false,
 			},
-			title: {
+			name: {
 				type: DataTypes.STRING,
 				allowNull: false,
 				validate: {
-					len: {
-						args: [3, 100],
-						msg: 'Title should be between 3 and 100 characters',
-					},
+					notEmpty: true,
 				},
 			},
-			description: {
+			url: {
 				type: DataTypes.STRING,
 				allowNull: false,
-				defaultValue: '',
+				validate: {
+					isURL: true,
+				},
 			},
-			image: {
-				type: DataTypes.STRING(512),
+			userId: {
+				type: DataTypes.UUID,
 				allowNull: false,
-				isUrl: true,
-				defaultValue: 'image_notfound.jpg',
+				references: {
+					model: User,
+					key: 'id',
+				},
 			},
 		},
-		{ timestamps: true, paranoid: true }
+		{
+			timestamps: true,
+		}
 	)
 }

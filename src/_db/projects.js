@@ -188,7 +188,7 @@ module.exports = [
 		image:
 			'https://img.freepik.com/vector-gratis/ilustracion-concepto-sistema-organizacion_114360-885.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
 		technologies: ['Python', 'Django', 'PostgreSQL'],
-		email: users[20].email,
+		email: users[19].email,
 	},
 	{
 		title: 'Meditation App',
@@ -240,7 +240,7 @@ module.exports = [
 		description: 'An app to track personal finances and expenses',
 		tags: ['finance', 'tracking', 'budget'],
 		image:
-			'https://img.freepik.com/foto-gratis/hombre-calculadora-monedas-notas-dinero_1150-14218.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/ilustracion-concepto-programacion_114360-27432.jpg?t=st=1722293602~exp=1722297202~hmac=069f9b217c66c614237736ed17879d6209d0c92f123707acb073fab6113c2514&w=1060',
 		technologies: ['JavaScript', 'React', 'Node.js'],
 		email: users[6].email,
 	},
@@ -249,7 +249,7 @@ module.exports = [
 		description: 'A game designed for virtual reality experiences',
 		tags: ['VR', 'gaming', 'entertainment'],
 		image:
-			'https://img.freepik.com/vector-premium/desarrollador-web-realidad-virtual_171537-33304.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/desarrolladores-web-ilustracion-diseno-plano_23-2148817995.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['C#', 'Unity', 'VR SDK'],
 		email: users[7].email,
 	},
@@ -258,7 +258,7 @@ module.exports = [
 		description: 'A tool for real-time document editing and collaboration',
 		tags: ['collaboration', 'document', 'editing'],
 		image:
-			'https://img.freepik.com/foto-gratis/pantalla-computadora-concepto-collaboracion-trabajo-en-equipo_1150-12845.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/programador-trabajando-codigo-desarrollo-web-ingeniero-programacion-script-python-php-java-computadora_90220-249.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['JavaScript', 'React', 'Firebase'],
 		email: users[8].email,
 	},
@@ -267,7 +267,7 @@ module.exports = [
 		description: 'A tool to generate content using AI algorithms',
 		tags: ['AI', 'content', 'generation'],
 		image:
-			'https://img.freepik.com/vector-premium/dibujo-mano-robot-tipo-algoritmo_17065-2447.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/fotos-premium/dibujo-hombre-mujer-trabajando-computadora_1004054-1080.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['Python', 'TensorFlow', 'Flask'],
 		email: users[9].email,
 	},
@@ -276,7 +276,7 @@ module.exports = [
 		description: 'A system for monitoring and securing smart homes',
 		tags: ['security', 'home', 'IoT'],
 		image:
-			'https://img.freepik.com/vector-gratis/ilustracion-concepto-seguridad-casa_114360-2979.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-premium/codigo-o-programa-cableado-desarrollador-web_773186-895.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['Java', 'Spring Boot', 'MQTT'],
 		email: users[10].email,
 	},
@@ -285,7 +285,7 @@ module.exports = [
 		description: 'A system for collecting and analyzing customer feedback',
 		tags: ['feedback', 'customer', 'analytics'],
 		image:
-			'https://img.freepik.com/vector-premium/ilustracion-analisis-datos_146472-152.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/ilustracion-concepto-abstracto-aplicacion-sola-pagina-pagina-web-spa-tendencia-desarrollo-web-aplicacion-dentro-navegador-pagina-reescritura-dinamica-creacion-sitio-web-receptivo_335657-899.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['Python', 'Django', 'PostgreSQL'],
 		email: users[11].email,
 	},
@@ -294,7 +294,7 @@ module.exports = [
 		description: 'A platform for selling and managing event tickets',
 		tags: ['events', 'ticketing', 'management'],
 		image:
-			'https://img.freepik.com/foto-gratis/tarjeta-evento-compras-entradas_1150-19309.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-premium/programador-trabaja-codigo-desarrollar-aplicacion-o-sitio-web-computadora-codigo-escritura-independiente_258153-639.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['Ruby', 'Rails', 'Stripe API'],
 		email: users[12].email,
 	},
@@ -303,7 +303,7 @@ module.exports = [
 		description: 'An app to translate text between multiple languages',
 		tags: ['translation', 'languages', 'communication'],
 		image:
-			'https://img.freepik.com/vector-premium/ilustracion-concepto-traduccion_114360-2865.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-premium/programador-profesional-escribiendo-codigo-probar-software-computadora-vector-plano_125133-1497.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['JavaScript', 'React', 'Google Translate API'],
 		email: users[7].email,
 	},
@@ -312,7 +312,7 @@ module.exports = [
 		description: 'An app to adopt and take care of virtual pets',
 		tags: ['pets', 'virtual', 'entertainment'],
 		image:
-			'https://img.freepik.com/vector-premium/dibujo-mano-pet_171537-40566.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/fotos-premium/desarrollador-software-disenador-interfaz-usuario-colaborando-codigo-diseno-monitores-duales-ar-169-estilizar-50-v-6-id-trabajo-c762a1194dce4199a900229c42ca88cb_951962-6857.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['Swift', 'iOS SDK', 'Firebase'],
 		email: users[8].email,
 	},
@@ -321,7 +321,7 @@ module.exports = [
 		description: 'A chat app with real-time messaging capabilities',
 		tags: ['chat', 'messaging', 'real-time'],
 		image:
-			'https://img.freepik.com/vector-premium/ilustracion-concepto-mensajeria-chat_17065-2482.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-premium/vector-mujer-desarrolladora-que-piensa-frente-al-escritorio-pc-desarrollar-programa-o-resolver-problema_983889-218.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['JavaScript', 'Socket.io', 'Node.js'],
 		email: users[9].email,
 	},
@@ -330,7 +330,7 @@ module.exports = [
 		description: 'A platform for collecting and managing ideas from a crowd',
 		tags: ['crowdsourcing', 'ideas', 'collaboration'],
 		image:
-			'https://img.freepik.com/foto-gratis/ideas-innovadoras-tendencia-crowdsourcing_1150-13126.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-premium/vector-mujer-desarrolladora-que-piensa-frente-al-escritorio-pc-desarrollar-programa-o-resolver-problema_983889-218.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['Python', 'Django', 'AWS'],
 		email: users[10].email,
 	},
@@ -339,7 +339,7 @@ module.exports = [
 		description: 'An app to join and track fitness challenges',
 		tags: ['fitness', 'challenges', 'tracking'],
 		image:
-			'https://img.freepik.com/foto-gratis/hombre-ejercicios-peso-libre-salud_1150-14224.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-premium/monitor-computadora-pantalla-que-dice-programa-el_1307877-8.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['JavaScript', 'React', 'Firebase'],
 		email: users[11].email,
 	},
@@ -348,7 +348,7 @@ module.exports = [
 		description: 'An engine to recommend recipes based on user preferences',
 		tags: ['recipes', 'recommendations', 'food'],
 		image:
-			'https://img.freepik.com/vector-premium/recetas-cocinero-alimentos_112345-5678.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/ilustracion-concepto-tipografia_114360-27234.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['Python', 'Flask', 'TensorFlow'],
 		email: users[12].email,
 	},
@@ -357,7 +357,7 @@ module.exports = [
 		description: 'An app to shop with augmented reality features',
 		tags: ['AR', 'shopping', 'technology'],
 		image:
-			'https://img.freepik.com/vector-premium/ar-shopping_148015-5059.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/joven-programador-que-trabaja-computadora-portatil-personaje-dibujos-animados_24797-2123.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['Swift', 'ARKit', 'Firebase'],
 		email: users[13].email,
 	},
@@ -366,7 +366,7 @@ module.exports = [
 		description: 'A platform for creating and managing virtual study groups',
 		tags: ['education', 'study', 'collaboration'],
 		image:
-			'https://img.freepik.com/foto-gratis/grupo-estudio-virtual-plataforma_1150-12848.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/ilustracion-concepto-codificacion_114360-22486.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['JavaScript', 'React', 'WebRTC'],
 		email: users[14].email,
 	},
@@ -375,7 +375,7 @@ module.exports = [
 		description: 'An app for creating and sharing interactive stories',
 		tags: ['stories', 'interactive', 'creative'],
 		image:
-			'https://img.freepik.com/vector-premium/contar-historias_202137-3688.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/ilustracion-concepto-codificacion_114360-22486.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['Ruby', 'Rails', 'SQLite'],
 		email: users[15].email,
 	},
@@ -384,7 +384,7 @@ module.exports = [
 		description: 'A platform to find and adopt pets',
 		tags: ['pets', 'adoption', 'animals'],
 		image:
-			'https://img.freepik.com/vector-premium/adoptar-animales_202137-3658.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-premium/concepto-programacion-codigo-programa-fondo-blanco-aislado_197170-769.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['Java', 'Spring Boot', 'MongoDB'],
 		email: users[16].email,
 	},
@@ -393,7 +393,7 @@ module.exports = [
 		description: 'A dashboard to monitor and track personal health metrics',
 		tags: ['health', 'dashboard', 'tracking'],
 		image:
-			'https://img.freepik.com/foto-gratis/salud-personal-panel_1150-19280.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/ilustracion-concepto-programacion-pareja_114360-1652.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['JavaScript', 'React', 'Chart.js'],
 		email: users[17].email,
 	},
@@ -402,7 +402,7 @@ module.exports = [
 		description: 'A tool to plan and visualize home renovation projects',
 		tags: ['renovation', 'planning', 'design'],
 		image:
-			'https://img.freepik.com/foto-gratis/plan-renovacion-hogar_1150-14092.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/fotos-premium/grupo-personas-sentadas-alrededor-computadora-ellas-tiene-imagen-hombre-trabajando-ella_1004054-1240.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['Python', 'Django', 'Three.js'],
 		email: users[18].email,
 	},
@@ -411,7 +411,7 @@ module.exports = [
 		description: 'An app to order groceries and have them delivered',
 		tags: ['grocery', 'delivery', 'shopping'],
 		image:
-			'https://img.freepik.com/foto-gratis/entrega-compras-supermercado_1150-19684.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-premium/codigo-o-programa-cableado-desarrollador-web_773186-894.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['JavaScript', 'React Native', 'Node.js'],
 		email: users[19].email,
 	},
@@ -420,16 +420,16 @@ module.exports = [
 		description: 'A tool to create and manage a professional digital portfolio',
 		tags: ['portfolio', 'professional', 'design'],
 		image:
-			'https://img.freepik.com/vector-premium/portfolio-digital_202137-3684.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/ilustracion-concepto-programacion-pares_114360-3941.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['HTML', 'CSS', 'JavaScript'],
-		email: users[20].email,
+		email: users[1].email,
 	},
 	{
 		title: 'Local Event Finder',
 		description: 'An app to find local events and activities',
 		tags: ['events', 'local', 'activities'],
 		image:
-			'https://img.freepik.com/vector-premium/eventos-locales_202137-3669.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/programador-trabajando-computadora_23-2148312610.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['JavaScript', 'React', 'Google Maps API'],
 		email: users[1].email,
 	},
@@ -438,7 +438,7 @@ module.exports = [
 		description: 'A web-based code editor with real-time collaboration',
 		tags: ['code', 'editor', 'collaboration'],
 		image:
-			'https://img.freepik.com/vector-premium/editor-codigo-en-linea_202137-3681.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-premium/monitor-computadora-pantalla-que-dice-programa-el_1307877-8.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['JavaScript', 'Monaco Editor', 'WebSockets'],
 		email: users[2].email,
 	},
@@ -447,7 +447,7 @@ module.exports = [
 		description: 'An app to find recipes based on available ingredients',
 		tags: ['recipes', 'ingredients', 'cooking'],
 		image:
-			'https://img.freepik.com/vector-premium/encontrar-recetas_202137-3664.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/ilustracion-concepto-programacion_114360-2717.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['Python', 'Flask', 'Recipe API'],
 		email: users[3].email,
 	},
@@ -456,7 +456,7 @@ module.exports = [
 		description: 'A platform to find and hire freelancers',
 		tags: ['freelance', 'marketplace', 'jobs'],
 		image:
-			'https://img.freepik.com/vector-premium/mercado-freelance_202137-3644.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/desarrollo-aplicaciones-escritorio-telefonos-inteligentes_23-2148683810.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['Ruby', 'Rails', 'Stripe API'],
 		email: users[4].email,
 	},
@@ -465,7 +465,7 @@ module.exports = [
 		description: 'A tool to organize and manage book clubs',
 		tags: ['books', 'club', 'organization'],
 		image:
-			'https://img.freepik.com/vector-premium/gestion-club-libros_202137-3673.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/programadores-desarrollo-software-investigan-codigo_90220-174.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['JavaScript', 'React', 'Firebase'],
 		email: users[5].email,
 	},
@@ -474,7 +474,7 @@ module.exports = [
 		description: 'A system for booking tickets for various events',
 		tags: ['tickets', 'booking', 'events'],
 		image:
-			'https://img.freepik.com/vector-premium/compra-boletos_202137-3685.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/programador-trabajando-estilo-plano_52683-15041.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['Python', 'Django', 'Stripe API'],
 		email: users[6].email,
 	},
@@ -483,7 +483,7 @@ module.exports = [
 		description: 'An app to take virtual tours of museums',
 		tags: ['museum', 'virtual', 'tour'],
 		image:
-			'https://img.freepik.com/vector-premium/tour-virtual-museo_202137-3620.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/programador-trabajando-html_52683-24171.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['JavaScript', 'React', 'WebGL'],
 		email: users[7].email,
 	},
@@ -492,7 +492,7 @@ module.exports = [
 		description: 'An app to aggregate and recommend news based on AI algorithms',
 		tags: ['news', 'AI', 'aggregator'],
 		image:
-			'https://img.freepik.com/vector-premium/agregador-noticias_202137-3683.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/ilustracion-concepto-equipo-desarrollo-software_335657-5545.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['Python', 'Flask', 'News API'],
 		email: users[8].email,
 	},
@@ -501,7 +501,7 @@ module.exports = [
 		description: 'A system to manage and track subscriptions',
 		tags: ['subscriptions', 'management', 'tracking'],
 		image:
-			'https://img.freepik.com/vector-premium/gestion-suscripciones_202137-3682.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-premium/desarrollador-web-haciendo-codificacion_1005511-752.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['Ruby', 'Rails', 'PostgreSQL'],
 		email: users[9].email,
 	},
@@ -510,7 +510,7 @@ module.exports = [
 		description: 'A tool to plan and organize travel itineraries',
 		tags: ['travel', 'itinerary', 'planning'],
 		image:
-			'https://img.freepik.com/vector-premium/planificador-viajes_202137-3648.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/programador-ilustracion-decorativa-diseno-plano_23-2148244398.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['JavaScript', 'React', 'Google Maps API'],
 		email: users[10].email,
 	},
@@ -519,7 +519,7 @@ module.exports = [
 		description: 'A platform for online learning and course management',
 		tags: ['e-learning', 'courses', 'education'],
 		image:
-			'https://img.freepik.com/vector-premium/plataforma-aprendizaje_202137-3653.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-premium/vector-desarrollador-hombre-desarrollando-programa-usando-gorra-mientras-esta-pie-frente-computadora-portatil-el-d_983889-222.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['Python', 'Django', 'AWS'],
 		email: users[11].email,
 	},
@@ -528,7 +528,7 @@ module.exports = [
 		description: 'An app to track and manage personal expenses',
 		tags: ['expenses', 'tracking', 'management'],
 		image:
-			'https://img.freepik.com/vector-premium/seguimiento-gastos_202137-3654.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/ilustracion-concepto-abstracto-desarrollo-micrositio_335657-3690.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['JavaScript', 'React', 'Firebase'],
 		email: users[12].email,
 	},
@@ -537,7 +537,7 @@ module.exports = [
 		description: 'An app to organize and store recipes smartly',
 		tags: ['recipes', 'organization', 'cooking'],
 		image:
-			'https://img.freepik.com/vector-premium/organizador-recetas_202137-3680.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/ilustracion-colorida-programador-trabajando_23-2148281409.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['Swift', 'iOS SDK', 'Core Data'],
 		email: users[13].email,
 	},
@@ -546,7 +546,7 @@ module.exports = [
 		description: 'A virtual coach app for personalized fitness training',
 		tags: ['fitness', 'coaching', 'training'],
 		image:
-			'https://img.freepik.com/vector-premium/entrenador-virtual_202137-3679.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/ilustracion-concepto-codificar_114360-939.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['JavaScript', 'React Native', 'Firebase'],
 		email: users[14].email,
 	},
@@ -555,7 +555,7 @@ module.exports = [
 		description: 'A marketplace for buying and selling real estate properties',
 		tags: ['real estate', 'marketplace', 'properties'],
 		image:
-			'https://img.freepik.com/vector-premium/mercado-inmobiliario_202137-3677.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/desarrolladores-web-dibujados-mano-trabajando_23-2148819605.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['Python', 'Flask', 'PostgreSQL'],
 		email: users[15].email,
 	},
@@ -564,7 +564,7 @@ module.exports = [
 		description: 'An app to discover and recommend new music',
 		tags: ['music', 'discovery', 'recommendations'],
 		image:
-			'https://img.freepik.com/vector-premium/descubrimiento-musical_202137-3687.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/ilustracion-concepto-codificacion-manual_114360-8113.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['JavaScript', 'React', 'Music API'],
 		email: users[16].email,
 	},
@@ -573,7 +573,7 @@ module.exports = [
 		description: 'A tool for planning and organizing events',
 		tags: ['events', 'planning', 'organization'],
 		image:
-			'https://img.freepik.com/vector-premium/planificador-eventos_202137-3688.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/programador-estilo-dibujos-animados-trabajando_52683-22716.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['JavaScript', 'React', 'Firebase'],
 		email: users[17].email,
 	},
@@ -582,7 +582,7 @@ module.exports = [
 		description: 'A virtual whiteboard for collaborative brainstorming sessions',
 		tags: ['whiteboard', 'collaboration', 'brainstorming'],
 		image:
-			'https://img.freepik.com/vector-premium/pizarra-colaborativa_202137-3689.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/trabajo-equipo-negocios-sitio-web-computadora_24877-54754.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['JavaScript', 'React', 'WebSocket'],
 		email: users[18].email,
 	},
@@ -591,7 +591,7 @@ module.exports = [
 		description: 'An app to track and manage daily habits',
 		tags: ['habits', 'tracking', 'management'],
 		image:
-			'https://img.freepik.com/vector-premium/seguimiento-habitos_202137-3675.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/programador-trabajando-computadora_23-2148312611.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['JavaScript', 'React', 'Redux'],
 		email: users[19].email,
 	},
@@ -600,16 +600,16 @@ module.exports = [
 		description: 'A virtual gallery to showcase and explore artworks',
 		tags: ['art', 'gallery', 'virtual'],
 		image:
-			'https://img.freepik.com/vector-premium/galeria-arte_202137-3647.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/desarrolladores-web-dibujados-mano-plana_23-2148828087.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['Python', 'Flask', 'Three.js'],
-		email: users[20].email,
+		email: users[10].email,
 	},
 	{
 		title: 'Language Learning Game',
 		description: 'A game designed to help users learn new languages',
 		tags: ['language', 'learning', 'game'],
 		image:
-			'https://img.freepik.com/vector-premium/juego-aprendizaje-lenguas_202137-3659.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/ilustracion-concepto-abstracto-campamento-programacion-informatica_335657-3921.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['Swift', 'iOS SDK', 'Firebase'],
 		email: users[1].email,
 	},
@@ -618,7 +618,7 @@ module.exports = [
 		description: 'A platform to attend and manage online fitness classes',
 		tags: ['fitness', 'classes', 'online'],
 		image:
-			'https://img.freepik.com/vector-premium/clases-fitness-online_202137-3672.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/concepto-desarrollo-aplicaciones-laptop_23-2148699364.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['JavaScript', 'React', 'WebRTC'],
 		email: users[2].email,
 	},
@@ -627,7 +627,7 @@ module.exports = [
 		description: 'An app to help users plan and manage personal budgets',
 		tags: ['budget', 'planning', 'management'],
 		image:
-			'https://img.freepik.com/vector-premium/planificador-presupuesto_202137-3667.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/ilustracion-concepto-codificacion_114360-22516.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['Python', 'Django', 'SQLite'],
 		email: users[3].email,
 	},
@@ -636,7 +636,7 @@ module.exports = [
 		description: 'A tool to manage and track travel expenses',
 		tags: ['travel', 'expenses', 'management'],
 		image:
-			'https://img.freepik.com/vector-premium/gestion-gastos-viajes_202137-3658.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/concepto-programador-idea-prueba-codificacion-programa-escritura-usando-internet-software-diferente-desarrollo-optimizacion-sitios-web-ilustracion-vectorial-aislada_613284-1392.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['JavaScript', 'React', 'Node.js'],
 		email: users[4].email,
 	},
@@ -645,7 +645,7 @@ module.exports = [
 		description: 'An app for interactive and guided cooking lessons',
 		tags: ['cooking', 'lessons', 'interactive'],
 		image:
-			'https://img.freepik.com/vector-premium/lecciones-cocina_202137-3641.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/ilustracion-concepto-mecanografia-codigo_114360-4296.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['Swift', 'iOS SDK', 'Firebase'],
 		email: users[5].email,
 	},
@@ -654,7 +654,7 @@ module.exports = [
 		description: 'A platform for hosting and attending virtual conferences',
 		tags: ['conferences', 'virtual', 'events'],
 		image:
-			'https://img.freepik.com/vector-premium/plataforma-conferencias_202137-3686.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/concepto-ingenieria-informatica_23-2148186531.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['JavaScript', 'React', 'WebRTC'],
 		email: users[6].email,
 	},
@@ -663,7 +663,7 @@ module.exports = [
 		description: 'An app to create and manage grocery lists with smart suggestions',
 		tags: ['grocery', 'list', 'management'],
 		image:
-			'https://img.freepik.com/vector-premium/lista-compras_202137-3684.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/ilustracion-concepto-disenador-sitio-web_114360-26055.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['Python', 'Flask', 'SQLite'],
 		email: users[7].email,
 	},
@@ -672,7 +672,7 @@ module.exports = [
 		description: 'A platform to showcase and manage freelancer portfolios',
 		tags: ['portfolio', 'freelancers', 'showcase'],
 		image:
-			'https://img.freepik.com/vector-premium/portafolio-freelancer_202137-3642.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/lenguajes-programacion-css-html-programacion-informatica-codificacion-informatica-personaje-dibujos-animados-programador-femenino-software-desarrollo-sitios-web-ilustracion-metafora-concepto-aislado-vector_335657-2740.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['JavaScript', 'React', 'Node.js'],
 		email: users[8].email,
 	},
@@ -681,7 +681,7 @@ module.exports = [
 		description: 'A network to connect and organize local volunteers',
 		tags: ['volunteers', 'network', 'community'],
 		image:
-			'https://img.freepik.com/vector-premium/red-voluntarios_202137-3685.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/mujer-trabajando-nueva-aplicacion_23-2148682102.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['Ruby', 'Rails', 'PostgreSQL'],
 		email: users[9].email,
 	},
@@ -690,7 +690,7 @@ module.exports = [
 		description: 'A virtual classroom platform for online education',
 		tags: ['education', 'classroom', 'virtual'],
 		image:
-			'https://img.freepik.com/vector-premium/aula-virtual_202137-3680.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/programador-haciendo-su-trabajo-oficina_23-2148274928.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['JavaScript', 'React', 'WebRTC'],
 		email: users[10].email,
 	},
@@ -699,7 +699,7 @@ module.exports = [
 		description: 'An app for practicing and tracking daily mindfulness exercises',
 		tags: ['mindfulness', 'daily', 'practice'],
 		image:
-			'https://img.freepik.com/vector-premium/mindfulness-diaria_202137-3668.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-premium/concepto-programacion-pagina-web-computadora-portatil-estilo-linea_281653-4525.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['Swift', 'iOS SDK', 'Core Data'],
 		email: users[11].email,
 	},
@@ -708,7 +708,7 @@ module.exports = [
 		description: 'A planner for organizing and tracking home workouts',
 		tags: ['workout', 'home', 'fitness'],
 		image:
-			'https://img.freepik.com/vector-premium/planificador-entrenamiento_202137-3682.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/fotos-premium/lenguas-programacion-css-html_1032986-218459.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['JavaScript', 'React', 'Firebase'],
 		email: users[12].email,
 	},
@@ -717,7 +717,7 @@ module.exports = [
 		description: 'A platform for conducting and participating in online auctions',
 		tags: ['auctions', 'online', 'bidding'],
 		image:
-			'https://img.freepik.com/vector-premium/plataforma-subastas_202137-3676.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/ilustracion-concepto-programacion-pareja_114360-1812.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['Python', 'Django', 'PostgreSQL'],
 		email: users[13].email,
 	},
@@ -726,7 +726,7 @@ module.exports = [
 		description: 'An app to assist with virtual gardening and plant care',
 		tags: ['gardening', 'virtual', 'plants'],
 		image:
-			'https://img.freepik.com/vector-premium/asistente-jardin_202137-3678.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/ilustracion-concepto-trabajo_114360-27000.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['JavaScript', 'React', 'Firebase'],
 		email: users[14].email,
 	},
@@ -735,7 +735,7 @@ module.exports = [
 		description: 'A dashboard for interactive fitness tracking and analytics',
 		tags: ['fitness', 'dashboard', 'tracking'],
 		image:
-			'https://img.freepik.com/vector-premium/dashboards-interactivo-fitness_202137-3674.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/desarrollo-nuevas-aplicaciones-escritorio_23-2148684987.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['JavaScript', 'React', 'Chart.js'],
 		email: users[15].email,
 	},
@@ -744,7 +744,7 @@ module.exports = [
 		description: 'A tool to manage and track freelance projects',
 		tags: ['projects', 'management', 'freelance'],
 		image:
-			'https://img.freepik.com/vector-premium/gestion-proyectos-freelance_202137-3683.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/concepto-programadores-diseno-plano_23-2147838764.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['Ruby', 'Rails', 'SQLite'],
 		email: users[16].email,
 	},
@@ -753,7 +753,7 @@ module.exports = [
 		description: 'An app to create and share curated music playlists',
 		tags: ['music', 'playlists', 'curation'],
 		image:
-			'https://img.freepik.com/vector-premium/curador-listas-musicales_202137-3651.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/personas-que-trabajan-oficina-diseno-plano_52683-21372.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['JavaScript', 'React', 'Spotify API'],
 		email: users[17].email,
 	},
@@ -762,7 +762,7 @@ module.exports = [
 		description: 'An app for virtual home staging and interior design',
 		tags: ['home', 'staging', 'design'],
 		image:
-			'https://img.freepik.com/vector-premium/etapa-virtual-casa_202137-3689.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/ilustracion-concepto-codificacion-manual_114360-8413.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['Python', 'Flask', 'Three.js'],
 		email: users[18].email,
 	},
@@ -771,7 +771,7 @@ module.exports = [
 		description: 'A platform for creating and collaborating on music projects',
 		tags: ['music', 'collaboration', 'creation'],
 		image:
-			'https://img.freepik.com/vector-premium/musica-colaborativa_202137-3655.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/psd-gratis/ilustracion-masculina-desarrollador-iconos-3d-nft_629802-6.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['JavaScript', 'React', 'WebRTC'],
 		email: users[19].email,
 	},
@@ -780,8 +780,8 @@ module.exports = [
 		description: 'An app providing smart recommendations and guides for travelers',
 		tags: ['travel', 'guide', 'recommendations'],
 		image:
-			'https://img.freepik.com/vector-premium/guia-viajes_202137-3681.jpg?ga=GA1.1.809440281.1720916925&semt=ais_user',
+			'https://img.freepik.com/vector-gratis/ilustracion-colorida-mujer-programadora-haciendo-su-trabajo_23-2148270747.jpg?ga=GA1.2.809440281.1720916925&semt=ais_hybrid',
 		technologies: ['JavaScript', 'React', 'Google Maps API'],
-		email: users[20].email,
+		email: users[15].email,
 	},
 ]

@@ -13,6 +13,15 @@ const {
 const client = new mercadopago.MercadoPagoConfig({
 	accessToken: MP_TEST_ACCESS_TOKEN,
 })
+
+const clientStripe = new stripe(
+	'sk_test_51PfcjxApzRY4HXw3SaIcmqMxh742spkGCG0ne5zCdsJATcsRky6mzglZe5n7lsGXzGZF6YAee3smMVgx8f8MdAcq00jf92UHM2'
+)
+
+const stripeSession = require('stripe')(
+	'sk_test_51PfcjxApzRY4HXw3SaIcmqMxh742spkGCG0ne5zCdsJATcsRky6mzglZe5n7lsGXzGZF6YAee3smMVgx8f8MdAcq00jf92UHM2'
+)
+
 const createPreference = async (title, quantity, unit_price, user) => {
 	try {
 		if (!user.id) {
@@ -75,10 +84,6 @@ const cancelSubscriptionController = async (currentUser) => {
 	}
 }
 
-const clientStripe = new stripe(
-	'sk_test_51PfcjxApzRY4HXw3SaIcmqMxh742spkGCG0ne5zCdsJATcsRky6mzglZe5n7lsGXzGZF6YAee3smMVgx8f8MdAcq00jf92UHM2'
-)
-
 const createStripePreference = async (title, quantity, unit_price) => {
 	const pesos = unit_price
 	const centavos = pesos * 100
@@ -96,11 +101,52 @@ const createStripePreference = async (title, quantity, unit_price) => {
 			},
 		],
 		mode: 'payment',
-		success_url: process.env.FRONT_DEPLOY,
-		cancel_url: process.env.FRONT_DEPLOY,
+		success_url: `${process.env.FRONT_LOCAL_SUCCESS}?session_id={CHECKOUT_SESSION_ID}`,
+		cancel_url: process.env.FRONT_LOCAL_FAILURE,
 	})
 	console.log(session)
 	return session.url
+}
+
+const paymentStripeController = async (sessionId, user, email) => {
+	const payment = email
+	try {
+		const session = await stripeSession.checkout.sessions.retrieve(sessionId)
+
+		if (!session) {
+			console.log('No session found with the provided ID.')
+			return { status: 404, message: 'No session found with the provided ID.' }
+		}
+
+		const paymentIntentId = session.payment_intent
+
+		if (paymentIntentId) {
+			const paymentIntent = await stripeSession.paymentIntents.retrieve(paymentIntentId)
+
+			if (paymentIntent.status === 'succeeded') {
+				const userId = await User.findByPk(user)
+				if (!userId) {
+					return { status: 404, message: 'User not found.' }
+				}
+
+				const premiumPlan = await Plan.findOne({ where: { planName: 'Premium' } })
+				if (!premiumPlan) {
+					return { status: 404, message: 'Premium plan not found.' }
+				}
+
+				userId.planName = premiumPlan.planName
+				await userId.save()
+				await youArePremium(payment)
+				return { status: 200, message: 'User updated to premium' }
+			} else {
+				return { status: 400, message: 'PaymentIntent not succeeded.' }
+			}
+		} else {
+			return { status: 404, message: 'No PaymentIntent associated with this Checkout Session.' }
+		}
+	} catch (error) {
+		return { status: 500, message: `Error retrieving PaymentIntent: ${error.message}` }
+	}
 }
 
 //* Tarjeta visa Argentina prueba 4000000320000021 COD 123 EXP 12/26
@@ -110,4 +156,5 @@ module.exports = {
 	paymentNotificationController,
 	createStripePreference,
 	cancelSubscriptionController,
+	paymentStripeController,
 }

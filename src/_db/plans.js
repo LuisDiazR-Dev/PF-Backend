@@ -5,6 +5,6 @@ module.exports = [
 	},
 	{
 		planName: 'Premium',
-		price: 10.0,
+		price: 1350.0,
 	},
 ]
