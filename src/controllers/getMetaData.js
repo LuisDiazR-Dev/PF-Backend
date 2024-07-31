@@ -32,6 +32,7 @@ const metaDateDashboard = async () => {
 		})
 
 		//*
+		//*
 		const incomes = await User.findAll({
 			attributes: [[fn('AVG', col('plan.price')), 'averagePrice']],
 			include: [
