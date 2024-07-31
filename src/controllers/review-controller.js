@@ -1,9 +1,10 @@
 const { Review } = require('../db')
 const AppError = require('../utils/error-util')
+const { reviewInclude } = require('../utils/review-util')
 
 const getAllReviewsController = async () => {
 	try {
-		const reviews = await Review.findAll()
+		const reviews = await Review.findAll({ include: reviewInclude })
 		return reviews
 	} catch (error) {
 		throw error
@@ -90,17 +91,17 @@ const deleteUserReviewController = async (reviewData) => {
 	}
 }
 
-// const deleteUserReviewByIdController = async (reviewData) => {
-// 	try {
-//         const updatingReview = await Review.findByPk(reviewData.id)
-// 		await Review.destroy({ where: { id: reviewData.id }}
-// 		)
-// 		const deletedReview = await Review.findByPk(updatingReview.id)
-// 		return 'Review deleted successfully'
-// 	} catch (error) {
-// 		throw error
-// 	}
-// }
+const deleteUserReviewByIdController = async (reviewData) => {
+	try {
+        const updatingReview = await Review.findByPk(reviewData.id)
+		await Review.destroy({ where: { id: reviewData.id }}
+		)
+		const deletedReview = await Review.findByPk(updatingReview.id)
+		return 'Review deleted successfully'
+	} catch (error) {
+		throw error
+	}
+}
 
 module.exports = {
 	getAllReviewsController,
@@ -110,5 +111,5 @@ module.exports = {
 	updateUserReviewController,
 	deleteUserReviewController,
 	// updateUserReviewByIdController,
-	// deleteUserReviewByIdController
+	deleteUserReviewByIdController
 }

@@ -41,8 +41,13 @@ const getUserIncludes = (queries = {}) => {
 				{
 					model: User,
 					as: 'reviewer',
-					attributes: ['id', 'userName', 'image']
-				}
+					attributes: ['id', 'userName', 'image', "planName"]
+				},
+				{
+					model: User,
+					as: 'reviewedUser',
+					attributes: ['id', 'userName', 'image', "planName"]
+				},
 			]
 		}
 	]

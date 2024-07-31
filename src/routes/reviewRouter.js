@@ -7,11 +7,12 @@ const {
     updateUserReview,
     deleteUserReview,
     // updateUserReviewById,
-    // deleteUserByIdReview
+    deleteUserReviewById
 } = require('../handlers/review-handler')
 
 const { checkPremium } = require('../middlewares/premium_moddleware')
 const { verifyToken, authenticate } = require('../middlewares/auth-middleware')
+const { checkAdmin } = require('../middlewares/admin_middleware')
 
 const reviewRouter = Router()
 reviewRouter.get('/', authenticate, getAllReviews)
@@ -21,6 +22,6 @@ reviewRouter.post('/', verifyToken, checkPremium, createReview)
 reviewRouter.put('/', verifyToken, updateUserReview)
 reviewRouter.delete('/:id', verifyToken, deleteUserReview)
 // reviewRouter.put('/', verifyToken, checkAdmin, updateUserReviewById)
-// reviewRouter.delete('/:id', verifyToken, checkAdmin, deleteUserByIdReview)
+reviewRouter.delete('/:id', verifyToken, checkAdmin, deleteUserReviewById)
 
 module.exports = reviewRouter

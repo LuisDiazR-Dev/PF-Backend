@@ -6,7 +6,7 @@ const {
 	updateUserReviewController,
 	deleteUserReviewController,
 	// updateUserReviewByIdController,
-	// deleteUserReviewByIdController,
+	deleteUserReviewByIdController,
 } = require('../controllers/review-controller')
 
 const getAllReviews = async (req, res) => {
@@ -83,16 +83,16 @@ const deleteUserReview = async (req, res) => {
 	}
 }
 
-// const deleteUserReviewById = async (req, res) => {
-// 	try {
-// 		const body = req.body
-// 		const { id } = req.params
-// 		const response = await deleteUserReviewByIdController(body, id)
-// 		res.status(200).json(response)
-// 	} catch (error) {
-// 		res.status(500).send(error.message)
-// 	}
-// }
+const deleteUserReviewById = async (req, res) => {
+	try {
+		const body = req.body
+		const { id } = req.params
+		const response = await deleteUserReviewByIdController(body, id)
+		res.status(200).json(response)
+	} catch (error) {
+		res.status(500).send(error.message)
+	}
+}
 
 module.exports = {
 	getAllReviews,
@@ -102,5 +102,5 @@ module.exports = {
 	updateUserReview,
 	deleteUserReview,
 	// updateUserReviewById,
-	// deleteUserReviewById,
+	deleteUserReviewById,
 }
