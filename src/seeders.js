@@ -4,6 +4,7 @@ const users = require('./_db/users')
 const projects = require('./_db/projects')
 const technologies = require('./_db/technologies')
 const plans = require('./_db/plans')
+const contracts = require('./_db/contract')
 
 const hashPasswords = async (users) => {
 	return await Promise.all(
@@ -13,22 +14,6 @@ const hashPasswords = async (users) => {
 		})
 	)
 }
-
-// const calculateCommission = (planName, budget) => {
-// 	let rate = 0
-// 	switch (planName) {
-// 		case 'Premium':
-// 			rate = 0.05 // 5% para Premium
-// 			break
-// 		case 'Free':
-// 			rate = 0.25 // 25% para Free
-// 			break
-// 		default:
-// 			throw new Error(`Unknown plan: ${planName}`)
-// 	}
-// 	const amount = budget * rate
-// 	return { rate, amount }
-// }
 
 const createSeeders = async () => {
 	try {
@@ -118,6 +103,34 @@ const createSeeders = async () => {
 		}
 		console.log('All projects have been added to the database!')
 		console.log('Users alredy created!')
+
+		// Crear contratos
+		for (const contractData of contracts) {
+			const sender = createdUsers[Math.floor(Math.random() * createdUsers.length)]
+			let receiver = createdUsers[Math.floor(Math.random() * createdUsers.length)]
+
+			// Asegurarse de que el receptor no sea el mismo que el remitente
+			while (receiver.id === sender.id) {
+				receiver = createdUsers[Math.floor(Math.random() * createdUsers.length)]
+			}
+
+			// Si el receptor o el remitente no son usuarios comunes, omitir este contrato
+			if (receiver.dataValues.role !== 'user' || sender.dataValues.role !== 'user') continue
+
+			// Crear contrato
+			await Contract.create({
+				senderId: sender.dataValues.id,
+				receiverId: receiver.dataValues.id,
+				subject: contractData.subject,
+				projectDescription: contractData.projectDescription,
+				budget: contractData.budget,
+				currency: contractData.currency,
+				availableTime: contractData.availableTime,
+				status: contractData.status,
+			})
+		}
+
+		console.log('All contracts have been added to the database!')
 	} catch (error) {
 		console.error('Error creating seed data:', error)
 	}
