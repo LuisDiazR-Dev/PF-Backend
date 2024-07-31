@@ -1,5 +1,5 @@
-const { User, Plan, Link, Like, Project, Review } = require('../db')
-const { fn, col } = require('sequelize')
+const { User, Plan, Link, Like, Project, Review, Contract, Commission } = require('../db')
+const { fn, col, literal } = require('sequelize')
 
 const metaDateDashboard = async () => {
 	try {
@@ -33,6 +33,10 @@ const metaDateDashboard = async () => {
 			},
 		})
 		const projectsCount = await Project.count()
+
+		const contractCount = await Contract.count()
+		const totalCommissions = await Commission.sum('amount')
+
 		const reviewCount = await Review.count()
 
 		const githubCount = await Link.count({
@@ -93,6 +97,7 @@ const metaDateDashboard = async () => {
 			userCount,
 			userAdmin,
 			projectsCount,
+			contractCount,
 			roundedAverageTotal,
 			roundedAveragePrice,
 			likeCount,
@@ -105,6 +110,7 @@ const metaDateDashboard = async () => {
 			reviewsPercentage,
 			userPremium,
 			userFree,
+			totalCommissions,
 		}
 	} catch (error) {
 		console.error('Error fetching dashboard data:', error)
