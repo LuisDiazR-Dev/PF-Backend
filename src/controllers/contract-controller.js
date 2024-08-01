@@ -174,7 +174,6 @@ const createCommissionController = async (commissionData) => {
 		if (contract.status !== 'accepted') {
 			throw new AppError('Commission can only be created for accepted contracts', 400)
 		}
-
 		const sender = await User.findByPk(contract.senderId)
 		const receiver = await User.findByPk(contract.receiverId)
 
