@@ -18,10 +18,11 @@ const createContract = async (req, res) => {
 		const contractData = req.body
 		const contract = await createContractController(contractData)
 
-		const sender = await User.findByPk(contract.senderId)
-		const receiver = await User.findByPk(contract.receiverId)
+		const sender = await User.findByPk(contract[0].dataValues.senderId)
+		const receiver = await User.findByPk(contract[0].dataValues.receiverId)
 
 		if (sender && receiver) {
+			console.log(sender, receiver, sender, receiver)
 			await sendContractNotification(sender.email, receiver.email, contractData)
 		}
 
