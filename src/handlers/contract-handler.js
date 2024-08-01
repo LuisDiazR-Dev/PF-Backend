@@ -10,7 +10,7 @@ const {
 	getCommissionByContractIdController,
 } = require('../controllers/contract-controller')
 const { User } = require('../db')
-const sendContractNotification = require('../mailer/contract-notification')
+const sendContractRequestNotification = require('../mailer/contractRequest-notification')
 const AppError = require('../utils/error-util')
 
 const createContract = async (req, res) => {
@@ -22,8 +22,7 @@ const createContract = async (req, res) => {
 		const receiver = await User.findByPk(contract[0].dataValues.receiverId)
 
 		if (sender && receiver) {
-			console.log(sender, receiver, sender, receiver)
-			await sendContractNotification(sender.email, receiver.email, contractData)
+			await sendContractRequestNotification(sender.email, receiver.email, contractData)
 		}
 
 		res.status(201).json(contract)

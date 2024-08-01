@@ -165,7 +165,6 @@ const calculateCommission = (planName, budget) => {
 
 const createCommissionController = async (commissionData) => {
 	const { contractId } = commissionData
-	console.log("log:", commissionData)
 	try {
 		const contract = await Contract.findByPk(contractId)
 		if (!contract) {
