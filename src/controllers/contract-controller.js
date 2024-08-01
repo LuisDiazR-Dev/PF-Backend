@@ -165,6 +165,7 @@ const calculateCommission = (planName, budget) => {
 
 const createCommissionController = async (commissionData) => {
 	const { contractId } = commissionData
+	console.log("log:", commissionData)
 	try {
 		const contract = await Contract.findByPk(contractId)
 		if (!contract) {
@@ -174,7 +175,6 @@ const createCommissionController = async (commissionData) => {
 		if (contract.status !== 'accepted') {
 			throw new AppError('Commission can only be created for accepted contracts', 400)
 		}
-
 		const sender = await User.findByPk(contract.senderId)
 		const receiver = await User.findByPk(contract.receiverId)
 
