@@ -61,6 +61,7 @@ const updateUserProfileController = async (userData, user) => {
             updateData.password = hashedPassword;
         }
 
+        // Actualiza el usuario
         const updatedUser = await updateUserByIdController(updateData, user.id);
 
         return { status: 200, message: 'Usuario actualizado exitosamente', user: updatedUser };
