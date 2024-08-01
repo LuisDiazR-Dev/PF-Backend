@@ -24,7 +24,7 @@ const createContract = async (req, res) => {
 		if (sender && receiver) {
 			await sendContractRequestNotification(sender.email, receiver.email, contractData)
 		}
-
+	
 		res.status(201).json(contract)
 	} catch (error) {
 		console.error('Error creating contract:', error)
@@ -93,6 +93,7 @@ const updateContractStatus = async (req, res) => {
 	const { contractId, status } = req.body
 	try {
 		const updatedContract = await updateContractStatusController(contractId, status)
+		console.log(updatedContract)
 		res.status(200).json(updatedContract)
 	} catch (error) {
 		res.status(error.statusCode || 500).json({ error: error.message })

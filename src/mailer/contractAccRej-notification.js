@@ -1,16 +1,16 @@
 const transporter = require('./mailer')
 
 const sendContractStatusNotification = async (senderEmail, receiverEmail, contractData, status) => {
-	const { projectDescription, budget, currency } = contractData
+  const { projectDescription, budget, currency } = contractData
 
-	const statusText = status === 'accepted' ? 'Accepted' : 'Rejected'
+  const statusText = status === 'accepted' ? 'Accepted' : 'Rejected'
 
-	const emailOptions = {
-		from: 'ForDevs ',
-		to: receiverEmail,
-		subject: `Your Contract for "${projectDescription}" has been ${statusText}!`,
-		text: `Your contract for "${projectDescription}" has been ${statusText} on ForDevs.`,
-		html: `
+  const emailOptions = {
+    from: 'ForDevs ',
+    to: receiverEmail,
+    subject: `Your Contract for "${projectDescription}" has been ${statusText}!`,
+    text: `Your contract for "${projectDescription}" has been ${statusText} on ForDevs.`,
+    html: `
       <!DOCTYPE html>
       <html lang="en">
       <head>
@@ -67,11 +67,7 @@ const sendContractStatusNotification = async (senderEmail, receiverEmail, contra
             <h2>Hello!</h2>
             <p>This email is to inform you that your contract for <strong>"${projectDescription}"</strong> has been <strong>${statusText}</strong> on ForDevs.</p>
             <p>**Budget:** ${budget} ${currency}</p>
-            ${
-							status === 'accepted'
-								? '<p>Congratulations! We look forward to working with you on this project.</p>'
-								: ''
-						}
+            ${status === 'accepted' ? '<p>Congratulations! We look forward to working with you on this project.</p>' : ''}
             <p>Best regards,<br>The ForDevs Team </p>
           </div>
           <div class="footer">
@@ -81,15 +77,15 @@ const sendContractStatusNotification = async (senderEmail, receiverEmail, contra
       </body>
       </html>
     `,
-	}
+  }
 
-	try {
-		await transporter.sendMail(emailOptions)
-		console.log('Contract notification sent to:', receiverEmail)
-	} catch (error) {
-		console.error('Error sending contract notification email:', error)
-		throw new Error('Error sending contract notification email')
-	}
+  try {
+    await transporter.sendMail(emailOptions)
+    console.log('Contract notification sent to:', receiverEmail)
+  } catch (error) {
+    console.error('Error sending contract notification email:', error)
+    throw new Error('Error sending contract notification email')
+  }
 }
 
 module.exports = sendContractStatusNotification
