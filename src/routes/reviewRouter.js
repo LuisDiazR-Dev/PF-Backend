@@ -20,7 +20,7 @@ reviewRouter.get('/:id', verifyToken, getReviewById)
 reviewRouter.get('/users/:id', verifyToken, getUserReviews)
 reviewRouter.post('/', verifyToken, checkPremium, createReview)
 reviewRouter.put('/', verifyToken, updateUserReview)
-// reviewRouter.delete('/:id', verifyToken, deleteUserReview)
+reviewRouter.delete('/profile/:id', verifyToken, deleteUserReviewById)
 // reviewRouter.put('/', verifyToken, checkAdmin, updateUserReviewById)
 reviewRouter.delete('/:id', verifyToken, checkAdmin, deleteUserReviewById)
 

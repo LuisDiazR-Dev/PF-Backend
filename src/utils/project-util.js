@@ -14,8 +14,8 @@ const getProjectIncludes = (queries = {}) => {
 			model: Tag,
 			as: 'tags',
 			through: { attributes: [] },
-			required: !!queries.tags,
-			order: [["tagName", "ASC"]]
+			required: false,
+			order: [['tagName', 'ASC']],
 		},
 		{
 			model: Like,
@@ -40,12 +40,16 @@ const getProjectIncludes = (queries = {}) => {
 	if (queries.tags) {
 		const tagInclude = includes.find((include) => include.as === 'tags')
 		if (tagInclude) {
-			tagInclude.where = { tagName: { [Op.iLike]: `%${queries.tags.split(',').join('%')}%` } }
+			tagInclude.where = {
+				tagName: { [Op.iLike]: { [Op.any]: queries.tags.split(',').map((tag) => `%${tag}%`) } },
+			}
+			tagInclude.required = true // Filtrar para incluir solo proyectos que coincidan con los tags
 		}
 	}
 
 	return includes
 }
+
 
 const getProjectOrder = (queries) => {
 	switch (queries.sort) {

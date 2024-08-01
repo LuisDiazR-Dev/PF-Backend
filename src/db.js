@@ -3,22 +3,13 @@ const { Sequelize } = require('sequelize')
 
 const fs = require('fs')
 const path = require('path')
-const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME } = process.env
+const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_DEPLOY } = process.env
 
-const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`, {
+
+const sequelize = new Sequelize(DB_DEPLOY, {
 	logging: false,
 	native: false,
 })
-
-//const sequelize = new Sequelize(DB_DEPLOY, {
-//	logging: false,
-//	native: false,
-//})
-
-// const sequelize = new Sequelize(DB_DEPLOY, {
-// 	logging: false,
-// 	native: false,
-// })
 
 const basename = path.basename(__filename)
 const modelDefiners = []
@@ -37,7 +28,7 @@ sequelize.models = Object.fromEntries(capsEntries)
 
 const { User, Project, Technology, Plan, Tag, Like, Contract, Review, Link, Commission } = sequelize.models
 
-User.hasMany(Project, { foreignKey: 'userId', as: 'projects', onDelete: 'cascade' })
+User.hasMany(Project, { foreignKey: 'userId', as: 'projects', onDelete: 'CASCADE' })
 Project.belongsTo(User, { foreignKey: 'userId', as: 'user' })
 
 Project.belongsToMany(Technology, { through: 'project_tech', as: 'technologies' })
@@ -49,28 +40,28 @@ Tag.belongsToMany(Project, { through: 'project_tag', as: 'projects' })
 User.belongsTo(Plan, { foreignKey: 'planName', as: 'plan' })
 Plan.hasMany(User, { foreignKey: 'planName', as: 'users' })
 
-User.hasMany(Like, { foreignKey: 'userId', as: 'likes' })
+User.hasMany(Like, { foreignKey: 'userId', as: 'likes', onDelete: 'CASCADE' })
 Like.belongsTo(User, { foreignKey: 'userId', as: 'user' })
 
-Project.hasMany(Like, { foreignKey: 'projectId', as: 'likes' })
+Project.hasMany(Like, { foreignKey: 'projectId', as: 'likes', onDelete: 'CASCADE' })
 Like.belongsTo(Project, { foreignKey: 'projectId', as: 'project' })
 
-User.hasMany(Contract, { foreignKey: 'senderId', as: 'sentContracts' })
+User.hasMany(Contract, { foreignKey: 'senderId', as: 'sentContracts', onDelete: 'CASCADE'})
 Contract.belongsTo(User, { foreignKey: 'senderId', as: 'sender' })
 
-User.hasMany(Contract, { foreignKey: 'receiverId', as: 'receivedContracts' })
+User.hasMany(Contract, { foreignKey: 'receiverId', as: 'receivedContracts', onDelete: 'CASCADE' })
 Contract.belongsTo(User, { foreignKey: 'receiverId', as: 'receiver' })
 
-User.hasMany(Review, { foreignKey: 'reviewerId', as: 'reviewsWritten' })
+User.hasMany(Review, { foreignKey: 'reviewerId', as: 'reviewsWritten' , onDelete: 'CASCADE' })
 Review.belongsTo(User, { foreignKey: 'reviewedUserId', as: 'reviewedUser' })
 
 Review.belongsTo(User, { foreignKey: 'reviewerId', as: 'reviewer' })
 User.hasMany(Review, { foreignKey: 'reviewedUserId', as: 'reviewsReceived' })
 
-User.hasMany(Link, { foreignKey: 'userId', as: 'links' })
+User.hasMany(Link, { foreignKey: 'userId', as: 'links', onDelete: 'CASCADE' })
 Link.belongsTo(User, { foreignKey: 'userId', as: 'user' })
 
-Contract.hasOne(Commission, { foreignKey: 'contractId', as: 'commission' })
+Contract.hasOne(Commission, { foreignKey: 'contractId', as: 'commission', onDelete: 'CASCADE' })
 Commission.belongsTo(Contract, { foreignKey: 'contractId', as: 'contract' })
 
 module.exports = {

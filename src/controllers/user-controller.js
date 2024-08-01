@@ -1,4 +1,4 @@
-const { User, Link } = require('../db')
+const { User, Link, Plan } = require('../db')
 const { Op } = require('sequelize')
 const AppError = require('../utils/error-util')
 const { findOrCreateLinks } = require('../controllers/link-controller')
@@ -78,7 +78,7 @@ const updateUserProfileController = async (userData, user) => {
 const updateUserByIdController = async (userData, id) => {
     try {
         const user = await User.findByPk(id, {
-            include: [{ model: Link, as: 'links' }]
+            include: getUserIncludes()
         });
 
         if (!user) {
@@ -103,10 +103,14 @@ const updateUserByIdController = async (userData, id) => {
         } else {
             console.log('No links data provided.');
         }
+		if (userData.planName === 'Premium' || userData.planName === 'Free') {
+		const plan = await Plan.findOne({where:{planName:userData.planName}});
+			await user.setPlan(plan)
+		}
 
         // Vuelve a cargar el usuario con los enlaces actualizados
         const updatedUser = await User.findByPk(id, {
-            include: [{ model: Link, as: 'links' }]
+            include: getUserIncludes()
         });
 
         console.log(`User updated successfully: ${JSON.stringify(updatedUser)}`);
