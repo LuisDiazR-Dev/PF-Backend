@@ -8,6 +8,9 @@ const {
 	FRONT_LOCAL_SUCCESS,
 	FRONT_LOCAL_FAILURE,
 	FRONT_LOCAL_PENDING,
+	FRONT_DEPLOY_SUCCESS,
+	FRONT_DEPLOY_FAILURE,
+	FRONT_DEPLOY_PENDING,
 } = process.env
 
 const client = new mercadopago.MercadoPagoConfig({
@@ -37,9 +40,9 @@ const createPreference = async (title, quantity, unit_price, user) => {
 				},
 			],
 			back_urls: {
-				success: FRONT_LOCAL_SUCCESS,
-				failure: FRONT_LOCAL_FAILURE,
-				pending: FRONT_LOCAL_PENDING,
+				success: FRONT_DEPLOY_SUCCESS,
+				failure: FRONT_DEPLOY_FAILURE,
+				pending: FRONT_DEPLOY_PENDING,
 			},
 			external_reference: user.id,
 		}
@@ -101,8 +104,8 @@ const createStripePreference = async (title, quantity, unit_price) => {
 			},
 		],
 		mode: 'payment',
-		success_url: `${process.env.FRONT_LOCAL_SUCCESS}?session_id={CHECKOUT_SESSION_ID}`,
-		cancel_url: process.env.FRONT_LOCAL_FAILURE,
+		success_url: `${FRONT_DEPLOY_SUCCESS}?session_id={CHECKOUT_SESSION_ID}`,
+		cancel_url: FRONT_DEPLOY_FAILURE,
 	})
 	console.log(session)
 	return session.url
