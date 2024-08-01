@@ -55,7 +55,7 @@ const generatePDF = (res, metadata, admins) => {
 
 	doc.pipe(res)
 
-	doc.rect(0, 0, doc.page.width, doc.page.height).fill('#ffd1e8')
+	doc.rect(0, 0, doc.page.width, doc.page.height).fill('#fff')
 	doc.fillColor('black')
 	doc.font('Lexend').fontSize(20).text('ForDevs', 50, 50)
 

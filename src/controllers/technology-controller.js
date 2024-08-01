@@ -16,6 +16,21 @@ const getAllTechnologiesController = async (name) => {
 	}
 }
 
+const createTechnologyController = async (name) => {
+	try {
+		const [technology, created] = await Technology.findOrCreate({
+			where: { name },
+		});
+		if (!created) {
+			throw new Error('Technology already exists');
+		}
+		return technology;
+	} catch (error) {
+		throw new Error('Technology creation failed');
+	}
+};
+
+
 const findOrCreateTechnologies = async (technologies) => {
 	return Promise.all(
 		technologies.map(async (techName) => {
@@ -30,4 +45,5 @@ const findOrCreateTechnologies = async (technologies) => {
 module.exports = {
 	getAllTechnologiesController,
 	findOrCreateTechnologies,
+	createTechnologyController
 }
